@@ -10,14 +10,14 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
   return (
     <>
       <div
-        className="relative group mt-4 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10 max-w-2xl mx-auto"
+        className="relative group mt-6 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10 max-w-4xl mx-auto"
         onClick={() => setIsOpen(true)}
       >
         {image ? (
           <img
             src={image}
             alt={caption || ''}
-            className="w-full object-cover max-h-64 transition-transform duration-700 group-hover:scale-105"
+            className="w-full object-cover max-h-96 transition-transform duration-700 group-hover:scale-105"
           />
         ) : isPrototype ? (
           <div className="w-full h-64 bg-white/5 flex items-center justify-center transition-colors group-hover:bg-white/10">
@@ -25,9 +25,9 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
           </div>
         ) : null}
         
-        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <div className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white">
-            <ZoomIn size={20} />
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+          <div className="p-4 bg-black/40 backdrop-blur-sm rounded-full text-white shadow-xl">
+            <ZoomIn size={24} />
           </div>
         </div>
       </div>
