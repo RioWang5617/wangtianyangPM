@@ -63,9 +63,10 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
               </div>
             </div>
             <div
-              className="flex-1 w-full max-w-7xl mx-auto rounded-xl overflow-hidden border border-white/10 shadow-2xl animate-zoom-in"
+              className="flex-1 w-full max-w-7xl mx-auto rounded-xl overflow-hidden border border-white/10 shadow-2xl animate-zoom-in relative"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Optional: Add a subtle overlay here if needed, but usually the iframe is fine. */}
               <iframe
                 src={prototypeUrl}
                 className="w-full h-full border-0 bg-white"
@@ -75,10 +76,10 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
           </div>
         ) : (
           <div
-            className="fixed inset-0 z-[9999] bg-black/95 flex items-start justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto"
+            className="fixed inset-0 z-[9999] bg-black/95 flex items-start justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto cursor-pointer"
             onClick={() => setIsOpen(false)}
           >
-            <div className="relative w-full max-w-5xl my-auto flex flex-col items-center">
+            <div className="relative w-full my-auto flex flex-col items-center">
               <button
                 className="fixed top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all z-10 backdrop-blur-md shadow-xl"
                 onClick={() => setIsOpen(false)}
@@ -88,11 +89,11 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
               <img
                 src={image}
                 alt={caption || ''}
-                className="w-full h-auto rounded-lg animate-zoom-in shadow-2xl"
+                className="max-w-full h-auto rounded-lg animate-zoom-in shadow-2xl cursor-default"
                 onClick={(e) => e.stopPropagation()}
               />
               {caption && (
-                <p className="mt-6 text-white/60 text-base font-medium">
+                <p className="mt-6 text-white/60 text-base font-medium cursor-default">
                   {caption}
                 </p>
               )}
