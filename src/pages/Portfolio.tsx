@@ -67,13 +67,6 @@ const projects: Project[] = [
   },
 ];
 
-const skills = [
-  { label: 'Product UI / UX Design', dot: 'bg-blue-500' },
-  { label: 'React / Next.js', dot: 'bg-purple-500' },
-  { label: 'Figma / Adobe', dot: 'bg-pink-500' },
-  { label: 'Motion Interaction', dot: 'bg-white' },
-];
-
 export default function Portfolio() {
   return (
     <div className="min-h-screen bg-[#070612] text-white selection:bg-purple-500/30 overflow-x-hidden">

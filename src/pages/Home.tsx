@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MuxVideo from '@mux/mux-video-react';
 
-const LOGO_URL =
-  'https://stunt-route-84150395.figma.site/_assets/v11/4bf0c72a919f5c8d7edcc2b6ee96432d6e85fbec.png';
-
 function AnimatedBackground() {
   return (
     <div className="absolute inset-0 z-0 overflow-hidden bg-[#070612]">
@@ -15,7 +12,7 @@ function AnimatedBackground() {
         muted
         playsInline
         className="absolute left-0 top-0 h-full w-full object-cover origin-left will-change-transform opacity-60"
-        style={{ transform: 'translateX(200px) scale(1.2)' }}
+        style={{ transform: 'scale(1.2)' }}
       />
       <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-64 w-full bg-gradient-to-t from-[#070612] via-[#070612]/40 to-transparent" />
       <div className="absolute inset-0 bg-black/20 z-[1]" />

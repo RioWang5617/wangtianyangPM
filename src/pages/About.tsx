@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ChevronRight, FileText, Zap, Phone } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ChevronRight, FileText, Phone } from 'lucide-react';
 
 export default function About() {
   const [mounted, setMounted] = useState(false);

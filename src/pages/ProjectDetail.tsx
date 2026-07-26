@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, X, ZoomIn, ExternalLink } from 'lucide-react';
 import { getProjectById } from '../data/projectDetails';
@@ -49,58 +50,24 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
         </div>
       )}
 
-      {isOpen && image && (
+      {isOpen && image && createPortal(
         <div
-          className="fixed inset-0 z-[9999] bg-black/95 animate-fade-in flex items-center justify-center p-4 sm:p-8 cursor-pointer"
+          className="fixed inset-0 z-[9999] animate-fade-in flex items-center justify-center p-4 sm:p-8 cursor-zoom-out"
           onClick={() => setIsOpen(false)}
         >
           <button
             className="fixed top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all z-10 backdrop-blur-md shadow-xl"
-            onClick={() => setIsOpen(false)}
+            onClick={(e) => { e.stopPropagation(); setIsOpen(false); }}
           >
             <X size={24} />
           </button>
-          
-          {/* Content Wrapper - strictly fits content */}
-          <div 
-            // 【关键修改 1】：增加 min-h-0 和 min-w-0 允许容器收缩，解除原图物理尺寸的绑定
-            className="flex flex-col items-center justify-center cursor-default min-h-0 min-w-0 max-w-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={image}
-              alt={caption || ''}
-              // 【关键修改 2】：去掉 object-contain，改用 w-auto h-auto 和 block，让 DOM 紧贴渲染像素
-              className="block max-w-full max-h-[75vh] w-auto h-auto shrink-0 rounded-lg animate-zoom-in shadow-2xl"
-            />
-            
-            {(caption || isPrototype) && (
-              // 【关键修改 3】：加了 shrink-0 防止文字块被挤压
-              <div className="w-full flex flex-col items-center mt-4 shrink-0">
-                {caption && (
-                  <p className="text-white/60 text-base font-medium text-center">
-                    {caption}
-                  </p>
-                )}
-
-                {isPrototype && (
-                  <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl flex flex-col items-center gap-3 animate-fade-in-up">
-                    <p className="text-white/80 font-medium text-sm">这是一个交互原型页面</p>
-                    <a
-                      href={prototypeUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full text-sm font-medium flex items-center gap-2 transition-all shadow-lg hover:shadow-blue-500/25"
-                    >
-                      <ExternalLink size={16} />
-                      在新窗口全屏打开原型
-                    </a>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+          <img
+            src={image}
+            alt={caption || ''}
+            className="block w-auto h-auto max-w-[calc(100vw_-_2rem)] sm:max-w-[calc(100vw_-_4rem)] max-h-[calc(100vh_-_2rem)] sm:max-h-[calc(100vh_-_4rem)] rounded-lg animate-zoom-in shadow-2xl"
+          />
+        </div>,
+        document.body
       )}
     </>
   );
@@ -186,17 +153,16 @@ export default function ProjectDetail() {
                       <p className="text-[#86868b] text-base leading-relaxed pl-4 border-l-2 border-white/5">
                         {item.content}
                       </p>
+                   )}
+                    {(item.image || item.prototypeUrl) && (
+                      <div className="mt-6">
+                        <ProjectMedia
+                          image={item.image}
+                          prototypeUrl={item.prototypeUrl}
+                          caption={item.imageCaption}
+                        />
+                      </div>
                     )}
-                    {/* Use the combined ProjectMedia component */}
-                {(item.image || item.prototypeUrl) && (
-                  <div className="mt-6">
-                    <ProjectMedia 
-                      image={item.image} 
-                      prototypeUrl={item.prototypeUrl} 
-                      caption={item.imageCaption} 
-                    />
-                  </div>
-                )}
                   </div>
                 ))}
               </div>

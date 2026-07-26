@@ -22,8 +22,6 @@ export interface ProjectDetail {
   learnings: string[];
 }
 
-const PLACEHOLDER = '/project-images/placeholder.jpg';
-
 export const PROJECT_DETAILS: ProjectDetail[] = [
   {
     id: 'ai-crm',
