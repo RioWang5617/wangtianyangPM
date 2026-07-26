@@ -105,7 +105,7 @@ export default function Portfolio() {
           </div>
 
           {/* Project grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {projects.map((project) => (
               <Link
                 key={project.id}
@@ -113,7 +113,7 @@ export default function Portfolio() {
                 className="group relative bg-white/[0.02] rounded-[48px] overflow-hidden border border-white/5 hover:bg-white/[0.05] hover:border-white/10 hover:shadow-2xl transition-all duration-500 flex flex-col p-0 cursor-pointer no-underline"
               >
                 {/* Image */}
-                <div className="aspect-[4/3] overflow-hidden relative bg-black/40">
+                <div className="aspect-[16/9] overflow-hidden relative bg-black/40">
                   <img
                     src={project.image}
                     alt={project.title}
@@ -127,25 +127,25 @@ export default function Portfolio() {
                 </div>
 
                 {/* Content */}
-                <div className="flex-1 flex flex-col p-10">
+                <div className="flex-1 flex flex-col p-8 lg:p-10 justify-center">
                   <div className="flex items-center gap-2 text-white/30 text-xs uppercase tracking-[0.2em] mb-4 whitespace-nowrap overflow-hidden">
                     <ArrowUpRight className="w-3 h-3" />
                     <span>{project.category}</span>
                   </div>
 
-                  <h3 className="font-medium mb-4 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis uppercase font-bold text-[28px]">
+                  <h3 className="font-medium mb-4 tracking-tight whitespace-nowrap overflow-hidden text-ellipsis uppercase font-bold text-[24px] lg:text-[28px]">
                     {project.title}
                   </h3>
 
-                  <p className="text-[#86868b] text-base leading-relaxed mb-10 font-light">
+                  <p className="text-[#86868b] text-sm lg:text-base leading-relaxed mb-8 lg:mb-10 font-light line-clamp-3">
                     {project.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-3 mt-auto">
+                  <div className="flex flex-wrap gap-2 lg:gap-3 mt-auto">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-4 py-1.5 bg-white/5 text-white/40 border border-white/5 rounded-full text-[11px] uppercase tracking-wider font-medium"
+                        className="px-3 py-1 lg:px-4 lg:py-1.5 bg-white/5 text-white/40 border border-white/5 rounded-full text-[10px] lg:text-[11px] uppercase tracking-wider font-medium"
                       >
                         {tag}
                       </span>
