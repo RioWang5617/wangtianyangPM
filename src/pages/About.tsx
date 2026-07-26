@@ -54,7 +54,7 @@ export default function About() {
           <div className="flex-1 space-y-6 lg:space-y-8" {...reveal(100)}>
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span className="font-bold tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-60 text-xs lg:text-[16px]">HELLO ~! 我是小羊</span>
+              <span className="font-bold tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-60 text-xs lg:text-[16px]">HELLO ~! 我是王天阳</span>
             </div>
             <h1 className="font-bold tracking-tighter leading-[1.1] md:leading-none md:whitespace-nowrap text-5xl md:text-7xl lg:text-8xl xl:text-[96px]">
               4年产品 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-300">设计专家</span>

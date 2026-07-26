@@ -163,63 +163,6 @@ export default function Portfolio() {
             </p>
           </div>
 
-          {/* About / CTA section */}
-          <div className="mt-24 lg:mt-40 pt-16 lg:pt-24 border-t border-white/5">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-              {/* Left */}
-              <div>
-                <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 lg:mb-8 leading-tight">
-                  设计驱动
-                  <br />
-                  <span className="text-[#86868b]">跨越时空的创造</span>
-                </h2>
-                <p className="text-lg md:text-xl text-[#86868b] mb-10 lg:mb-12 font-light leading-relaxed">
-                  拥有 6 年经验的产品型UI / UX设计师，连接 product 逻辑与视觉体验。
-                </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
-                  <div className="space-y-4 lg:space-y-6">
-                    {skills.slice(0, 2).map((skill) => (
-                      <div
-                        key={skill.label}
-                        className="flex items-center gap-4 text-white/80 text-[16px]"
-                      >
-                        <div
-                          className={`w-2 h-2 rounded-full ${skill.dot} animate-pulse shrink-0`}
-                        />
-                        <span>{skill.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="space-y-4 lg:space-y-6">
-                    {skills.slice(2).map((skill) => (
-                      <div
-                        key={skill.label}
-                        className="flex items-center gap-4 text-white/80 text-[16px]"
-                      >
-                        <div
-                          className={`w-2 h-2 rounded-full ${skill.dot} animate-pulse shrink-0`}
-                        />
-                        <span>{skill.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right - CTA card */}
-              <div className="bg-white/[0.02] p-8 lg:p-12 rounded-[48px] border border-white/5 relative overflow-hidden group shadow-xl">
-                <div className="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-[120px]" />
-                <h3 className="font-bold mb-8 lg:mb-10 relative z-10 text-[28px]">
-                  共创未来体验
-                </h3>
-                <div className="space-y-4 lg:space-y-6 relative z-10">
-                  <button className="w-full py-6 lg:py-8 bg-white text-black font-bold rounded-[32px] hover:bg-neutral-200 transition-all transform hover:scale-[1.02] active:scale-95 shadow-2xl text-base lg:text-lg">
-                    下载设计白皮书
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
     </div>
