@@ -3,6 +3,7 @@ import Nav from '@/components/Nav';
 import Home from '@/pages/Home';
 import Portfolio from '@/pages/Portfolio';
 import About from '@/pages/About';
+import ProjectDetail from '@/pages/ProjectDetail';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/about" element={<About />} />
-        <Route path="/project/:id" element={<Portfolio />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
       </Routes>
     </BrowserRouter>
   );

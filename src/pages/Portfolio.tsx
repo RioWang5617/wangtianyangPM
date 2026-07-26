@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 
 interface Project {
-  id: number;
+  id: string;
   category: string;
   title: string;
   description: string;
@@ -12,64 +12,58 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 1,
-    category: 'AI Product / Web',
-    title: 'DINGZUO AI 视觉创造系统',
+    id: 'ai-crm',
+    category: 'AI CRM / SaaS',
+    title: '企业自研 AI-CRM 系统',
     description:
-      '面向内容创作场景的 AI 视觉生成与编辑平台，通过大模型重构传统的图像设计工作流，实现效率的指数级提升。',
-    image:
-      'https://stunt-route-84150395.figma.site/_assets/v11/90ac51f7298fbc53f90ceb89a995233103f47cb3.png',
-    tags: ['Product Strategy', 'UI/UX', 'Design System'],
+      '主导 0 到 1 的 8 大模块架构。面向系统集成商，完全替代 Microsoft CRM，实现智能填表引擎多源异构抽取，销售录入工作量骤降 80%。',
+    image: '/project-images/ai-crm-1.jpg',
+    tags: ['AI-CRM', '智能填表', '私有化部署'],
   },
   {
-    id: 2,
-    category: 'Social AI / Mobile',
-    title: 'DUODUOLAND AI 社交招聘',
+    id: 'alumni',
+    category: 'App / Management',
+    title: '吉林大学校友会小程序',
     description:
-      '探索多模态对话场景下的求职交互。分析并优化 AI 匹配逻辑，为 Z 世代提供沉浸式的职场社交体验。',
-    image:
-      'https://stunt-route-84150395.figma.site/_assets/v11/fe9687fbc9183d908d92293ef28e22a2c425b303.png',
-    tags: ['Interaction', 'Prototype', 'App'],
+      '为吉大校友会打造的官方小程序与后台管理系统。提供校友认证、活动报名、资讯发布等功能，增强校友凝聚力与信息互通。',
+    image: '/project-images/alumni-1.jpg',
+    tags: ['小程序', '校友社交', '后台管理'],
   },
   {
-    id: 3,
-    category: 'Dashboard / Game Ops',
-    title: 'Eater课程管理 SaaS 平台',
+    id: 'rental',
+    category: 'SaaS / Real Estate',
+    title: '心仪租房管理系统',
     description:
-      '构建面向教育机构的智能课程管理平台，集课程排期、学员预约与运营数据分析于一体，实现课程业务的数字化与高效运营。',
-    image:
-      'https://stunt-route-84150395.figma.site/_assets/v11/51416c967bb02b3bb4d41790ae4327edebe21618.png',
-    tags: ['课程数据可视化', 'SaaS 多机构管理', '智能排课系统', '运营数据分析'],
+      '为长租公寓/二房东提供的房源与租客管理 SaaS。涵盖房源发布、在线签约、账单催缴、工单报修等全链路闭环，提升管房效率。',
+    image: '/project-images/rental-1.jpg',
+    tags: ['SaaS', '房产管理', '在线签约'],
   },
   {
-    id: 4,
-    category: 'E-Commerce / Mini Program',
-    title: 'GIGI HOUSE 潮玩商城',
+    id: 'health',
+    category: 'Medical / SaaS',
+    title: '格森医疗管理系统',
     description:
-      '专为年轻圈层打造的潮玩购物小程序。重构了从选品到支付的核心链路，引入了盲盒抽赏与社区分享机制，大幅提升了用户留存与复购率。',
-    image:
-      'https://images.unsplash.com/photo-1612015900986-4c4d017d1648?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw0fHxtaW5pbWFsaXN0JTIwYXBwfGVufDB8fHx8MTc4NTA3ODkyM3ww&ixlib=rb-4.1.0&q=80&w=1080',
-    tags: ['E-Commerce', 'Mini Program', 'Visual Design'],
+      '面向医疗机构的内部管理系统。包含患者档案、在线问诊、知识库管理与客服工作台，优化医疗服务流程与数据流转效率。',
+    image: '/project-images/health/health-1.jpg',
+    tags: ['医疗系统', '在线问诊', '知识库'],
   },
   {
-    id: 5,
-    category: 'IoT / Hardware',
-    title: '香港房屋署 T5 智能机器人',
+    id: 'iot',
+    category: 'Hardware / App',
+    title: 'AMLINK 智能设备 App',
     description:
-      '面向香港公共房屋管理的智能接待机器人终端。设计了适老化且直观的语音/触控双模态交互界面，提升了公共服务的数字化体验。',
-    image:
-      'https://images.unsplash.com/photo-1518770660439-4636190af475?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxpb3R8ZW58MHx8fHwxNzg1MDc4OTUzfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    tags: ['Hardware UI', 'Accessibility', 'IoT Terminal'],
+      '软硬件结合的智能终端控制 App 与后台管理系统。实现设备状态实时监控、远程控制指令下发及固件 OTA 升级，保障设备稳定运行。',
+    image: '/project-images/iot-1.jpg',
+    tags: ['IoT', '智能硬件', 'App'],
   },
   {
-    id: 6,
-    category: 'Fintech / Web3',
-    title: 'Kredit 跨境金融平台',
+    id: 'office',
+    category: 'Enterprise / OA',
+    title: '企业内部 OA 系统',
     description:
-      '针对东南亚市场的数字资产借贷平台。建立了严谨的表单交互与资产可视化面板，在保证合规性的同时提供了流畅的用户开户与交易体验。',
-    image:
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxkYXNoYm9hcmR8ZW58MHx8fHwxNzg1MDc4OTcyfDA&ixlib=rb-4.1.0&q=80&w=1080',
-    tags: ['Fintech', 'Data Dashboard', 'Form Design'],
+      '定制化的企业办公自动化平台。涵盖智能表单审批、组织架构管理、日程排班等，通过系统集成提升企业内部跨部门协同效率。',
+    image: '/project-images/office-1.jpg',
+    tags: ['OA', '审批流', '企业办公'],
   },
 ];
 

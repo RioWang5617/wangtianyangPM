@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ChevronRight, FileText, Zap, Phone } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function About() {
   const [mounted, setMounted] = useState(false);
@@ -243,171 +244,167 @@ export default function About() {
             <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 via-white/5 to-transparent mt-8"></div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(200)}>
+            <Link to="/project/ai-crm" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(200)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">DINGZUO AI 项目</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">App / Web 重构</span>
+                <h3 className="text-2xl font-bold mb-2">企业自研 AI-CRM 系统</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">AI CRM / SaaS</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                不仅是品牌焕新，更在用户体验、交互逻辑与视觉系统上实现全面提升。与 AI 团队协作定义语义识别与反馈界面，推动 Lottie 动效标准化落地。
+                主导 0 到 1 的 8 大模块架构。面向系统集成商，完全替代 Microsoft CRM，实现智能填表引擎多源异构抽取，销售录入工作量骤降 80%。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">AI 交互</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">Figma Design System</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">Lottie</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">AI-CRM</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">智能填表</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">私有化部署</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>复用率提升 60%</span>
+                    <span>录入工作量降低 80%</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>核心路径减少 3 步</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>完成率提升 15%</span>
+                    <span>大幅节约采购成本</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(300)}>
+            <Link to="/project/alumni" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(300)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">曹操传数据预约后台</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Web 管理系统</span>
+                <h3 className="text-2xl font-bold mb-2">吉林大学校友会</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">App / Management</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                实现游戏预约数据的实时监控与高效运营支撑。优化国际化数据可视化体验，显著降低了运营团队的培训与沟通成本。
+                为吉大校友会打造的官方小程序与后台管理系统。提供校友认证、活动报名、资讯发布等功能，增强校友凝聚力与信息互通。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">数据可视化</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">国际化</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">业务提效</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">小程序</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">校友社交</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">后台管理</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>监控效率提升 20%</span>
+                    <span>校友认证率提升</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>验收通过率 100%</span>
+                    <span>活动参与度增加</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(400)}>
+            <Link to="/project/rental" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(400)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">香港房屋署 T5 机器人</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">IoT 终端设计</span>
+                <h3 className="text-2xl font-bold mb-2">心仪租房管理系统</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">SaaS / Real Estate</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                用智能接待机器人替代传统人工登记。构建了跨端统一的视觉与交互规范，提升了系统的整体任务完成流畅度与准确性。
+                为长租公寓/二房东提供的房源与租客管理 SaaS。涵盖房源发布、在线签约、账单催缴、工单报修等全链路闭环，提升管房效率。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">硬件交互</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">访客系统</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">一致性</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">SaaS</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">房产管理</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">在线签约</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>独立负责全链路 UI</span>
+                    <span>管房效率提升 200%</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>信息架构重构</span>
+                    <span>签约流程数字化</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(500)}>
+            <Link to="/project/health" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(500)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">GIGI HOUSE 潮玩商城</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">E-Commerce</span>
+                <h3 className="text-2xl font-bold mb-2">格森医疗管理系统</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Medical / SaaS</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                专为年轻圈层打造的潮玩购物小程序。重构了从选品到支付的核心链路，引入了盲盒抽赏与社区分享机制，大幅提升了用户留存与复购率。
+                面向医疗机构的内部管理系统。包含患者档案、在线问诊、知识库管理与客服工作台，优化医疗服务流程与数据流转效率。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">电商链路</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">年轻化视觉</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">社区互动</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">医疗系统</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">在线问诊</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">知识库</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>复购率提升 30%</span>
+                    <span>问诊响应时间缩短</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>转化率提升 12%</span>
+                    <span>数据流转效率提升</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(600)}>
+            <Link to="/project/iot" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(600)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">DUODUOLAND 社交招聘</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Social App</span>
+                <h3 className="text-2xl font-bold mb-2">AMLINK 智能设备 App</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Hardware / App</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                探索多模态对话场景下的求职交互。分析并优化 AI 匹配逻辑，为 Z 世代提供沉浸式的职场社交体验。
+                软硬件结合的智能终端控制 App 与后台管理系统。实现设备状态实时监控、远程控制指令下发及固件 OTA 升级，保障设备稳定运行。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">社交互动</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">AI 匹配</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">多模态对话</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">IoT</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">智能硬件</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">App</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>日活时长增加 25%</span>
+                    <span>设备连接稳定性 99.9%</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>简历投递率提升 40%</span>
+                    <span>OTA 升级成功率提升</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
 
-            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(700)}>
+            <Link to="/project/office" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(700)}>
               <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">Kredit 跨境金融</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Fintech</span>
+                <h3 className="text-2xl font-bold mb-2">企业内部 OA 系统</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Enterprise / OA</span>
               </div>
               <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                针对东南亚市场的数字资产借贷平台。建立了严谨的表单交互与资产可视化面板，在保证合规性的同时提供了流畅的用户开户与交易体验。
+                定制化的企业办公自动化平台。涵盖智能表单审批、组织架构管理、日程排班等，通过系统集成提升企业内部跨部门协同效率。
               </p>
               <div className="space-y-4 pt-8 border-t border-white/5">
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">资产可视化</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">表单体验</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">安全合规</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">OA</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">审批流</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">企业办公</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>开户流失率降低 18%</span>
+                    <span>审批流程缩短 50%</span>
                   </div>
                   <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
                     <Zap className="w-3.5 h-3.5" />
-                    <span>交易效率提升 2x</span>
+                    <span>跨部门沟通成本降低</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           </div>
         </section>
 
