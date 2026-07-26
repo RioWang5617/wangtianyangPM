@@ -29,26 +29,28 @@ function ProjectImage({ src, caption }: { src: string; caption?: string }) {
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4 sm:p-8 animate-fade-in"
+          className="fixed inset-0 z-[9999] bg-black/95 flex items-start justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto"
           onClick={() => setIsOpen(false)}
         >
-          <button
-            className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors z-10"
-            onClick={() => setIsOpen(false)}
-          >
-            <X size={28} />
-          </button>
-          <img
-            src={src}
-            alt={caption || ''}
-            className="max-w-full max-h-[90vh] object-contain rounded-lg animate-zoom-in"
-            onClick={(e) => e.stopPropagation()}
-          />
-          {caption && (
-            <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/50 text-sm">
-              {caption}
-            </p>
-          )}
+          <div className="relative w-full max-w-5xl my-auto flex flex-col items-center">
+            <button
+              className="fixed top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all z-10 backdrop-blur-md shadow-xl"
+              onClick={() => setIsOpen(false)}
+            >
+              <X size={24} />
+            </button>
+            <img
+              src={src}
+              alt={caption || ''}
+              className="w-full h-auto rounded-lg animate-zoom-in shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+            {caption && (
+              <p className="mt-6 text-white/60 text-base font-medium">
+                {caption}
+              </p>
+            )}
+          </div>
         </div>
       )}
     </>
@@ -95,29 +97,29 @@ function ProjectPrototype({ url, caption }: { url: string; caption?: string }) {
           className="fixed inset-0 z-[9999] bg-black/95 flex flex-col p-4 sm:p-8 animate-fade-in"
           onClick={() => setIsOpen(false)}
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-4 w-full max-w-7xl mx-auto">
             <p className="text-white/70 text-sm">{caption}</p>
             <div className="flex items-center gap-4">
               <a
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 text-sm flex items-center gap-1"
+                className="px-4 py-2 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 rounded-full text-sm font-medium flex items-center gap-2 transition-colors"
                 onClick={(e) => e.stopPropagation()}
               >
                 <ExternalLink size={14} />
-                新窗口打开
+                新窗口全屏打开
               </a>
               <button
-                className="text-white/60 hover:text-white transition-colors"
+                className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
                 onClick={() => setIsOpen(false)}
               >
-                <X size={28} />
+                <X size={20} />
               </button>
             </div>
           </div>
           <div
-            className="flex-1 rounded-lg overflow-hidden border border-white/10 animate-zoom-in"
+            className="flex-1 w-full max-w-7xl mx-auto rounded-xl overflow-hidden border border-white/10 shadow-2xl animate-zoom-in"
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
