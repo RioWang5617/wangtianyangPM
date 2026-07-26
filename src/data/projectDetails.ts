@@ -58,6 +58,7 @@ export const PROJECT_DETAILS: ProjectDetail[] = [
         items: [
           { title: '1. 整体架构与 AI 能力层设计', content: '主导设计了系统四层架构（接入层、核心服务层、AI 能力层、数据层），打通了 Web 端、飞书、Outlook 及 Webhook 事件入口。' },
           { title: '', content: '', image: '/project-images/ai-crm/crm-architecture.jpg', prototypeUrl: '/prototypes/crm/assets/page/systemArchitecturePage.html', imageCaption: '系统整体技术与业务架构图' },
+          { title: '', content: '', prototypeUrl: '/prototypes/crm/assets/page/accessConfigPage.html', imageCaption: '接入配置页交互原型' },
           { title: '2. M3 智能填表引擎（核心创新闭环）', content: '设计了完整的"多源解析 -> OCR/文本抽取 -> 实体与金额识别 -> 预览/高亮校验 -> 一键写入 -> 采纳日志数据回流"闭环流程。' },
           { title: '', content: '', image: '/project-images/ai-crm/crm-smart-form.jpg', prototypeUrl: '/prototypes/crm/assets/page/smartFormPipelinePage.html', imageCaption: '智能填表引擎多源异构抽取与人工确认流转图' },
           { title: '3. AI 销售助手（M4）与智能化业务流', content: '实现了基于历史 CRM数据的跟进摘要自动生成、最佳联系时机推荐以及商机赢单概率预测。' },

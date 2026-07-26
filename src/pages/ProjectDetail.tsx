@@ -164,31 +164,22 @@ export default function ProjectDetail() {
         <div className="absolute top-[40%] right-[10%] w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[140px]" />
       </div>
 
-      <div className="fixed top-0 left-0 right-0 z-50 bg-[#070612]/80 backdrop-blur-md border-b border-white/5">
-        <div className="w-full max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-32 pb-24">
+        {/* Top Navigation inside content */}
+        <div className="flex items-center justify-between mb-12 animate-fade-in-up">
           <button
             onClick={() => navigate('/portfolio')}
-            className="flex items-center gap-2 text-white/60 hover:text-white transition-colors group"
+            className="px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full flex items-center gap-2 text-white/80 hover:text-white transition-all backdrop-blur-md group shadow-lg"
           >
-            <ArrowLeft size={18} className="transition-transform group-hover:-translate-x-1" />
-            <span className="text-sm font-medium">返回项目展示</span>
+            <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+            <span className="text-sm font-medium tracking-wide">返回 项目展示</span>
           </button>
-          <span className="text-sm text-white/40">{project.category}</span>
-        </div>
-      </div>
-
-      <div className="relative z-10 w-full max-w-4xl mx-auto px-6 pt-32 pb-24">
-        <div className="animate-fade-in-up">
-          <div className="flex items-center gap-4 mb-8">
-            <span
-              className="text-xs font-bold px-4 py-1.5 rounded-full text-white uppercase tracking-wider"
-              style={{ backgroundColor: project.category_color }}
-            >
-              {project.category}
-            </span>
-            <span className="text-white/40 text-sm font-mono tracking-widest">{project.period}</span>
+          <div className="px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-full flex items-center shadow-lg">
+            <span className="text-blue-400 text-sm font-medium tracking-wider">{project.category}</span>
           </div>
-          
+        </div>
+
+        <div className="animate-fade-in-up">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 tracking-tight">
             {project.title}
           </h1>

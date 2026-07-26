@@ -13,4 +13,18 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+  server: {
+    proxy: {
+      '/api/opencode': {
+        target: 'https://opencode.ai',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/opencode/, '')
+      },
+      '/api/volcengine': {
+        target: 'https://ark.cn-beijing.volces.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/volcengine/, '')
+      }
+    }
+  }
 });

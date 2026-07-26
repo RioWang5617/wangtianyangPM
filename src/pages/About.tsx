@@ -90,7 +90,7 @@ export default function About() {
           <div className="w-full lg:w-[500px] aspect-[4/5] relative" {...scaleUp(300)}>
             <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/30 to-green-500/30 rounded-[48px] blur-3xl opacity-40"></div>
             <div className="relative w-full h-full rounded-[48px] overflow-hidden border border-white/10 group shadow-2xl bg-white/[0.02]">
-              <img src="https://images.unsplash.com/photo-1728218948405-d749e7d1851e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaW5pbWFsaXN0JTIwM2QlMjBjaGFyYWN0ZXIlMjBhdmF0YXIlMjBmdXR1cmlzdGljJTIwYmxhY2slMjBiYWNrZ3JvdW5kJTIwcHJvZmlsZXxlbnwxfHx8fDE3NzM1NjE4NjR8MA&ixlib=rb-4.1.0&q=80&w=1080" alt="欧顺 虚拟头像" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <img src="/about-avatar.png" alt="王天阳 虚拟头像" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#070612] via-transparent to-transparent opacity-60"></div>
             </div>
           </div>

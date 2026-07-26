@@ -13,21 +13,21 @@ const MODELS: ModelConfig[] = [
   {
     id: 'opencode',
     name: 'OpenCode Go',
-    url: 'https://opencode.ai/zen/go/v1/chat/completions',
+    url: '/api/opencode/zen/go/v1/chat/completions',
     key: import.meta.env.VITE_OPENCODE_KEY || '',
     model: 'deepseek-v4-flash'
   },
   {
     id: 'volc1',
     name: '火山 1',
-    url: 'https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions',
+    url: '/api/volcengine/api/plan/v3/chat/completions',
     key: import.meta.env.VITE_VOLC1_KEY || '',
     model: 'Doubao-Seed-2.1-turbo'
   },
   {
     id: 'volc2',
     name: '火山 2',
-    url: 'https://ark.cn-beijing.volces.com/api/plan/v3/chat/completions',
+    url: '/api/volcengine/api/plan/v3/chat/completions',
     key: import.meta.env.VITE_VOLC2_KEY || '',
     model: 'deepseek-v4-flash'
   }
