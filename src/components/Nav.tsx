@@ -25,7 +25,7 @@ export default function Nav() {
           />
         </div>
         <span className="text-white text-base tracking-tight font-medium">
-          O.Design
+          Next.Pm
         </span>
       </Link>
 

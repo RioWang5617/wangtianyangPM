@@ -103,7 +103,7 @@ export default function Home() {
             {...reveal(650)}
           >
             <span className="font-bold text-[28px] text-white">关注体验、细节与产品价值</span>
-            <span className="opacity-40 text-[28px]">让设计真正服务于用户，构建触手可及的交互美感</span>
+            <span className="opacity-40 text-[28px]">将模糊的想法变成可落地的需求</span>
           </p>
 
           <div

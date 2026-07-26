@@ -54,16 +54,16 @@ export default function About() {
           <div className="flex-1 space-y-6 lg:space-y-8" {...reveal(100)}>
             <div className="inline-flex items-center gap-3 px-4 py-2 bg-white/5 rounded-full border border-white/10 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-              <span className="font-bold tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-60 text-xs lg:text-[16px]">Hello ~ 我是 小O</span>
+              <span className="font-bold tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-60 text-xs lg:text-[16px]">HELLO ~! 我是小羊</span>
             </div>
             <h1 className="font-bold tracking-tighter leading-[1.1] md:leading-none md:whitespace-nowrap text-5xl md:text-7xl lg:text-8xl xl:text-[96px]">
-              6年 UI/UX <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-300">设计专家</span>
+              4年产品/研发 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-300">设计专家</span>
             </h1>
             <p className="font-light text-[#86868b] leading-relaxed max-w-2xl text-left text-lg md:text-xl lg:text-[24px]">
               深耕 App / Web / B 端后台业务产品，致力于通过 AI 提效与严谨的组件规范，构建具有生命力的数字化交互体验。
             </p>
             <div className="flex flex-wrap gap-6 pt-4">
-              <a href="https://drive.google.com/file/d/1VAl_cFKCmhCjFsmtypLamuusQUAfaiPU/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-all shadow-xl flex items-center gap-3">
+              <a href="/产品经理-王天阳.pdf" download="产品经理-王天阳.pdf" className="px-10 py-5 bg-white text-black rounded-full font-bold text-lg hover:scale-105 transition-all shadow-xl flex items-center gap-3">
                 <FileText className="w-5 h-5" />
                 <span>下载完整简历</span>
               </a>
@@ -75,15 +75,15 @@ export default function About() {
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">专业</span>
-                <span className="text-lg font-medium whitespace-nowrap">心理学（在读）</span>
+                <span className="text-lg font-medium whitespace-nowrap">计算机科班</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">经验</span>
-                <span className="text-lg font-medium whitespace-nowrap">6年+</span>
+                <span className="text-lg font-medium whitespace-nowrap">四年</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">坐标</span>
-                <span className="text-lg font-medium whitespace-nowrap">深圳</span>
+                <span className="text-lg font-medium whitespace-nowrap">成都/北京</span>
               </div>
             </div>
           </div>
@@ -489,7 +489,7 @@ export default function About() {
         <section id="contact" className="mb-20">
           <div className="flex items-center gap-6 mb-20">
             <div className="flex flex-col">
-              <h2 className="text-5xl lg:text-7xl font-bold tracking-tighter uppercase">联系合作</h2>
+              <h2 className="text-5xl lg:text-7xl font-bold tracking-tighter uppercase">寻求机会</h2>
             </div>
             <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 via-white/5 to-transparent mt-8"></div>
           </div>
@@ -503,10 +503,32 @@ export default function About() {
                   在 <span className="font-bold text-white/80">App、Web及后台管理系统的产品设计中</span>，无论是<span className="font-bold text-white/80">交互探索、复杂 B 端系统重构，还是 UI 视觉细节的打磨</span>，我都期待与您共同打造更具价值的产品体验。
                 </p>
                 <div className="flex flex-wrap justify-center lg:justify-start gap-6 lg:gap-8">
-                  <a href="tel:18601643750" className="group flex items-center gap-4 px-8 lg:px-10 py-4 lg:py-5 bg-white text-black rounded-full font-bold text-lg lg:text-xl hover:scale-105 transition-all duration-300">
+                  <a href="tel:18603313359" className="group flex items-center gap-4 px-8 lg:px-10 py-4 lg:py-5 bg-white text-black rounded-full font-bold text-lg lg:text-xl hover:scale-105 transition-all duration-300">
                     <Phone className="w-[22px] h-[22px] shrink-0" />
-                    <span className="whitespace-nowrap">18601643750</span>
+                    <span className="whitespace-nowrap">18603313359</span>
                   </a>
+                  <button 
+                    onClick={() => {
+                      const modal = document.createElement('div');
+                      modal.className = 'fixed inset-0 z-[9999] bg-black/95 flex items-center justify-center p-4 sm:p-8 animate-fade-in cursor-pointer';
+                      modal.onclick = () => document.body.removeChild(modal);
+                      
+                      const img = document.createElement('img');
+                      img.src = '/project-images/wechat-qr.jpg'; // We'll need to copy this image
+                      img.className = 'max-w-full max-h-[80vh] object-contain rounded-2xl animate-zoom-in';
+                      
+                      const text = document.createElement('p');
+                      text.className = 'absolute bottom-8 left-1/2 -translate-x-1/2 text-white/50 text-sm';
+                      text.innerText = '扫码添加微信';
+                      
+                      modal.appendChild(img);
+                      modal.appendChild(text);
+                      document.body.appendChild(modal);
+                    }}
+                    className="group flex items-center gap-4 px-8 lg:px-10 py-4 lg:py-5 bg-green-500 text-white rounded-full font-bold text-lg lg:text-xl hover:bg-green-600 hover:scale-105 transition-all duration-300"
+                  >
+                    <span className="whitespace-nowrap">微信二维码</span>
+                  </button>
                 </div>
               </div>
             </div>
