@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { X, Send, ChevronDown, User, RefreshCw } from 'lucide-react';
 
 interface ModelConfig {
@@ -48,6 +49,7 @@ export default function Chatbot() {
   const [selectedModelId, setSelectedModelId] = useState<string>('auto');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   
+  const location = useLocation();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -58,7 +60,11 @@ export default function Chatbot() {
     scrollToBottom();
   }, [messages]);
 
-  const callModel = async (config: ModelConfig, messageHistory: Message[]) => {
+  if (location.pathname === '/') {
+    return null;
+  }
+
+  const streamResponse = async (config: ModelConfig, messageHistory: Message[]) => {
     const response = await fetch(config.url, {
       method: 'POST',
       headers: {
@@ -67,6 +73,7 @@ export default function Chatbot() {
       },
       body: JSON.stringify({
         model: config.model,
+        stream: true,
         messages: [
           { role: 'system', content: '你是王天阳的数字人分身。作为一名拥有4年经验的产品设计专家，你精通UI/UX设计、AI产品落地、B端企服及数字化转型。请以王天阳本人的语气回答问题，要专业、自信且友好。' },
           ...messageHistory
@@ -78,8 +85,40 @@ export default function Chatbot() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     
-    const data = await response.json();
-    return data.choices[0].message.content;
+    const reader = response.body?.getReader();
+    if (!reader) throw new Error('No reader available');
+
+    const decoder = new TextDecoder();
+    let currentReply = '';
+    
+    // Add empty message placeholder for streaming
+    setMessages(prev => [...prev, { role: 'assistant', content: '' }]);
+
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      
+      const chunk = decoder.decode(value, { stream: true });
+      const lines = chunk.split('\n');
+      
+      for (const line of lines) {
+        if (line.startsWith('data: ') && line.trim() !== 'data: [DONE]') {
+          try {
+            const data = JSON.parse(line.slice(6));
+            const delta = data.choices[0]?.delta?.content || '';
+            currentReply += delta;
+            
+            setMessages(prev => {
+              const newMsgs = [...prev];
+              newMsgs[newMsgs.length - 1].content = currentReply;
+              return newMsgs;
+            });
+          } catch (e) {
+            // Ignore parse errors for incomplete chunks
+          }
+        }
+      }
+    }
   };
 
   const handleSend = async () => {
@@ -93,17 +132,17 @@ export default function Chatbot() {
     const messageHistory = [...messages, userMessage];
 
     try {
-      let reply = '';
-      
       if (selectedModelId === 'auto') {
         let success = false;
         for (const model of MODELS) {
           try {
-            reply = await callModel(model, messageHistory);
+            await streamResponse(model, messageHistory);
             success = true;
             break; 
           } catch (error) {
             console.error(`Model ${model.name} failed:`, error);
+            // remove the failed empty message if added
+            setMessages(prev => prev[prev.length - 1].role === 'assistant' && prev[prev.length - 1].content === '' ? prev.slice(0, -1) : prev);
           }
         }
         if (!success) {
@@ -112,11 +151,9 @@ export default function Chatbot() {
       } else {
         const model = MODELS.find(m => m.id === selectedModelId);
         if (model) {
-          reply = await callModel(model, messageHistory);
+          await streamResponse(model, messageHistory);
         }
       }
-
-      setMessages(prev => [...prev, { role: 'assistant', content: reply }]);
     } catch (error) {
       console.error('Chat error:', error);
       setMessages(prev => [...prev, { role: 'assistant', content: '抱歉，当前网络或模型服务出现异常，请稍后再试或切换模型。' }]);
@@ -235,7 +272,7 @@ export default function Chatbot() {
       {/* Toggle Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 shadow-xl shadow-purple-500/20 flex items-center justify-center hover:scale-105 active:scale-95 transition-all overflow-hidden border-2 border-white/20"
+        className="w-14 h-14 rounded-full bg-black shadow-xl shadow-black/20 flex items-center justify-center hover:scale-105 active:scale-95 transition-all overflow-hidden border-2 border-black"
       >
         {isOpen ? (
           <X size={24} className="text-white" />
