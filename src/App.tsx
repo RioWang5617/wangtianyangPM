@@ -4,6 +4,7 @@ import Home from '@/pages/Home';
 import Portfolio from '@/pages/Portfolio';
 import About from '@/pages/About';
 import ProjectDetail from '@/pages/ProjectDetail';
+import Chatbot from '@/components/Chatbot';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
       </Routes>
+      <Chatbot />
     </BrowserRouter>
   );
 }
