@@ -7,100 +7,100 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
   const [isOpen, setIsOpen] = useState(false);
   const isPrototype = !!prototypeUrl;
 
+  if (!image && !isPrototype) return null;
+
   return (
     <>
-      <div
-        className="relative group mt-6 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10 max-w-4xl mx-auto"
-        onClick={() => setIsOpen(true)}
-      >
-        {image ? (
+      {image && (
+        <div
+          className="relative group mt-6 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10 max-w-4xl mx-auto"
+          onClick={() => setIsOpen(true)}
+        >
           <img
             src={image}
             alt={caption || ''}
             className="w-full object-cover max-h-96 transition-transform duration-700 group-hover:scale-105"
           />
-        ) : isPrototype ? (
-          <div className="w-full h-64 bg-white/5 flex items-center justify-center transition-colors group-hover:bg-white/10">
-            <span className="text-white/40">点击查看原型</span>
-          </div>
-        ) : null}
-        
-        {/* Only ONE hover overlay */}
-        <div className="absolute inset-0 bg-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-          <div className="p-4 bg-white/10 backdrop-blur-sm rounded-full text-white shadow-xl">
-            <ZoomIn size={24} />
+          
+          {/* Unified hover overlay with caption */}
+          <div className="absolute inset-0 bg-[#070612]/60 opacity-0 group-hover:opacity-100 transition-all duration-300 backdrop-blur-[2px] flex flex-col items-center justify-center gap-4">
+            <div className="p-4 bg-white/10 backdrop-blur-md rounded-full text-white shadow-xl transform scale-90 group-hover:scale-100 transition-transform duration-300">
+              <ZoomIn size={24} />
+            </div>
           </div>
         </div>
-      </div>
-      {caption && (
+      )}
+
+      {caption && image && (
         <p className="text-white/30 text-xs mt-2 italic text-center">{caption}</p>
       )}
 
-      {isOpen && (
-        isPrototype ? (
-          <div
-            className="fixed inset-0 z-[9999] bg-black/95 flex flex-col p-4 sm:p-8 animate-fade-in"
+      {!image && isPrototype && (
+        <div className="mt-6 flex justify-center">
+          <a
+            href={prototypeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 text-blue-400 rounded-full text-sm font-medium flex items-center gap-2 transition-all shadow-lg"
+          >
+            <ExternalLink size={16} />
+            {caption ? `查看原型：${caption}` : '在新窗口打开交互原型'}
+          </a>
+        </div>
+      )}
+
+      {isOpen && image && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/95 animate-fade-in flex items-center justify-center p-4 sm:p-8 cursor-pointer"
+          onClick={() => setIsOpen(false)}
+        >
+          <button
+            className="fixed top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all z-10 backdrop-blur-md shadow-xl"
             onClick={() => setIsOpen(false)}
           >
-            <div className="flex items-center justify-between mb-4 w-full max-w-7xl mx-auto">
-              <p className="text-white/70 text-sm">{caption}</p>
-              <div className="flex items-center gap-4">
-                <a
-                  href={prototypeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2 bg-blue-500/20 text-blue-400 hover:bg-blue-500/30 rounded-full text-sm font-medium flex items-center gap-2 transition-colors"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <ExternalLink size={14} />
-                  新窗口全屏打开
-                </a>
-                <button
-                  className="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <X size={20} />
-                </button>
+            <X size={24} />
+          </button>
+          
+          {/* Content Wrapper - strictly fits content */}
+          <div 
+            // 【关键修改 1】：增加 min-h-0 和 min-w-0 允许容器收缩，解除原图物理尺寸的绑定
+            className="flex flex-col items-center justify-center cursor-default min-h-0 min-w-0 max-w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={image}
+              alt={caption || ''}
+              // 【关键修改 2】：去掉 object-contain，改用 w-auto h-auto 和 block，让 DOM 紧贴渲染像素
+              className="block max-w-full max-h-[75vh] w-auto h-auto shrink-0 rounded-lg animate-zoom-in shadow-2xl"
+            />
+            
+            {(caption || isPrototype) && (
+              // 【关键修改 3】：加了 shrink-0 防止文字块被挤压
+              <div className="w-full flex flex-col items-center mt-4 shrink-0">
+                {caption && (
+                  <p className="text-white/60 text-base font-medium text-center">
+                    {caption}
+                  </p>
+                )}
+
+                {isPrototype && (
+                  <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-xl flex flex-col items-center gap-3 animate-fade-in-up">
+                    <p className="text-white/80 font-medium text-sm">这是一个交互原型页面</p>
+                    <a
+                      href={prototypeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-full text-sm font-medium flex items-center gap-2 transition-all shadow-lg hover:shadow-blue-500/25"
+                    >
+                      <ExternalLink size={16} />
+                      在新窗口全屏打开原型
+                    </a>
+                  </div>
+                )}
               </div>
-            </div>
-            <div
-              className="flex-1 w-full max-w-7xl mx-auto rounded-xl overflow-hidden border border-white/10 shadow-2xl animate-zoom-in relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Optional: Add a subtle overlay here if needed, but usually the iframe is fine. */}
-              <iframe
-                src={prototypeUrl}
-                className="w-full h-full border-0 bg-white"
-                title={caption || '原型预览'}
-              />
-            </div>
+            )}
           </div>
-        ) : (
-          <div
-            className="fixed inset-0 z-[9999] bg-black/95 flex items-start justify-center p-4 sm:p-8 animate-fade-in overflow-y-auto cursor-pointer"
-            onClick={() => setIsOpen(false)}
-          >
-            <div className="relative w-full my-auto flex flex-col items-center">
-              <button
-                className="fixed top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white/80 hover:text-white transition-all z-10 backdrop-blur-md shadow-xl"
-                onClick={() => setIsOpen(false)}
-              >
-                <X size={24} />
-              </button>
-              <img
-                src={image}
-                alt={caption || ''}
-                className="max-w-full h-auto rounded-lg animate-zoom-in shadow-2xl cursor-default"
-                onClick={(e) => e.stopPropagation()}
-              />
-              {caption && (
-                <p className="mt-6 text-white/60 text-base font-medium cursor-default">
-                  {caption}
-                </p>
-              )}
-            </div>
-          </div>
-        )
+        </div>
       )}
     </>
   );
