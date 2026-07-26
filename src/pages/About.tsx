@@ -57,7 +57,7 @@ export default function About() {
               <span className="font-bold tracking-[0.2em] lg:tracking-[0.3em] uppercase opacity-60 text-xs lg:text-[16px]">HELLO ~! 我是小羊</span>
             </div>
             <h1 className="font-bold tracking-tighter leading-[1.1] md:leading-none md:whitespace-nowrap text-5xl md:text-7xl lg:text-8xl xl:text-[96px]">
-              4年产品/研发 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-300">设计专家</span>
+              4年产品 <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-green-300">设计专家</span>
             </h1>
             <p className="font-light text-[#86868b] leading-relaxed max-w-2xl text-left text-lg md:text-xl lg:text-[24px]">
               深耕 App / Web / B 端后台业务产品，致力于通过 AI 提效与严谨的组件规范，构建具有生命力的数字化交互体验。
@@ -110,7 +110,7 @@ export default function About() {
                 <ChevronRight className="w-5 h-5" />
               </div>
               <p className="text-xl text-[#86868b] leading-relaxed group-hover:text-white transition-colors">
-                拥有 6 年 UI/UX 设计经验，覆盖 AI、电商与 IoT 等行业场景，能够快速理解业务需求并转化为有效的体验方案。
+                兼具后端开发与产品落地双重经验，减少产研沟通内耗；深耕 B 端企服与数字化转型。
               </p>
             </div>
             <div className="p-10 rounded-[40px] bg-white/[0.02] border border-white/5 flex gap-6 group hover:bg-white/[0.04] transition-all" {...reveal(300)}>
@@ -118,7 +118,7 @@ export default function About() {
                 <ChevronRight className="w-5 h-5" />
               </div>
               <p className="text-xl text-[#86868b] leading-relaxed group-hover:text-white transition-colors">
-                具备 App / Web / B 端后台多端设计经验，可独立完成需求分析、方案输出与设计落地。
+                熟练掌握各类产品文档撰写与业务调研工作，具备扎实的需求分析与产品规划能力；精通 Dify 等 AI Agent 平台。
               </p>
             </div>
             <div className="p-10 rounded-[40px] bg-white/[0.02] border border-white/5 flex gap-6 group hover:bg-white/[0.04] transition-all" {...reveal(400)}>
@@ -126,7 +126,7 @@ export default function About() {
                 <ChevronRight className="w-5 h-5" />
               </div>
               <p className="text-xl text-[#86868b] leading-relaxed group-hover:text-white transition-colors">
-                熟悉组件库、设计规范与 Figma 变量管理，能够提升设计复用效率，并结合 AI 工具优化设计流程。
+                熟悉 AI 模型评估、Prompt 工程、Bad Case 分析，能够有效提升大模型在具体业务场景下的表现。
               </p>
             </div>
             <div className="p-10 rounded-[40px] bg-white/[0.02] border border-white/5 flex gap-6 group hover:bg-white/[0.04] transition-all" {...reveal(500)}>
@@ -134,7 +134,7 @@ export default function About() {
                 <ChevronRight className="w-5 h-5" />
               </div>
               <p className="text-xl text-[#86868b] leading-relaxed group-hover:text-white transition-colors">
-                熟悉 AI 工具类与业务型产品设计，具备跨产品、研发协同推进能力。
+                掌握 Python、SQL、Docker、LangChain 等技术栈，能更好地协同研发团队推进 AI 产品落地。
               </p>
             </div>
           </div>
@@ -152,259 +152,44 @@ export default function About() {
             <div className="group p-12 rounded-[48px] bg-white/[0.01] border border-white/5 hover:border-white/10 transition-all" {...slideIn(200)}>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
                 <div className="space-y-2">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">劲速（深圳）云计算科技有限公司</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">北京昆仑联通科技发展股份有限公司</h3>
                   <div className="flex flex-wrap items-center gap-3 md:gap-4 text-purple-400 font-medium md:whitespace-nowrap">
-                    <span className="text-[#c27aff]">UI 设计师</span>
+                    <span className="text-[#c27aff]">AI产品经理</span>
                     <span className="w-1 h-1 rounded-full bg-white/20 hidden md:block"></span>
-                    <span className="text-[#86868b] font-mono text-sm md:text-base">2025.04 - 2025.10</span>
+                    <span className="text-[#86868b] font-mono text-sm md:text-base">2025.08 - 2026.06</span>
                   </div>
                 </div>
               </div>
               <p className="text-lg md:text-xl text-[#86868b] leading-relaxed mb-10">
-                主导 AI 产品「DINGZUO.AI」的 App / Web 重构，基于 Figma 搭建设计系统与评审流程。负责多条业务线（曹操传预约官网、数据后台）的界面视觉规范与交互优化。
+                主导 Dify 企业技术方案输出、客户侧售后培训，完成 AI Agent 场景化方案包装与落地；负责公司 AI 办公产品线从 0 到 1 规划落地，依托 Dify 搭建官网节假日宕机自动化监控预警工作流，同时主导规划“钉钉考勤-门禁打卡-财务工资核算”业务流程，实现跨部门提效。
               </p>
               <div className="flex flex-wrap gap-4">
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">建立规范化流程</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">提升团队交付标准</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">品牌强化与产品展示</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">Dify 商业化体系搭建</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">AI 办公产品线规划</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">业务工作流重构</span>
               </div>
             </div>
 
             <div className="group p-12 rounded-[48px] bg-white/[0.01] border border-white/5 hover:border-white/10 transition-all" {...slideIn(300)}>
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
                 <div className="space-y-2">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">深圳影诺智能有限公司</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">成都聚创新易智能科技有限公司</h3>
                   <div className="flex flex-wrap items-center gap-3 md:gap-4 text-purple-400 font-medium md:whitespace-nowrap">
-                    <span className="text-[#c27aff]">UI 设计师</span>
+                    <span className="text-[#c27aff]">产品经理</span>
                     <span className="w-1 h-1 rounded-full bg-white/20 hidden md:block"></span>
-                    <span className="text-[#86868b] font-mono text-sm md:text-base">2023.12 - 2025.03</span>
+                    <span className="text-[#86868b] font-mono text-sm md:text-base">2023.02 - 2025.07</span>
                   </div>
                 </div>
               </div>
               <p className="text-lg md:text-xl text-[#86868b] leading-relaxed mb-10">
-                负责智能硬件端与管理后台的 UI 设计，构建跨端统一的视觉规范。优化后台流程的信息架构与可视化方案，增强操作流畅度。
+                配合产品经理开展需求侧全链路工作，面向业务端收集零散需求、输出 PRD、需求说明书等标准化产品文档。跟进公司多类外包定制项目，协同甲乙双方完成需求对齐核对，协助同步项目进度，跟进项目按期交付。
               </p>
               <div className="flex flex-wrap gap-4">
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">硬件/后台跨端规范</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">信息架构重构</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">可视化数据呈现</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">全链路需求管理</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">标准化文档输出</span>
+                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">跨部门/外包项目协同</span>
               </div>
             </div>
-
-            <div className="group p-12 rounded-[48px] bg-white/[0.01] border border-white/5 hover:border-white/10 transition-all" {...slideIn(400)}>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <div className="space-y-2">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">上海摩明信息技术有限公司</h3>
-                  <div className="flex flex-wrap items-center gap-3 md:gap-4 text-purple-400 font-medium md:whitespace-nowrap">
-                    <span className="text-[#c27aff]">UI 设计师</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20 hidden md:block"></span>
-                    <span className="text-[#86868b] font-mono text-sm md:text-base">2021.06 - 2023.12</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-lg md:text-xl text-[#86868b] leading-relaxed mb-10">
-                独立负责多个 AI 产品（增长模盒 AI、法侍卫、多多群岛 AI）模块设计，提出并落地创新交互方案。分析并优化多模态对话场景下的交互逻辑。
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">AI 对话交互探索</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">创新方案落地</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">跨部门规范推动</span>
-              </div>
-            </div>
-
-            <div className="group p-12 rounded-[48px] bg-white/[0.01] border border-white/5 hover:border-white/10 transition-all" {...slideIn(500)}>
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
-                <div className="space-y-2">
-                  <h3 className="text-2xl md:text-3xl font-bold tracking-tight md:whitespace-nowrap">上海漫屋网络科技有限公司</h3>
-                  <div className="flex flex-wrap items-center gap-3 md:gap-4 text-purple-400 font-medium md:whitespace-nowrap">
-                    <span className="text-[#c27aff]">UI 设计师 & 平面电商</span>
-                    <span className="w-1 h-1 rounded-full bg-white/20 hidden md:block"></span>
-                    <span className="text-[#86868b] font-mono text-sm md:text-base">2019.04 - 2021.05</span>
-                  </div>
-                </div>
-              </div>
-              <p className="text-lg md:text-xl text-[#86868b] leading-relaxed mb-10">
-                主导 GIGI HOUSE 潮玩小程序 UI 改版，优化信息架构。负责电商视觉设计，提升品牌在年轻用户群体中的感知度。
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">小程序重构</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">年轻化视觉体验</span>
-                <span className="px-5 py-2 bg-white/5 rounded-full text-sm font-medium border border-white/5 text-white/40 group-hover:text-white/80 transition-colors">电商全链路设计</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section id="projects" className="mb-48">
-          <div className="flex items-center gap-6 mb-20">
-            <div className="flex flex-col">
-              <h2 className="text-5xl lg:text-7xl font-bold tracking-tighter uppercase">项目深度分析</h2>
-            </div>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 via-white/5 to-transparent mt-8"></div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Link to="/project/ai-crm" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(200)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">企业自研 AI-CRM 系统</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">AI CRM / SaaS</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                主导 0 到 1 的 8 大模块架构。面向系统集成商，完全替代 Microsoft CRM，实现智能填表引擎多源异构抽取，销售录入工作量骤降 80%。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">AI-CRM</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">智能填表</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">私有化部署</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>录入工作量降低 80%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>大幅节约采购成本</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/project/alumni" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(300)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">吉林大学校友会</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">App / Management</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                为吉大校友会打造的官方小程序与后台管理系统。提供校友认证、活动报名、资讯发布等功能，增强校友凝聚力与信息互通。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">小程序</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">校友社交</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">后台管理</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>校友认证率提升</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>活动参与度增加</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/project/rental" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(400)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">心仪租房管理系统</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">SaaS / Real Estate</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                为长租公寓/二房东提供的房源与租客管理 SaaS。涵盖房源发布、在线签约、账单催缴、工单报修等全链路闭环，提升管房效率。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">SaaS</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">房产管理</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">在线签约</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>管房效率提升 200%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>签约流程数字化</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/project/health" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(500)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">格森医疗管理系统</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Medical / SaaS</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                面向医疗机构的内部管理系统。包含患者档案、在线问诊、知识库管理与客服工作台，优化医疗服务流程与数据流转效率。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">医疗系统</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">在线问诊</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">知识库</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>问诊响应时间缩短</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>数据流转效率提升</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/project/iot" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(600)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">AMLINK 智能设备 App</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Hardware / App</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                软硬件结合的智能终端控制 App 与后台管理系统。实现设备状态实时监控、远程控制指令下发及固件 OTA 升级，保障设备稳定运行。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">IoT</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">智能硬件</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">App</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>设备连接稳定性 99.9%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>OTA 升级成功率提升</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
-
-            <Link to="/project/office" className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(700)}>
-              <div className="mb-8">
-                <h3 className="text-2xl font-bold mb-2">企业内部 OA 系统</h3>
-                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Enterprise / OA</span>
-              </div>
-              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
-                定制化的企业办公自动化平台。涵盖智能表单审批、组织架构管理、日程排班等，通过系统集成提升企业内部跨部门协同效率。
-              </p>
-              <div className="space-y-4 pt-8 border-t border-white/5">
-                <div className="flex flex-wrap gap-2">
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">OA</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">审批流</span>
-                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">企业办公</span>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>审批流程缩短 50%</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
-                    <Zap className="w-3.5 h-3.5" />
-                    <span>跨部门沟通成本降低</span>
-                  </div>
-                </div>
-              </div>
-            </Link>
           </div>
         </section>
 
@@ -418,67 +203,67 @@ export default function About() {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="p-12 rounded-[48px] bg-white/[0.02] border border-white/5">
-              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">设计基石</h4>
+              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">产品工具</h4>
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Figma (Design Token)</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Axure</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Photoshop</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">墨刀</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Illustrator</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">XMind</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Sketch</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Visio</span>
                 </div>
               </div>
             </div>
 
             <div className="p-12 rounded-[48px] bg-white/[0.02] border border-white/5">
-              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">动效与交互</h4>
+              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">AI 与大模型</h4>
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">After Effects</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Dify</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Lottie</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">LangChain</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Principle</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Prompt 工程</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">ProtoPie</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">模型评估</span>
                 </div>
               </div>
             </div>
 
             <div className="p-12 rounded-[48px] bg-white/[0.02] border border-white/5">
-              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">领域专长</h4>
+              <h4 className="font-bold text-white/30 mb-10 tracking-[0.4em] uppercase text-[12px]">技术栈</h4>
               <div className="grid grid-cols-2 gap-x-6 gap-y-4">
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">AI 提效</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Python</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">组件规范建设</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">SQL</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">B端业务逻辑</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">Docker</span>
                 </div>
                 <div className="flex items-center gap-3 group">
                   <div className="w-1.5 h-1.5 rounded-full bg-purple-500/40 group-hover:bg-purple-400 transition-colors"></div>
-                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">IoT 终端交互</span>
+                  <span className="text-lg font-medium text-[#86868b] group-hover:text-white transition-colors">API 接口</span>
                 </div>
               </div>
             </div>
