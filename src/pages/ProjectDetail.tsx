@@ -25,6 +25,7 @@ function ProjectMedia({ image, prototypeUrl, caption }: { image?: string; protot
           </div>
         ) : null}
         
+        {/* Only ONE hover overlay */}
         <div className="absolute inset-0 bg-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="p-4 bg-white/10 backdrop-blur-sm rounded-full text-white shadow-xl">
             <ZoomIn size={24} />
