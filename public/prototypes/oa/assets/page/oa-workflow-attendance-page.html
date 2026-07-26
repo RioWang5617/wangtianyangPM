@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="zh-CN" id="8498">
+ <head id="3327"> 
+  <meta charset="UTF-8" id="2555"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="5021"> 
+  <title id="5534">审批流与考勤管理页</title> 
+  <script src="./oa-workflow-attendance-page/resource_3fa48481.js" id="1263"></script> 
+  <link rel="stylesheet" href="./oa-workflow-attendance-page/all.min_3d03d8cd.css" id="1120"> 
+  <script src="./oa-workflow-attendance-page/echarts.min_2475de5b.js" id="7386"></script> 
+  <script id="2877">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#2563EB',
+                        accent: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#0F172A',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        };
+    </script> 
+  <style type="text/tailwindcss" id="3462">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-glass {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            .card-glass-dark {
+                background: rgba(30, 58, 138, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(30, 58, 138, 0.15);
+            }
+            .flow-line {
+                background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0.2));
+                height: 2px;
+                position: relative;
+                overflow: hidden;
+            }
+            .flow-line::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, #10B981, transparent);
+                animation: flow 3s linear infinite;
+            }
+            @keyframes flow {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(200%); }
+            }
+            .modal-mask {
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(4px);
+            }
+            .modal-mask.hidden {
+                display: none;
+            }
+            .shadow-diffuse {
+                box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            }
+        }
+    </style> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+</style> 
+ </head> 
+ <body class="bg-slate-50 font-sans" id="9627"> 
+  <!-- 侧边栏 --> 
+  <aside class="w-64 bg-dark text-white fixed left-0 top-0 h-full z-20 overflow-y-auto" id="1293"> 
+   <div class="p-6 flex flex-col gap-8" id="7244"> 
+    <div class="flex items-center gap-3" id="2455"> 
+     <i class="fas fa-building text-2xl text-secondary" id="8074"></i> 
+     <h1 class="text-xl font-bold" id="9820">企业OA系统</h1> 
+    </div> 
+    <nav class="flex flex-col gap-1" id="6554"> 
+     <a id="nav-architecture" data-uuid="oa-architecture-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-sitemap w-5 text-center" id="5499"></i> <span id="6092">系统架构总览</span> </a> 
+     <a id="nav-workflow" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg bg-primary/30 text-white font-medium"> <i class="fas fa-cogs w-5 text-center" id="8774"></i> <span id="2783">流程引擎配置</span> </a> 
+     <a id="nav-attendance" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg bg-primary/30 text-white font-medium"> <i class="fas fa-user-clock w-5 text-center" id="1772"></i> <span id="1479">人事考勤管理</span> </a> 
+     <a id="nav-finance" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-bookkeeping w-5 text-center" id="1218"></i> <span id="1614">财务台账管理</span> </a> 
+     <a id="nav-security" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-shield-alt w-5 text-center" id="8995"></i> <span id="2516">保密权限配置</span> </a> 
+     <a id="nav-progress" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-tasks w-5 text-center" id="2145"></i> <span id="5560">项目进度管控</span> </a> 
+     <a id="nav-kanban" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-columns w-5 text-center" id="9068"></i> <span id="2658">研发协同看板</span> </a> 
+    </nav> 
+   </div> 
+  </aside> 
+  <!-- 主内容区域 --> 
+  <main class="pl-64" id="8157"> 
+   <!-- 顶部导航栏 --> 
+   <header class="h-16 bg-white shadow-sm sticky top-0 z-10 flex items-center px-8" id="1681"> 
+    <div class="flex items-center justify-between w-full" id="2879"> 
+     <div class="flex items-center gap-2 text-slate-500" id="7877"> 
+      <i class="fas fa-home" id="1352"></i> 
+      <span id="2460">/</span> 
+      <span class="text-primary font-medium" id="9642">审批流与考勤管理</span> 
+     </div> 
+     <div class="flex items-center gap-6" id="3255"> 
+      <button type="button" class="relative p-2 rounded-full hover:bg-slate-100" id="9528"> <i class="fas fa-bell text-slate-600" id="2962"></i> <span class="absolute top-0 right-0 w-2 h-2 bg-danger rounded-full" id="7362"></span> </button> 
+      <div class="flex items-center gap-3" id="4104"> 
+       <img src="./oa-workflow-attendance-page/40_206da978.jpg" alt="用户头像" class="w-9 h-9 rounded-full object-cover" id="4884"> 
+       <span class="font-medium" id="8607">系统管理员</span> 
+      </div> 
+     </div> 
+    </div> 
+   </header> 
+   <!-- 页面内容 --> 
+   <div class="p-6 flex flex-col gap-6" id="6026"> 
+    <!-- 顶部二级子菜单 --> 
+    <div class="bg-white rounded-xl p-4 shadow-diffuse" id="7381"> 
+     <div class="flex items-center gap-4" id="8497"> 
+      <button id="tab-flow-designer" type="button" class="px-5 py-2 rounded-lg bg-secondary text-white font-medium"> 审批流引擎配置 </button> 
+      <button id="tab-attendance-board" type="button" class="px-5 py-2 rounded-lg bg-slate-100 text-slate-600 font-medium hover:bg-slate-200 transition-all"> 考勤管理看板 </button> 
+     </div> 
+    </div> 
+    <!-- 审批流引擎配置区域 --> 
+    <div id="flow-designer-area" class="flex flex-col gap-6"> 
+     <div class="bg-white rounded-xl p-6 shadow-diffuse" id="5233"> 
+      <div class="flex items-center justify-between" id="1598"> 
+       <div class="flex flex-col gap-2" id="1317"> 
+        <h2 class="text-xl font-bold text-dark" id="8573">BPMN 拖拽式审批流引擎画布</h2> 
+        <p class="text-slate-500" id="1146">可视化配置请假/报销/公务用车自动化审批流程</p> 
+       </div> 
+       <div class="flex items-center gap-3" id="1297"> 
+        <button type="button" class="px-4 py-2 bg-slate-100 rounded-lg text-slate-600 flex items-center gap-2" id="8712"> <i class="fas fa-save" id="2232"></i> <span id="8369">保存流程</span> </button> 
+        <button type="button" class="px-4 py-2 bg-secondary rounded-lg text-white flex items-center gap-2" id="8917"> <i class="fas fa-play" id="3077"></i> <span id="6431">发布流程</span> </button> 
+       </div> 
+      </div> 
+      <div class="flow-line my-4" id="4090"></div> 
+      <!-- 流程画布区域 --> 
+      <div class="w-full bg-slate-50 rounded-xl p-6 min-h-[500px]" id="3069"> 
+       <div class="flex items-center justify-center gap-4 flex-wrap" id="4919"> 
+        <!-- 节点1 --> 
+        <div class="flex flex-col items-center gap-2" id="8152"> 
+         <div class="w-40 p-4 bg-blue-50 border-2 border-secondary rounded-xl text-center" id="2987"> 
+          <i class="fas fa-user-circle text-2xl text-secondary" id="3346"></i> 
+          <p class="font-medium text-dark mt-2" id="9959">发起人提交</p> 
+          <p class="text-xs text-slate-500 mt-1" id="6100">支持附件/发票识别</p> 
+         </div> 
+         <div class="w-1 h-10 bg-secondary" id="7720"></div> 
+        </div> 
+        <!-- 节点2 --> 
+        <div class="flex flex-col items-center gap-2" id="2839"> 
+         <div class="w-40 p-4 bg-blue-50 border-2 border-secondary rounded-xl text-center" id="7048"> 
+          <i class="fas fa-user-tie text-2xl text-secondary" id="4980"></i> 
+          <p class="font-medium text-dark mt-2" id="3372">部门经理审批</p> 
+          <p class="text-xs text-slate-500 mt-1" id="1892">超时24h自动催办</p> 
+         </div> 
+         <div class="w-1 h-10 bg-secondary" id="5815"></div> 
+        </div> 
+        <!-- 条件分支 --> 
+        <div class="flex flex-col items-center gap-2" id="3907"> 
+         <div class="w-40 p-4 bg-yellow-50 border-2 border-warning rounded-xl text-center" id="8047"> 
+          <i class="fas fa-code-branch text-2xl text-warning" id="5678"></i> 
+          <p class="font-medium text-dark mt-2" id="8891">条件判断</p> 
+          <p class="text-xs text-slate-500 mt-1" id="6585">金额&gt;5000元 或 请假&gt;3天?</p> 
+         </div> 
+         <div class="flex gap-8" id="8146"> 
+          <div class="flex flex-col items-center" id="6014"> 
+           <span class="text-sm font-medium text-accent" id="5638">是</span> 
+           <div class="w-1 h-10 bg-accent" id="7708"></div> 
+          </div> 
+          <div class="flex flex-col items-center" id="5048"> 
+           <span class="text-sm font-medium text-danger" id="7770">否</span> 
+           <div class="w-1 h-10 bg-danger" id="9897"></div> 
+          </div> 
+         </div> 
+        </div> 
+        <!-- 分支A --> 
+        <div class="flex flex-col items-center gap-2" id="2446"> 
+         <div class="w-40 p-4 bg-green-50 border-2 border-accent rounded-xl text-center" id="3081"> 
+          <i class="fas fa-user-shield text-2xl text-accent" id="1430"></i> 
+          <p class="font-medium text-dark mt-2" id="3223">加签审批</p> 
+          <p class="text-xs text-slate-500 mt-1" id="8983">财务VP/分管领导</p> 
+         </div> 
+         <div class="w-1 h-10 bg-accent" id="7687"></div> 
+         <div class="w-40 p-4 bg-green-50 border-2 border-accent rounded-xl text-center" id="1586"> 
+          <i class="fas fa-copy text-2xl text-accent" id="7425"></i> 
+          <p class="font-medium text-dark mt-2" id="4814">自动抄送</p> 
+          <p class="text-xs text-slate-500 mt-1" id="5631">抄送保密员</p> 
+         </div> 
+         <div class="w-1 h-10 bg-accent" id="1025"></div> 
+        </div> 
+        <!-- 分支B --> 
+        <div class="flex flex-col items-center gap-2" id="5905"> 
+         <div class="w-40 p-4 bg-red-50 border-2 border-danger rounded-xl text-center" id="5946"> 
+          <i class="fas fa-check-circle text-2xl text-danger" id="9699"></i> 
+          <p class="font-medium text-dark mt-2" id="2391">自动通过</p> 
+          <p class="text-xs text-slate-500 mt-1" id="3913">扣减假勤/锁定车源</p> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <!-- 考勤管理看板区域 --> 
+    <div id="attendance-board-area" class="hidden flex flex-col gap-6"> 
+     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="9080"> 
+      <!-- 考勤统计卡片 --> 
+      <div class="bg-white rounded-xl p-6 shadow-diffuse" id="4926"> 
+       <div class="flex items-center gap-3" id="9920"> 
+        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center" id="7351"> 
+         <i class="fas fa-check-circle text-xl text-accent" id="6521"></i> 
+        </div> 
+        <div class="flex flex-col" id="1610"> 
+         <span class="text-slate-500 text-sm" id="3756">正常打卡</span> 
+         <span class="text-2xl font-bold text-dark" id="1393">287</span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="bg-white rounded-xl p-6 shadow-diffuse" id="5356"> 
+       <div class="flex items-center gap-3" id="7764"> 
+        <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center" id="9837"> 
+         <i class="fas fa-exclamation-circle text-xl text-warning" id="3749"></i> 
+        </div> 
+        <div class="flex flex-col" id="3467"> 
+         <span class="text-slate-500 text-sm" id="2377">迟到/早退</span> 
+         <span class="text-2xl font-bold text-dark" id="7402">23</span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="bg-white rounded-xl p-6 shadow-diffuse" id="2151"> 
+       <div class="flex items-center gap-3" id="5561"> 
+        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center" id="9949"> 
+         <i class="fas fa-times-circle text-xl text-danger" id="2551"></i> 
+        </div> 
+        <div class="flex flex-col" id="6301"> 
+         <span class="text-slate-500 text-sm" id="8328">缺卡</span> 
+         <span class="text-2xl font-bold text-dark" id="1100">8</span> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="2754"> 
+      <!-- 考勤日历表 --> 
+      <div class="bg-white rounded-xl p-6 shadow-diffuse" id="9174"> 
+       <div class="flex items-center justify-between" id="9051"> 
+        <h3 class="text-lg font-bold text-dark" id="2372">本月考勤排班日历</h3> 
+        <div class="flex items-center gap-2" id="7990"> 
+         <button type="button" class="p-2 rounded-lg hover:bg-slate-100" id="9951"> <i class="fas fa-chevron-left text-slate-500" id="3875"></i> </button> 
+         <span class="font-medium" id="7027">2024年6月</span> 
+         <button type="button" class="p-2 rounded-lg hover:bg-slate-100" id="2213"> <i class="fas fa-chevron-right text-slate-500" id="9701"></i> </button> 
+        </div> 
+       </div> 
+       <div class="flow-line my-4" id="2087"></div> 
+       <div class="grid grid-cols-7 gap-2 mt-4" id="2496"> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="5358">
+          日 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="2843">
+          一 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="2941">
+          二 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="8363">
+          三 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="2774">
+          四 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="6232">
+          五 
+        </div> 
+        <div class="text-center text-sm font-medium text-slate-500 p-2" id="7888">
+          六 
+        </div> 
+        <!-- 日期格子 --> 
+        <div class="p-2 text-center text-slate-400" id="3418">
+          26 
+        </div> 
+        <div class="p-2 text-center text-slate-400" id="4206">
+          27 
+        </div> 
+        <div class="p-2 text-center text-slate-400" id="3435">
+          28 
+        </div> 
+        <div class="p-2 text-center text-slate-400" id="5535">
+          29 
+        </div> 
+        <div class="p-2 text-center text-slate-400" id="2348">
+          30 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5405">
+          1 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="9406">
+          2 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="9331">
+          3 
+        </div> 
+        <div class="p-2 text-center bg-yellow-100 rounded-lg text-warning font-medium" id="8142">
+          4 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5033">
+          5 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="2288">
+          6 
+        </div> 
+        <div class="p-2 text-center bg-red-100 rounded-lg text-danger font-medium" id="9725">
+          7 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5070">
+          8 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="9778">
+          9 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="6520">
+          10 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5532">
+          11 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="3460">
+          12 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5485">
+          13 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="2782">
+          14 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5329">
+          15 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="4084">
+          16 
+        </div> 
+        <div class="p-2 text-center bg-yellow-100 rounded-lg text-warning font-medium" id="1692">
+          17 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="1961">
+          18 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="4127">
+          19 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="3146">
+          20 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="6233">
+          21 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="7680">
+          22 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="8132">
+          23 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="6774">
+          24 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="3820">
+          25 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5983">
+          26 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="3263">
+          27 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="2099">
+          28 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="5160">
+          29 
+        </div> 
+        <div class="p-2 text-center bg-green-100 rounded-lg text-accent font-medium" id="1978">
+          30 
+        </div> 
+       </div> 
+       <div class="flex items-center gap-4 mt-4" id="8507"> 
+        <div class="flex items-center gap-2" id="7270"> 
+         <span class="w-3 h-3 bg-green-100 rounded-full" id="1593"></span> 
+         <span class="text-sm text-slate-500" id="2968">正常打卡</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="9136"> 
+         <span class="w-3 h-3 bg-yellow-100 rounded-full" id="5733"></span> 
+         <span class="text-sm text-slate-500" id="5683">迟到/早退</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="4007"> 
+         <span class="w-3 h-3 bg-red-100 rounded-full" id="1880"></span> 
+         <span class="text-sm text-slate-500" id="7043">缺卡</span> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 外勤打卡地图预览 --> 
+      <div class="bg-white rounded-xl p-6 shadow-diffuse" id="5338"> 
+       <h3 class="text-lg font-bold text-dark" id="7368">外勤打卡GPS定位预览</h3> 
+       <div class="flow-line my-4" id="8780"></div> 
+       <div class="w-full h-[300px] bg-slate-100 rounded-xl flex items-center justify-center" id="7498"> 
+        <img src="./oa-workflow-attendance-page/addab3855a7bb7ef2bb3ef80d5d782b6_b1cd0669.png" alt="外勤打卡地图" class="w-full h-full object-cover rounded-xl" id="3297"> 
+       </div> 
+       <div class="flex items-center gap-4 mt-4" id="4232"> 
+        <div class="flex items-center gap-2" id="1613"> 
+         <span class="w-3 h-3 bg-accent rounded-full" id="1067"></span> 
+         <span class="text-sm text-slate-500" id="5398">打卡有效</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="6401"> 
+         <span class="w-3 h-3 bg-warning rounded-full" id="7101"></span> 
+         <span class="text-sm text-slate-500" id="2550">WiFi范围外</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="9504"> 
+         <span class="w-3 h-3 bg-danger rounded-full" id="5541"></span> 
+         <span class="text-sm text-slate-500" id="2891">定位异常</span> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 考勤台账表格 --> 
+     <div class="bg-white rounded-xl p-6 shadow-diffuse" id="4040"> 
+      <div class="flex items-center justify-between" id="7255"> 
+       <h3 class="text-lg font-bold text-dark" id="3236">员工考勤台账</h3> 
+       <button type="button" class="px-4 py-2 bg-secondary rounded-lg text-white flex items-center gap-2" id="4403"> <i class="fas fa-download" id="9526"></i> <span id="4041">导出报表</span> </button> 
+      </div> 
+      <div class="flow-line my-4" id="7168"></div> 
+      <div class="overflow-x-auto" id="4201"> 
+       <table class="w-full" id="6919"> 
+        <thead id="7730"> 
+         <tr class="border-b border-slate-200" id="8835"> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="2525">员工姓名</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="3867">部门</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="4704">日期</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="5542">上班打卡</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="2472">下班打卡</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="6730">状态</th> 
+          <th class="text-left p-3 text-sm font-medium text-slate-500" id="4826">操作</th> 
+         </tr> 
+        </thead> 
+        <tbody id="5984"> 
+         <tr class="border-b border-slate-100 hover:bg-slate-50" id="8430"> 
+          <td class="p-3 text-sm" id="4105">张三</td> 
+          <td class="p-3 text-sm" id="4358">研发部</td> 
+          <td class="p-3 text-sm" id="7176">2024-06-01</td> 
+          <td class="p-3 text-sm" id="2412">08:55</td> 
+          <td class="p-3 text-sm" id="1076">18:05</td> 
+          <td class="p-3 text-sm" id="4832"> <span class="px-2 py-1 bg-green-100 text-accent rounded-full text-xs" id="4320">正常打卡</span> </td> 
+          <td class="p-3 text-sm" id="6052"> <button type="button" class="detail-btn text-secondary" id="8352">查看详情</button> </td> 
+         </tr> 
+         <tr class="border-b border-slate-100 hover:bg-slate-50" id="5706"> 
+          <td class="p-3 text-sm" id="9048">李四</td> 
+          <td class="p-3 text-sm" id="9870">销售部</td> 
+          <td class="p-3 text-sm" id="7834">2024-06-04</td> 
+          <td class="p-3 text-sm" id="9128">09:25</td> 
+          <td class="p-3 text-sm" id="2172">18:30</td> 
+          <td class="p-3 text-sm" id="8715"> <span class="px-2 py-1 bg-yellow-100 text-warning rounded-full text-xs" id="2624">迟到</span> </td> 
+          <td class="p-3 text-sm" id="6830"> <button type="button" class="detail-btn text-secondary" id="7227">查看详情</button> </td> 
+         </tr> 
+         <tr class="border-b border-slate-100 hover:bg-slate-50" id="1712"> 
+          <td class="p-3 text-sm" id="5608">王五</td> 
+          <td class="p-3 text-sm" id="9220">行政部</td> 
+          <td class="p-3 text-sm" id="4314">2024-06-07</td> 
+          <td class="p-3 text-sm" id="1521">--</td> 
+          <td class="p-3 text-sm" id="6416">17:50</td> 
+          <td class="p-3 text-sm" id="5340"> <span class="px-2 py-1 bg-red-100 text-danger rounded-full text-xs" id="5412">缺卡</span> </td> 
+          <td class="p-3 text-sm" id="4146"> <button type="button" id="makeup-card-btn" class="text-secondary">发起补卡审批</button> </td> 
+         </tr> 
+         <tr class="border-b border-slate-100 hover:bg-slate-50" id="7162"> 
+          <td class="p-3 text-sm" id="8249">赵六</td> 
+          <td class="p-3 text-sm" id="4545">财务部</td> 
+          <td class="p-3 text-sm" id="7062">2024-06-10</td> 
+          <td class="p-3 text-sm" id="4217">08:45</td> 
+          <td class="p-3 text-sm" id="5791">17:30</td> 
+          <td class="p-3 text-sm" id="3458"> <span class="px-2 py-1 bg-green-100 text-accent rounded-full text-xs" id="8426">正常打卡</span> </td> 
+          <td class="p-3 text-sm" id="2275"> <button type="button" class="detail-btn text-secondary" id="5554">查看详情</button> </td> 
+         </tr> 
+        </tbody> 
+       </table> 
+      </div> 
+     </div> 
+     <!-- 提示卡片 --> 
+     <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-center gap-3" id="3468"> 
+      <i class="fas fa-info-circle text-secondary text-xl" id="5072"></i> 
+      <p class="text-slate-700" id="4166">本月考勤月报已与 HR 薪酬计算模块实现实时同步</p> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <!-- 补卡审批弹窗蒙版 --> 
+  <div id="makeup-card-mask" class="modal-mask hidden fixed inset-0 z-50 flex items-center justify-center"> 
+   <!-- 补卡审批弹窗 --> 
+   <div id="makeup-card-modal" class="bg-white rounded-xl w-full max-w-lg p-6 shadow-diffuse"> 
+    <div class="flex items-center justify-between" id="4065"> 
+     <h3 class="text-xl font-bold text-dark" id="6746">发起补卡审批</h3> 
+     <button type="button" id="close-makeup-modal" class="p-2 rounded-lg hover:bg-slate-100"> <i class="fas fa-times text-slate-500" id="7777"></i> </button> 
+    </div> 
+    <div class="flow-line my-4" id="1162"></div> 
+    <div class="flex flex-col gap-4" id="9908"> 
+     <div class="flex flex-col gap-2" id="1585"> 
+      <label class="text-sm font-medium text-slate-600" id="9032">员工姓名</label> 
+      <input type="text" class="w-full p-3 border border-slate-200 rounded-lg" value="王五" readonly id="6028"> 
+     </div> 
+     <div class="flex flex-col gap-2" id="2506"> 
+      <label class="text-sm font-medium text-slate-600" id="3127">补卡日期</label> 
+      <input type="date" class="w-full p-3 border border-slate-200 rounded-lg" value="2024-06-07" id="4174"> 
+     </div> 
+     <div class="flex flex-col gap-2" id="7702"> 
+      <label class="text-sm font-medium text-slate-600" id="1760">补卡时间</label> 
+      <input type="time" class="w-full p-3 border border-slate-200 rounded-lg" value="09:00" id="6624"> 
+     </div> 
+     <div class="flex flex-col gap-2" id="5263"> 
+      <label class="text-sm font-medium text-slate-600" id="3267">补卡原因</label> 
+      <textarea class="w-full p-3 border border-slate-200 rounded-lg h-24" placeholder="请输入补卡原因" id="7620"></textarea> 
+     </div> 
+     <div class="flex items-center justify-end gap-3 pt-4" id="3549"> 
+      <button type="button" id="cancel-makeup-btn" class="px-5 py-2 bg-slate-100 rounded-lg text-slate-600">取消</button> 
+      <button type="button" class="px-5 py-2 bg-secondary rounded-lg text-white" id="2560">提交申请</button> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        },
+        //显示id为targetId的目标容器
+        show: function(targetId, callback) {
+            const modal = document.getElementById(targetId);//获取targetId的隐藏框元素
+            // 检查targetId的隐藏框元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            // 递归清理子元素的内联样式和hidden类
+            const clearChildrenStyles = function(element) {
+                if (!element) return;
+                const children = element.children;
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i];
+                    // 清理hidden类
+                    child.classList.remove("hidden");
+                    // 清理内联样式
+                    child.style.display = "";
+                    child.style.visibility = "";
+                    child.style.opacity = "";
+                    child.style.transform = "";
+                    child.style.animation = "";
+                    // 递归处理子元素的子元素
+                    clearChildrenStyles(child);
+                }
+            };
+            // 1. 清理该元素之前的状态和监听器
+            if (modal._hideAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._hideAnimationEndHandler);
+                delete modal._hideAnimationEndHandler;
+            }
+            if (modal._hideTimeout){
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+            }
+             // 2. 移除目标元素的隐藏类并重置内联样式
+            modal.classList.remove("hidden");
+            modal.style.display = ""; // 清空内联隐藏，让 CSS 的 flex 自动接管
+            modal.style.visibility = "";
+            modal.style.opacity = "";
+            modal.style.transform = "";
+            modal.style.animation = "";
+            // 3. 递归清理所有子元素的内联样式和hidden类
+            clearChildrenStyles(modal);
+            // 4. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 5. 执行显示动画
+            modal.style.animation = 'yt_modalFadeIn 0.3s ease-out';
+            // 6. 动画结束后清理动画样式
+            const onAnimationEnd = function() {
+                modal.style.animation = "";
+                delete modal._showAnimationEndHandler;
+            };
+            modal._showAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            if (callback) callback();
+        },
+        //移除类名
+        removeClassNames: function(targetId, classNames) {
+            const target = document.getElementById(targetId);
+            if (!target) { console.error('Modal element not found: ' + targetId); return; }
+            if (!classNames) { console.warn('No class names provided'); return; }
+            const classNamesArray = classNames.split(',') || [];
+            classNamesArray.forEach(className => {
+                className = className.trim();
+                if (className) { target.classList.remove(className); }
+            });
+        },
+        //添加类名
+        addClassNames: function(targetId, classNames) {
+            const target = document.getElementById(targetId);
+            if (!target) { console.error('Modal element not found: ' + targetId); return; }
+            if (!classNames) { console.warn('No class names provided'); return; }
+            const classNamesArray = classNames.split(',') || [];
+            classNamesArray.forEach(className => {
+                className = className.trim();
+                if (className) { target.classList.add(className); }
+            });
+        }
+        };
+window.onload = function(){
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.show('flow-designer-area', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.hide('attendance-board-area');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.addClassNames('tab-flow-designer', 'bg-secondary,text-white');
+          })
+        } catch (e) {
+          console.error('addClass error:', e);
+        }
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.removeClassNames('tab-flow-designer', 'bg-slate-100,text-slate-600');
+          })
+        } catch (e) {
+          console.error('removeClass error:', e);
+        }
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.addClassNames('tab-attendance-board', 'bg-slate-100,text-slate-600');
+          })
+        } catch (e) {
+          console.error('addClass error:', e);
+        }
+        try {
+          //为#tab-flow-designer元素添加点击事件监听器
+          document.getElementById('tab-flow-designer').addEventListener('click',function(event){
+             ytHandles.removeClassNames('tab-attendance-board', 'bg-secondary,text-white');
+          })
+        } catch (e) {
+          console.error('removeClass error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.show('attendance-board-area', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.hide('flow-designer-area');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.addClassNames('tab-attendance-board', 'bg-secondary,text-white');
+          })
+        } catch (e) {
+          console.error('addClass error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.removeClassNames('tab-attendance-board', 'bg-slate-100,text-slate-600');
+          })
+        } catch (e) {
+          console.error('removeClass error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.addClassNames('tab-flow-designer', 'bg-slate-100,text-slate-600');
+          })
+        } catch (e) {
+          console.error('addClass error:', e);
+        }
+        try {
+          //为#tab-attendance-board元素添加点击事件监听器
+          document.getElementById('tab-attendance-board').addEventListener('click',function(event){
+             ytHandles.removeClassNames('tab-flow-designer', 'bg-secondary,text-white');
+          })
+        } catch (e) {
+          console.error('removeClass error:', e);
+        }
+        try {
+          //为#makeup-card-btn元素添加点击事件监听器
+          document.getElementById('makeup-card-btn').addEventListener('click',function(event){
+             ytHandles.show('makeup-card-mask', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#close-makeup-modal元素添加点击事件监听器
+          document.getElementById('close-makeup-modal').addEventListener('click',function(event){
+             ytHandles.hide('makeup-card-mask');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#cancel-makeup-btn元素添加点击事件监听器
+          document.getElementById('cancel-makeup-btn').addEventListener('click',function(event){
+             ytHandles.hide('makeup-card-mask');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#nav-architecture元素添加点击事件监听器
+          document.getElementById('nav-architecture').addEventListener('click',function(event){
+             ytHandles.openPage('oa-architecture-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-workflow元素添加点击事件监听器
+          document.getElementById('nav-workflow').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-attendance元素添加点击事件监听器
+          document.getElementById('nav-attendance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-finance元素添加点击事件监听器
+          document.getElementById('nav-finance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-security元素添加点击事件监听器
+          document.getElementById('nav-security').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-progress元素添加点击事件监听器
+          document.getElementById('nav-progress').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-kanban元素添加点击事件监听器
+          document.getElementById('nav-kanban').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

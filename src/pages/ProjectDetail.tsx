@@ -9,13 +9,13 @@ function ProjectImage({ src, caption }: { src: string; caption?: string }) {
   return (
     <>
       <div
-        className="relative group mt-4 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10"
+        className="relative group mt-4 cursor-pointer overflow-hidden rounded-xl bg-white/5 border border-white/10 max-w-2xl mx-auto"
         onClick={() => setIsOpen(true)}
       >
         <img
           src={src}
           alt={caption || ''}
-          className="w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          className="w-full object-cover max-h-64 transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="p-3 bg-white/10 backdrop-blur-md rounded-full text-white">
@@ -61,7 +61,7 @@ function ProjectPrototype({ url, caption }: { url: string; caption?: string }) {
   return (
     <>
       <div
-        className="relative group mt-4 cursor-pointer overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/30 to-slate-800/30 border border-white/10 h-64"
+        className="relative group mt-4 cursor-pointer overflow-hidden rounded-xl bg-gradient-to-br from-slate-900/30 to-slate-800/30 border border-white/10 h-64 max-w-2xl mx-auto"
         onClick={() => setIsOpen(true)}
       >
         <iframe

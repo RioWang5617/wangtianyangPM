@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="zh-CN" id="1267">
+ <head id="9962"> 
+  <meta charset="UTF-8" id="8966"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="5946"> 
+  <title id="3224">合同智能审查 - AI-CRM</title> 
+  <script src="./smartContractReviewPage/resource_3fa48481.js" id="5053"></script> 
+  <link href="./smartContractReviewPage/all.min_3d03d8cd.css" rel="stylesheet" id="1730"> 
+  <script src="./smartContractReviewPage/echarts.min_2475de5b.js" id="2005"></script> 
+  <script id="5523">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1677FF',
+                        darkBg: '#0F172A',
+                        layerBg: 'rgba(22, 119, 255, 0.05)',
+                        cardBorder: 'rgba(22, 119, 255, 0.2)',
+                        riskHigh: '#EF4444',
+                        riskMedium: '#F59E0B',
+                        riskLow: '#3B82F6',
+                    },
+                    spacing: {
+                        sidebar: '240px',
+                        header: '64px',
+                    }
+                }
+            }
+        };
+    </script> 
+  <style id="8420">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(22, 119, 255, 0.1);
+            color: #1677FF;
+            border-right: 3px solid #1677FF;
+        }
+        .risk-high-highlight {
+            background-color: rgba(239, 68, 68, 0.15);
+            border-bottom: 2px solid #EF4444;
+            border-radius: 2px;
+        }
+        .risk-medium-highlight {
+            background-color: rgba(245, 158, 11, 0.15);
+            border-bottom: 2px solid #F59E0B;
+            border-radius: 2px;
+        }
+        .risk-low-highlight {
+            background-color: rgba(59, 130, 246, 0.15);
+            border-bottom: 2px solid #3B82F6;
+            border-radius: 2px;
+        }
+        .modal-mask {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+        }
+        .modal-mask.hidden {
+            display: none;
+        }
+        .modal-content.hidden {
+            display: none;
+        }
+    </style> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+</style> 
+ </head> 
+ <body class="min-h-screen" id="5045"> 
+  <!-- 顶部导航栏 --> 
+  <header class="fixed top-0 left-0 right-0 h-header bg-white border-b border-gray-200 flex items-center px-6 z-30" id="6164"> 
+   <div class="flex items-center gap-3" id="7980"> 
+    <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center" id="8131"> 
+     <i class="fas fa-brain text-white text-lg" id="4379"></i> 
+    </div> 
+    <span class="text-xl font-bold text-darkBg" id="5508">AI-CRM</span> 
+   </div> 
+   <div class="flex-1 flex items-center justify-center px-8" id="4678"> 
+    <div class="relative w-full max-w-xl" id="7497"> 
+     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" id="8192"></i> 
+     <input type="text" placeholder="全局搜索功能、模块、文档..." class="w-full h-10 pl-10 pr-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="5688"> 
+    </div> 
+   </div> 
+   <div class="flex items-center gap-5" id="6439"> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="9838"> <i class="fas fa-bell" id="2361"></i> </button> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="4767"> <i class="fas fa-cog" id="8414"></i> </button> 
+    <div class="flex items-center gap-3 pl-3 border-l border-gray-200" id="9895"> 
+     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-medium" id="3782">
+       管 
+     </div> 
+     <span class="text-sm font-medium text-darkBg" id="1924">系统管理员</span> 
+    </div> 
+   </div> 
+  </header> 
+  <!-- 侧边导航栏 --> 
+  <aside class="fixed top-header left-0 bottom-0 w-sidebar bg-darkBg z-20" id="9188"> 
+   <nav class="h-full py-4" id="8461"> 
+    <ul class="flex flex-col" id="2041"> 
+     <li id="3361"> <a id="smartFormPipelinePage" data-uuid="smartFormPipelinePage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-file-alt w-5 text-center" id="1992"></i> <span id="3125">智能填表引擎</span> </a> </li> 
+     <li id="8301"> <a id="aiSalesAssistantPage" data-uuid="aiSalesAssistantPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-user-tie w-5 text-center" id="1294"></i> <span id="7226">AI销售助手</span> </a> </li> 
+     <li id="1042"> <a id="smartContractReviewPage" data-uuid="smartContractReviewPage" href="javascript:void(0);" class="sidebar-item-active flex items-center gap-3 px-5 py-3.5 text-sm font-medium"> <i class="fas fa-file-contract w-5 text-center" id="2784"></i> <span id="4616">合同智能审查</span> </a> </li> 
+    </ul> 
+   </nav> 
+  </aside> 
+  <!-- 主内容区 --> 
+  <main class="pt-header pl-sidebar min-h-screen" id="5536"> 
+   <div class="p-6" id="7290"> 
+    <div class="flex flex-col gap-6" id="5289"> 
+     <!-- 页面标题栏 --> 
+     <div class="flex items-center justify-between" id="4679"> 
+      <div class="flex flex-col gap-1" id="7095"> 
+       <h1 class="text-2xl font-bold text-darkBg" id="6670">合同智能审查</h1> 
+       <p class="text-gray-500 text-sm" id="5209">自动识别合同风险条款，配置自动化审批流转工作流</p> 
+      </div> 
+      <div class="flex items-center gap-3" id="4647"> 
+       <button type="button" class="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50" id="6582"> <i class="fas fa-upload" id="6796"></i> <span id="4429">上传合同</span> </button> 
+       <button type="button" id="openWorkflowBtn" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"> <i class="fas fa-cogs" id="8043"></i> <span id="6591">配置工作流</span> </button> 
+      </div> 
+     </div> 
+     <!-- 主内容双栏布局 --> 
+     <div class="flex gap-6" id="2915"> 
+      <!-- 左侧合同预览区 --> 
+      <div class="w-1/2 flex flex-col gap-4" id="4287"> 
+       <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100" id="6447"> 
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="6839"> 
+         <div class="flex items-center gap-3" id="7207"> 
+          <i class="fas fa-file-pdf text-red-500 text-xl" id="8511"></i> 
+          <div class="flex flex-col" id="5764"> 
+           <h3 class="font-semibold text-darkBg" id="4611">2024年度采购服务合同.pdf</h3> 
+           <span class="text-xs text-gray-500" id="4220">最后修改时间: 2024-05-20 14:30</span> 
+          </div> 
+         </div> 
+         <div class="flex items-center gap-2" id="9675"> 
+          <span class="px-2 py-1 text-xs font-medium bg-green-50 text-green-600 rounded" id="3148">审查完成</span> 
+         </div> 
+        </div> 
+        <div class="pt-5 max-h-[700px] overflow-y-auto" id="3320"> 
+         <div class="flex flex-col gap-4 text-sm leading-relaxed text-gray-700" id="1701"> 
+          <h2 class="text-xl font-bold text-center text-darkBg" id="8267">采购服务合同</h2> 
+          <p class="text-center text-gray-500" id="4427">合同编号: HT-2024-0520-001</p> 
+          <p id="5934">甲方（采购方）：北京某某科技有限公司</p> 
+          <p id="9341">乙方（供应方）：上海某某信息技术有限公司</p> 
+          <p id="2863">一、服务内容</p> 
+          <p id="6857">乙方同意按照本合同约定向甲方提供企业级SaaS服务，服务期限为12个月，自2024年6月1日起至2025年5月31日止。</p> 
+          <p id="2825">二、合同金额</p> 
+          <p id="1313">本合同总金额为人民币1,280,000元（大写：壹佰贰拾捌万元整），该金额包含所有服务费用、税费及技术支持费用。</p> 
+          <p id="3115">三、付款方式</p> 
+          <p id="1991">甲方应在服务验收合格后 <span class="risk-medium-highlight px-1" id="6166">90个自然日内</span> 以银行转账方式支付全部合同款项至乙方指定银行账户。</p> 
+          <p id="4029">四、违约责任</p> 
+          <p id="3714">如甲方未能按照本合同约定时间支付款项，每逾期一日，应按照合同总金额的千分之五向乙方支付违约金。逾期超过30日的，乙方有权单方面终止本合同，并要求甲方支付 <span class="risk-high-highlight px-1" id="1680">合同总金额30%的违约金</span> 作为损失赔偿。</p> 
+          <p id="9516">五、保密条款</p> 
+          <p id="6687">双方应对在合作过程中获知的对方商业秘密严格保密，未经对方书面同意不得向任何第三方泄露。保密义务在合同终止后3年内仍然有效。</p> 
+          <p id="6451">六、争议解决</p> 
+          <p id="9925">因本合同引起的任何争议，双方应首先通过友好协商解决。协商不成的，任何一方均有权向 <span class="risk-low-highlight px-1" id="8487">乙方所在地有管辖权的人民法院</span> 提起诉讼。</p> 
+          <p id="9692">七、其他条款</p> 
+          <p id="6054">本合同自双方签字盖章之日起生效，一式两份，甲乙双方各执一份，具有同等法律效力。</p> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 右侧风险面板区 --> 
+      <div class="w-1/2 flex flex-col gap-4" id="2926"> 
+       <!-- 风险统计卡片 --> 
+       <div class="grid grid-cols-3 gap-4" id="6596"> 
+        <div class="bg-white rounded-xl p-4 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100" id="3717"> 
+         <div class="flex items-center gap-3" id="3932"> 
+          <div class="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center" id="2478"> 
+           <i class="fas fa-exclamation-circle text-riskHigh text-lg" id="2575"></i> 
+          </div> 
+          <div class="flex flex-col" id="5548"> 
+           <span class="text-2xl font-bold text-darkBg" id="5842">1</span> 
+           <span class="text-xs text-gray-500" id="4372">高风险项</span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="bg-white rounded-xl p-4 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100" id="6185"> 
+         <div class="flex items-center gap-3" id="5212"> 
+          <div class="w-10 h-10 rounded-lg bg-yellow-50 flex items-center justify-center" id="4294"> 
+           <i class="fas fa-exclamation-triangle text-riskMedium text-lg" id="4532"></i> 
+          </div> 
+          <div class="flex flex-col" id="7617"> 
+           <span class="text-2xl font-bold text-darkBg" id="9078">1</span> 
+           <span class="text-xs text-gray-500" id="4744">中风险项</span> 
+          </div> 
+         </div> 
+        </div> 
+        <div class="bg-white rounded-xl p-4 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100" id="8690"> 
+         <div class="flex items-center gap-3" id="7755"> 
+          <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center" id="9216"> 
+           <i class="fas fa-info-circle text-riskLow text-lg" id="8964"></i> 
+          </div> 
+          <div class="flex flex-col" id="4329"> 
+           <span class="text-2xl font-bold text-darkBg" id="6368">1</span> 
+           <span class="text-xs text-gray-500" id="8809">低风险项</span> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+       <!-- 风险详情列表 --> 
+       <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] border border-gray-100 flex-1" id="1506"> 
+        <div class="pb-4 border-b border-gray-100" id="3986"> 
+         <h3 class="font-semibold text-darkBg" id="7769">风险标注详情</h3> 
+        </div> 
+        <div class="pt-4 flex flex-col gap-3 max-h-[500px] overflow-y-auto" id="7804"> 
+         <!-- 高风险项 --> 
+         <div class="p-4 rounded-lg bg-red-50 border border-red-100" id="8832"> 
+          <div class="flex items-start gap-3" id="4687"> 
+           <div class="w-6 h-6 rounded-full bg-riskHigh flex items-center justify-center text-white text-xs flex-shrink-0" id="8589"> 
+            <i class="fas fa-exclamation" id="2340"></i> 
+           </div> 
+           <div class="flex-1 flex flex-col gap-2" id="8516"> 
+            <div class="flex items-center justify-between" id="3512"> 
+             <h4 class="font-medium text-riskHigh" id="3122">高风险：违约金比例过高</h4> 
+             <button type="button" class="text-xs text-gray-500 hover:text-primary" id="8673">查看原文</button> 
+            </div> 
+            <p class="text-sm text-gray-700" id="9897">违约金设为 30%，远超行业标准 10%，可能导致甲方承担过重的违约赔偿责任。</p> 
+            <div class="flex items-center gap-2 pt-2" id="1753"> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-red-200 text-riskHigh rounded hover:bg-red-50" id="8096">标记已处理</button> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-50" id="4488">添加备注</button> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 中风险项 --> 
+         <div class="p-4 rounded-lg bg-yellow-50 border border-yellow-100" id="9712"> 
+          <div class="flex items-start gap-3" id="3163"> 
+           <div class="w-6 h-6 rounded-full bg-riskMedium flex items-center justify-center text-white text-xs flex-shrink-0" id="6835"> 
+            <i class="fas fa-exclamation" id="9497"></i> 
+           </div> 
+           <div class="flex-1 flex flex-col gap-2" id="5524"> 
+            <div class="flex items-center justify-between" id="5102"> 
+             <h4 class="font-medium text-riskMedium" id="1528">中风险：账期风险</h4> 
+             <button type="button" class="text-xs text-gray-500 hover:text-primary" id="7169">查看原文</button> 
+            </div> 
+            <p class="text-sm text-gray-700" id="8208">付款周期为 90 天，超过标准 30 天，将对甲方现金流造成较大压力。</p> 
+            <div class="flex items-center gap-2 pt-2" id="3188"> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-yellow-200 text-riskMedium rounded hover:bg-yellow-50" id="6710">标记已处理</button> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-50" id="2304">添加备注</button> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 低风险项 --> 
+         <div class="p-4 rounded-lg bg-blue-50 border border-blue-100" id="4363"> 
+          <div class="flex items-start gap-3" id="8227"> 
+           <div class="w-6 h-6 rounded-full bg-riskLow flex items-center justify-center text-white text-xs flex-shrink-0" id="5132"> 
+            <i class="fas fa-info" id="9887"></i> 
+           </div> 
+           <div class="flex-1 flex flex-col gap-2" id="8305"> 
+            <div class="flex items-center justify-between" id="8782"> 
+             <h4 class="font-medium text-riskLow" id="6903">低风险：争议管辖约定</h4> 
+             <button type="button" class="text-xs text-gray-500 hover:text-primary" id="6352">查看原文</button> 
+            </div> 
+            <p class="text-sm text-gray-700" id="9168">争议解决地约定为乙方所在地法院，增加甲方后续维权的异地诉讼成本。</p> 
+            <div class="flex items-center gap-2 pt-2" id="9723"> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-blue-200 text-riskLow rounded hover:bg-blue-50" id="8172">标记已处理</button> 
+             <button type="button" class="px-3 py-1 text-xs bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-50" id="7931">添加备注</button> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <!-- 工作流配置弹窗蒙版 --> 
+  <div id="workflowModalMask" class="modal-mask fixed inset-0 z-50 flex items-center justify-center hidden"> 
+   <!-- 工作流配置弹窗内容 --> 
+   <div id="workflowModal" class="modal-content bg-white w-[900px] max-h-[80vh] rounded-2xl shadow-2xl flex flex-col hidden"> 
+    <div class="flex items-center justify-between p-6 border-b border-gray-100" id="3766"> 
+     <h3 class="text-xl font-bold text-darkBg" id="7504">自动化审批工作流配置</h3> 
+     <button type="button" id="closeWorkflowBtn" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100"> <i class="fas fa-times" id="6627"></i> </button> 
+    </div> 
+    <div class="p-6 flex-1 overflow-y-auto" id="4240"> 
+     <div class="flex flex-col gap-6" id="6062"> 
+      <p class="text-gray-600 text-sm" id="7716">配置合同风险识别后的自动化流转规则，实现智能审批流程。</p> 
+      <!-- 工作流节点流转图 --> 
+      <div class="flex flex-col items-center gap-0" id="1792"> 
+       <div class="w-full p-4 bg-primary/5 rounded-xl border border-primary/20 flex items-center justify-center" id="7652"> 
+        <div class="flex items-center gap-2" id="1505"> 
+         <i class="fas fa-shield-alt text-primary" id="4665"></i> 
+         <span class="font-medium text-darkBg" id="6434">AI自动识别高风险条款</span> 
+        </div> 
+       </div> 
+       <div class="h-10 w-0.5 bg-gradient-to-b from-primary to-primary/30 relative" id="9254"> 
+        <i class="fas fa-chevron-down text-primary absolute -bottom-2 left-1/2 -translate-x-1/2" id="8007"></i> 
+       </div> 
+       <div class="w-full p-4 bg-purple-50 rounded-xl border border-purple-200 flex items-center justify-center" id="9337"> 
+        <div class="flex items-center gap-2" id="8393"> 
+         <i class="fas fa-user-shield text-purple-600" id="5432"></i> 
+         <span class="font-medium text-darkBg" id="4087">自动抄送法务总监</span> 
+        </div> 
+       </div> 
+       <div class="h-10 w-0.5 bg-gradient-to-b from-purple-500 to-purple-300 relative" id="2148"> 
+        <i class="fas fa-chevron-down text-purple-500 absolute -bottom-2 left-1/2 -translate-x-1/2" id="8788"></i> 
+       </div> 
+       <div class="w-full p-4 bg-orange-50 rounded-xl border border-orange-200 flex items-center justify-center" id="8171"> 
+        <div class="flex items-center gap-2" id="9491"> 
+         <i class="fas fa-money-check-alt text-orange-600" id="9289"></i> 
+         <span class="font-medium text-darkBg" id="2889">要求补充预付款担保</span> 
+        </div> 
+       </div> 
+       <div class="h-10 w-0.5 bg-gradient-to-b from-orange-500 to-orange-300 relative" id="4204"> 
+        <i class="fas fa-chevron-down text-orange-500 absolute -bottom-2 left-1/2 -translate-x-1/2" id="2682"></i> 
+       </div> 
+       <div class="w-full p-4 bg-green-50 rounded-xl border border-green-200 flex items-center justify-center" id="6305"> 
+        <div class="flex items-center gap-2" id="8883"> 
+         <i class="fas fa-archive text-green-600" id="3028"></i> 
+         <span class="font-medium text-darkBg" id="8714">审批通过后一键生成归档</span> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 工作流配置表单 --> 
+      <div class="grid grid-cols-2 gap-4 pt-4" id="1816"> 
+       <div class="flex flex-col gap-2" id="6397"> 
+        <label class="text-sm font-medium text-gray-700" id="8642">高风险触发通知人</label> 
+        <select class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary" id="7357"> <option id="8880">法务总监 - 张总</option> <option id="9920">法务专员 - 李丽</option> <option id="8572">部门经理 - 王经理</option> </select> 
+       </div> 
+       <div class="flex flex-col gap-2" id="3791"> 
+        <label class="text-sm font-medium text-gray-700" id="2617">审批超时自动提醒时间</label> 
+        <select class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary" id="5203"> <option id="5381">24小时</option> <option id="8875">48小时</option> <option id="4113">72小时</option> </select> 
+       </div> 
+       <div class="flex flex-col gap-2" id="9288"> 
+        <label class="text-sm font-medium text-gray-700" id="8401">自动归档路径</label> 
+        <input type="text" value="/合同归档/2024年采购类合同" class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary" id="6728"> 
+       </div> 
+       <div class="flex flex-col gap-2" id="5509"> 
+        <label class="text-sm font-medium text-gray-700" id="7096">风险等级阈值</label> 
+        <select class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary" id="8876"> <option id="2367">仅高风险触发工作流</option> <option id="8473">高+中风险触发工作流</option> <option id="3371">所有风险均触发工作流</option> </select> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <div class="flex items-center justify-end gap-3 p-6 border-t border-gray-100" id="1017"> 
+     <button type="button" id="cancelWorkflowBtn" class="px-5 py-2 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50">取消</button> 
+     <button type="button" class="px-5 py-2 bg-primary text-white rounded-lg hover:bg-primary/90" id="4210">保存配置</button> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        },
+        //显示id为targetId的目标容器
+        show: function(targetId, callback) {
+            const modal = document.getElementById(targetId);//获取targetId的隐藏框元素
+            // 检查targetId的隐藏框元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            // 递归清理子元素的内联样式和hidden类
+            const clearChildrenStyles = function(element) {
+                if (!element) return;
+                const children = element.children;
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i];
+                    // 清理hidden类
+                    child.classList.remove("hidden");
+                    // 清理内联样式
+                    child.style.display = "";
+                    child.style.visibility = "";
+                    child.style.opacity = "";
+                    child.style.transform = "";
+                    child.style.animation = "";
+                    // 递归处理子元素的子元素
+                    clearChildrenStyles(child);
+                }
+            };
+            // 1. 清理该元素之前的状态和监听器
+            if (modal._hideAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._hideAnimationEndHandler);
+                delete modal._hideAnimationEndHandler;
+            }
+            if (modal._hideTimeout){
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+            }
+             // 2. 移除目标元素的隐藏类并重置内联样式
+            modal.classList.remove("hidden");
+            modal.style.display = ""; // 清空内联隐藏，让 CSS 的 flex 自动接管
+            modal.style.visibility = "";
+            modal.style.opacity = "";
+            modal.style.transform = "";
+            modal.style.animation = "";
+            // 3. 递归清理所有子元素的内联样式和hidden类
+            clearChildrenStyles(modal);
+            // 4. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 5. 执行显示动画
+            modal.style.animation = 'yt_modalFadeIn 0.3s ease-out';
+            // 6. 动画结束后清理动画样式
+            const onAnimationEnd = function() {
+                modal.style.animation = "";
+                delete modal._showAnimationEndHandler;
+            };
+            modal._showAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            if (callback) callback();
+        }
+        };
+window.onload = function(){
+        try {
+          //为#openWorkflowBtn元素添加点击事件监听器
+          document.getElementById('openWorkflowBtn').addEventListener('click',function(event){
+             ytHandles.show('workflowModalMask', null);
+          ytHandles.show('workflowModal', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#closeWorkflowBtn元素添加点击事件监听器
+          document.getElementById('closeWorkflowBtn').addEventListener('click',function(event){
+             ytHandles.hide('workflowModalMask');
+          ytHandles.hide('workflowModal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#cancelWorkflowBtn元素添加点击事件监听器
+          document.getElementById('cancelWorkflowBtn').addEventListener('click',function(event){
+             ytHandles.hide('workflowModalMask');
+          ytHandles.hide('workflowModal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#smartFormPipelinePage元素添加点击事件监听器
+          document.getElementById('smartFormPipelinePage').addEventListener('click',function(event){
+             ytHandles.openPage('smartFormPipelinePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#aiSalesAssistantPage元素添加点击事件监听器
+          document.getElementById('aiSalesAssistantPage').addEventListener('click',function(event){
+             ytHandles.openPage('aiSalesAssistantPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#smartContractReviewPage元素添加点击事件监听器
+          document.getElementById('smartContractReviewPage').addEventListener('click',function(event){
+             ytHandles.openPage('smartContractReviewPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

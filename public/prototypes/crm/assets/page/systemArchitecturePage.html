@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="zh-CN" id="8998">
+ <head id="2341"> 
+  <meta charset="UTF-8" id="9252"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="8255"> 
+  <title id="6165">AI驱动智能CRM系统 - 系统整体架构图</title> 
+  <script src="./systemArchitecturePage/resource_3fa48481.js" id="5239"></script> 
+  <link href="./systemArchitecturePage/all.min_3d03d8cd.css" rel="stylesheet" id="2927"> 
+  <script id="3150">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1677FF',
+                        darkBg: '#0F172A',
+                        layerBg: 'rgba(22, 119, 255, 0.05)',
+                        cardBorder: 'rgba(22, 119, 255, 0.2)',
+                    },
+                    spacing: {
+                        sidebar: '240px',
+                        header: '64px',
+                    }
+                }
+            }
+        };
+    </script> 
+  <style id="6389">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(22, 119, 255, 0.1);
+            color: #1677FF;
+            border-right: 3px solid #1677FF;
+        }
+        .layer-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--tw-border-opacity, rgba(22, 119, 255, 0.2));
+        }
+        .architecture-card {
+            background: white;
+            border: 1px solid rgba(22, 119, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+        .architecture-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(22, 119, 255, 0.12);
+            border-color: rgba(22, 119, 255, 0.4);
+        }
+        .arrow-connector {
+            position: relative;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .arrow-line {
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #1677FF, rgba(22, 119, 255, 0.3));
+        }
+        .arrow-icon {
+            position: absolute;
+            bottom: 0;
+            color: #1677FF;
+            font-size: 16px;
+        }
+    </style> 
+ </head> 
+ <body class="overflow-hidden" id="3778"> 
+  <!-- 顶部导航栏 --> 
+  <header class="fixed top-0 left-0 right-0 h-header bg-white border-b border-gray-200 flex items-center px-6 z-30" id="3468"> 
+   <div class="flex items-center gap-3" id="5442"> 
+    <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center" id="2509"> 
+     <i class="fas fa-brain text-white text-lg" id="6696"></i> 
+    </div> 
+    <span class="text-xl font-bold text-darkBg" id="3066">AI-CRM</span> 
+   </div> 
+   <div class="flex-1 flex items-center justify-center px-8" id="3363"> 
+    <div class="relative w-full max-w-xl" id="9960"> 
+     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" id="1046"></i> 
+     <input type="text" placeholder="全局搜索功能、模块、文档..." class="w-full h-10 pl-10 pr-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="2079"> 
+    </div> 
+   </div> 
+   <div class="flex items-center gap-5" id="7256"> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="9223"> <i class="fas fa-bell" id="1150"></i> </button> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="8420"> <i class="fas fa-cog" id="7277"></i> </button> 
+    <div class="flex items-center gap-3 pl-3 border-l border-gray-200" id="5024"> 
+     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-medium" id="3087">
+       管 
+     </div> 
+     <span class="text-sm font-medium text-darkBg" id="8517">系统管理员</span> 
+    </div> 
+   </div> 
+  </header> 
+  <!-- 左侧侧边栏 --> 
+  <aside class="fixed top-header left-0 bottom-0 w-sidebar bg-darkBg z-20" id="9307"> 
+   <nav class="h-full py-4" id="6145"> 
+    <ul class="flex flex-col" id="3470"> 
+     <li id="7198"> <a id="systemArchitecturePage" data-uuid="systemArchitecturePage" href="javascript:void(0);" class="sidebar-item-active flex items-center gap-3 px-5 py-3.5 text-sm font-medium"> <i class="fas fa-sitemap w-5 text-center" id="6233"></i> <span id="3158">系统架构总览</span> </a> </li> 
+     <li id="9118"> <a id="accessConfigPage" data-uuid="accessConfigPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-plug w-5 text-center" id="2909"></i> <span id="5340">接入层配置</span> </a> </li> 
+     <li id="8326"> <a id="coreServicePage" data-uuid="coreServicePage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-cubes w-5 text-center" id="5784"></i> <span id="7670">核心服务管理</span> </a> </li> 
+     <li id="9281"> <a id="aiCapabilityPage" data-uuid="aiCapabilityPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-microchip w-5 text-center" id="3192"></i> <span id="7255">AI能力管控</span> </a> </li> 
+     <li id="2025"> <a id="dataOperationPage" data-uuid="dataOperationPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-database w-5 text-center" id="1991"></i> <span id="7094">数据层运维</span> </a> </li> 
+    </ul> 
+   </nav> 
+  </aside> 
+  <!-- 主内容区域 --> 
+  <main class="ml-sidebar pt-header min-h-full p-8" id="4014"> 
+   <div class="flex flex-col gap-6" id="6048"> 
+    <!-- 页面标题区域 --> 
+    <div class="flex flex-col gap-2" id="8938"> 
+     <h1 class="text-[clamp(1.5rem,3vw,2.25rem)] font-bold text-darkBg" id="2962">系统整体技术与业务架构图</h1> 
+     <p class="text-gray-500 text-base" id="7124">AI-CRM 系统四层技术与业务架构拓扑图，清晰展示各模块数据流向与依赖关系</p> 
+    </div> 
+    <!-- 架构图主体区域 --> 
+    <div class="w-full rounded-2xl bg-white p-8 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="6152"> 
+     <!-- 接入层 --> 
+     <div class="layer-card rounded-xl p-6 bg-layerBg" id="3318"> 
+      <div class="flex items-center gap-3 pb-5" id="7260"> 
+       <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center" id="7160"> 
+        <i class="fas fa-door-open text-primary text-lg" id="5052"></i> 
+       </div> 
+       <div id="4152"> 
+        <h2 class="text-xl font-semibold text-darkBg" id="6883">接入层 (Access Layer)</h2> 
+        <p class="text-sm text-gray-500 mt-1" id="6816">多端统一接入入口，覆盖全场景用户触点</p> 
+       </div> 
+      </div> 
+      <div class="grid grid-cols-5 gap-4" id="5727"> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="7757"> 
+        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center" id="3130"> 
+         <i class="fas fa-desktop text-primary text-2xl" id="7303"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="9648">Web 网页端</span> 
+        <span class="text-xs text-gray-400" id="2727">Mac OS UI 风格</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="3632"> 
+        <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center" id="3737"> 
+         <i class="fas fa-mobile-alt text-green-500 text-2xl" id="6860"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="8396">移动端 App</span> 
+        <span class="text-xs text-gray-400" id="8247">iOS/Android</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="7532"> 
+        <div class="w-14 h-14 rounded-full bg-yellow-50 flex items-center justify-center" id="9700"> 
+         <i class="fab fa-weixin text-green-600 text-2xl" id="8725"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="7495">微信小程序</span> 
+        <span class="text-xs text-gray-400" id="8223">轻量访问</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="1114"> 
+        <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center" id="7701"> 
+         <i class="fas fa-building text-purple-500 text-2xl" id="4051"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="9249">企业微信/钉钉</span> 
+        <span class="text-xs text-gray-400" id="6518">办公插件</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="2624"> 
+        <div class="w-14 h-14 rounded-full bg-orange-50 flex items-center justify-center" id="7194"> 
+         <i class="fas fa-exchange-alt text-orange-500 text-2xl" id="2965"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="5134">API 开放接口</span> 
+        <span class="text-xs text-gray-400" id="6110">第三方集成</span> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 连接箭头 --> 
+     <div class="arrow-connector" id="7872"> 
+      <div class="arrow-line" id="6558"></div> 
+      <i class="fas fa-chevron-down arrow-icon" id="7548"></i> 
+     </div> 
+     <!-- 核心服务层 --> 
+     <div class="layer-card rounded-xl p-6 bg-layerBg" id="5249"> 
+      <div class="flex items-center gap-3 pb-5" id="1215"> 
+       <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center" id="9603"> 
+        <i class="fas fa-server text-primary text-lg" id="1015"></i> 
+       </div> 
+       <div id="7114"> 
+        <h2 class="text-xl font-semibold text-darkBg" id="3929">核心服务层 (Core Services Layer)</h2> 
+        <p class="text-sm text-gray-500 mt-1" id="1706">业务逻辑核心处理单元，提供全链路CRM业务能力</p> 
+       </div> 
+      </div> 
+      <div class="grid grid-cols-5 gap-4" id="5687"> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="3738"> 
+        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center" id="3966"> 
+         <i class="fas fa-user-plus text-primary text-2xl" id="3061"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="6500">线索管理</span> 
+        <span class="text-xs text-gray-400" id="2744">Leads</span> 
+       </div> 
+       <div class="ar
+chitecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="5282"> 
+        <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center" id="3766"> 
+         <i class="fas fa-users text-green-500 text-2xl" id="6958"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="6073">客户管理</span> 
+        <span class="text-xs text-gray-400" id="8300">Accounts</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="1445"> 
+        <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center" id="2384"> 
+         <i class="fas fa-chart-line text-purple-500 text-2xl" id="4587"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="3878">商机与管道</span> 
+        <span class="text-xs text-gray-400" id="2031">Pipelines</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="1549"> 
+        <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center" id="6940"> 
+         <i class="fas fa-file-contract text-red-500 text-2xl" id="9214"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="4610">合同管理</span> 
+        <span class="text-xs text-gray-400" id="4735">Contracts</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="7740"> 
+        <div class="w-14 h-14 rounded-full bg-cyan-50 flex items-center justify-center" id="9153"> 
+         <i class="fas fa-cogs text-cyan-500 text-2xl" id="6826"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="9427">销售自动化</span> 
+        <span class="text-xs text-gray-400" id="9937">SFA Workflow</span> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 连接箭头 --> 
+     <div class="arrow-connector" id="6755"> 
+      <div class="arrow-line" id="5705"></div> 
+      <i class="fas fa-chevron-down arrow-icon" id="4790"></i> 
+     </div> 
+     <!-- AI能力层 --> 
+     <div class="layer-card rounded-xl p-6 bg-layerBg" id="2345"> 
+      <div class="flex items-center gap-3 pb-5" id="8841"> 
+       <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center" id="9686"> 
+        <i class="fas fa-brain text-primary text-lg" id="1048"></i> 
+       </div> 
+       <div id="1403"> 
+        <h2 class="text-xl font-semibold text-darkBg" id="7468">AI 能力层 (AI Capabilities Layer)</h2> 
+        <p class="text-sm text-gray-500 mt-1" id="5289">智能算法引擎，为业务提供AI增强能力</p> 
+       </div> 
+      </div> 
+      <div class="grid grid-cols-4 gap-4" id="5649"> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="5589"> 
+        <div class="w-14 h-14 rounded-full bg-indigo-50 flex items-center justify-center" id="2925"> 
+         <i class="fas fa-file-import text-indigo-500 text-2xl" id="5119"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="8873">多源异构抽取引擎</span> 
+        <span class="text-xs text-gray-400" id="7384">OCR/NLP</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="9898"> 
+        <div class="w-14 h-14 rounded-full bg-violet-50 flex items-center justify-center" id="4849"> 
+         <i class="fas fa-file-alt text-violet-500 text-2xl" id="9120"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="8329">跟进摘要自动生成</span> 
+        <span class="text-xs text-gray-400" id="2905">智能总结</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="2400"> 
+        <div class="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center" id="9696"> 
+         <i class="fas fa-percentage text-emerald-500 text-2xl" id="7506"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="6975">赢单概率预测算法</span> 
+        <span class="text-xs text-gray-400" id="3803">智能预测</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="6331"> 
+        <div class="w-14 h-14 rounded-full bg-rose-50 flex items-center justify-center" id="2721"> 
+         <i class="fas fa-shield-alt text-rose-500 text-2xl" id="7808"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="3111">合同智能审查</span> 
+        <span class="text-xs text-gray-400" id="6012">风险评估引擎</span> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 连接箭头 --> 
+     <div class="arrow-connector" id="3779"> 
+      <div class="arrow-line" id="4325"></div> 
+      <i class="fas fa-chevron-down arrow-icon" id="8312"></i> 
+     </div> 
+     <!-- 数据层 --> 
+     <div class="layer-card rounded-xl p-6 bg-layerBg" id="9985"> 
+      <div class="flex items-center gap-3 pb-5" id="7510"> 
+       <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center" id="6621"> 
+        <i class="fas fa-database text-primary text-lg" id="3378"></i> 
+       </div> 
+       <div id="7923"> 
+        <h2 class="text-xl font-semibold text-darkBg" id="4597">数据层 (Data &amp; Infrastructure Layer)</h2> 
+        <p class="text-sm text-gray-500 mt-1" id="1796">数据持久化与存储基础设施，保障数据安全可靠</p> 
+       </div> 
+      </div> 
+      <div class="grid grid-cols-4 gap-4" id="8497"> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="6344"> 
+        <div class="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center" id="9873"> 
+         <i class="fas fa-database text-blue-600 text-2xl" id="5058"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="1021">CRM 主数据库</span> 
+        <span class="text-xs text-gray-400" id="6308">PostgreSQL</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="1450"> 
+        <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center" id="4771"> 
+         <i class="fas fa-vector-square text-purple-600 text-2xl" id="8883"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="4338">向量数据库</span> 
+        <span class="text-xs text-gray-400" id="5947">Vector DB/Milvus</span> 
+       </div> 
+       <div class="architecture-card rounded-xl p-5 flex flex-col items-center gap-3" id="4858"> 
+        <div class="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center" id="8059"> 
+         <i class="fas fa-hdd text-amber-600 text-2xl" id="3259"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="9128">非结构化文件存储</span> 
+        <span class="text-xs text-gray-400" id="8050">S3</span> 
+       </div> 
+       <div class="architecture-card rounded-
+xl p-5 flex flex-col items-center gap-3" id="1147"> 
+        <div class="w-14 h-14 rounded-full bg-slate-50 flex items-center justify-center" id="1382"> 
+         <i class="fas fa-history text-slate-600 text-2xl" id="9456"></i> 
+        </div> 
+        <span class="text-sm font-medium text-darkBg" id="8296">日志与审计追踪</span> 
+        <span class="text-xs text-gray-400" id="6009">全链路追溯</span> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <!-- 业务功能导航入口 --> 
+    <div class="flex flex-col gap-4" id="8429"> 
+     <h2 class="text-xl font-bold text-darkBg" id="5360">业务功能导航</h2> 
+     <p class="text-gray-500 text-sm" id="4524">快速进入各业务功能模块，体验AI驱动的智能CRM工作流</p> 
+     <div class="grid grid-cols-3 gap-6" id="2792"> 
+      <!-- 智能填表引擎 --> 
+      <a id="smartFormPipelinePage" data-uuid="smartFormPipelinePage" href="javascript:void(0);" class="architecture-card rounded-xl p-6 flex flex-col items-center gap-4 cursor-pointer no-underline"> 
+       <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center" id="8072"> 
+        <i class="fas fa-file-import text-primary text-2xl" id="1667"></i> 
+       </div> 
+       <div class="flex flex-col items-center gap-1" id="8928"> 
+        <span class="text-base font-semibold text-darkBg" id="9849">智能填表引擎</span> 
+        <span class="text-xs text-gray-400 text-center" id="1641">多源异构抽取与人工确认流转</span> 
+       </div> 
+       <div class="flex items-center gap-1 text-primary text-sm font-medium" id="7799"> 
+        <span id="4421">进入模块</span> 
+        <i class="fas fa-arrow-right text-xs" id="8884"></i> 
+       </div> </a> 
+      <!-- AI销售助手 --> 
+      <a id="aiSalesAssistantPage" data-uuid="aiSalesAssistantPage" href="javascript:void(0);" class="architecture-card rounded-xl p-6 flex flex-col items-center gap-4 cursor-pointer no-underline"> 
+       <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center" id="2398"> 
+        <i class="fas fa-robot text-purple-500 text-2xl" id="5447"></i> 
+       </div> 
+       <div class="flex flex-col items-center gap-1" id="4387"> 
+        <span class="text-base font-semibold text-darkBg" id="6765">AI销售助手</span> 
+        <span class="text-xs text-gray-400 text-center" id="6320">跟进摘要与赢单预测工作流</span> 
+       </div> 
+       <div class="flex items-center gap-1 text-purple-500 text-sm font-medium" id="2752"> 
+        <span id="9106">进入模块</span> 
+        <i class="fas fa-arrow-right text-xs" id="3730"></i> 
+       </div> </a> 
+      <!-- 合同智能审查 --> 
+      <a id="smartContractReviewPage" data-uuid="smartContractReviewPage" href="javascript:void(0);" class="architecture-card rounded-xl p-6 flex flex-col items-center gap-4 cursor-pointer no-underline"> 
+       <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-50 to-amber-100 flex items-center justify-center" id="8668"> 
+        <i class="fas fa-shield-alt text-amber-500 text-2xl" id="5878"></i> 
+       </div> 
+       <div class="flex flex-col items-center gap-1" id="4795"> 
+        <span class="text-base font-semibold text-darkBg" id="4131">合同智能审查</span> 
+        <span class="text-xs text-gray-400 text-center" id="5520">风险标注与自动化工作流配置</span> 
+       </div> 
+       <div class="flex items-center gap-1 text-amber-500 text-sm font-medium" id="4100"> 
+        <span id="3985">进入模块</span> 
+        <i class="fas fa-arrow-right text-xs" id="8575"></i> 
+       </div> </a> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        }
+        };
+window.onload = function(){
+        try {
+          //为#systemArchitecturePage元素添加点击事件监听器
+          document.getElementById('systemArchitecturePage').addEventListener('click',function(event){
+             ytHandles.openPage('systemArchitecturePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#accessConfigPage元素添加点击事件监听器
+          document.getElementById('accessConfigPage').addEventListener('click',function(event){
+             ytHandles.openPage('accessConfigPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#coreServicePage元素添加点击事件监听器
+          document.getElementById('coreServicePage').addEventListener('click',function(event){
+             ytHandles.openPage('coreServicePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#aiCapabilityPage元素添加点击事件监听器
+          document.getElementById('aiCapabilityPage').addEventListener('click',function(event){
+             ytHandles.openPage('aiCapabilityPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#dataOperationPage元素添加点击事件监听器
+          document.getElementById('dataOperationPage').addEventListener('click',function(event){
+             ytHandles.openPage('dataOperationPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#smartFormPipelinePage元素添加点击事件监听器
+          document.getElementById('smartFormPipelinePage').addEventListener('click',function(event){
+             ytHandles.openPage('smartFormPipelinePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#aiSalesAssistantPage元素添加点击事件监听器
+          document.getElementById('aiSalesAssistantPage').addEventListener('click',function(event){
+             ytHandles.openPage('aiSalesAssistantPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#smartContractReviewPage元素添加点击事件监听器
+          document.getElementById('smartContractReviewPage').addEventListener('click',function(event){
+             ytHandles.openPage('smartContractReviewPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

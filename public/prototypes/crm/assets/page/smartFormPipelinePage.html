@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="zh-CN" id="9327">
+ <head id="7773"> 
+  <meta charset="UTF-8" id="5687"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="2574"> 
+  <title id="2643">智能填表引擎 - AI-CRM</title> 
+  <script src="./smartFormPipelinePage/resource_3fa48481.js" id="5441"></script> 
+  <link href="./smartFormPipelinePage/all.min_3d03d8cd.css" rel="stylesheet" id="7455"> 
+  <script src="./smartFormPipelinePage/echarts.min_2475de5b.js" id="6621"></script> 
+  <script id="9842">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1677FF',
+                        darkBg: '#0F172A',
+                        layerBg: 'rgba(22, 119, 255, 0.05)',
+                        cardBorder: 'rgba(22, 119, 255, 0.2)',
+                        success: '#52C41A',
+                        warning: '#FAAD14',
+                        danger: '#FF4D4F',
+                        infoBlue: '#1890FF',
+                    },
+                    spacing: {
+                        sidebar: '240px',
+                        header: '64px',
+                    }
+                }
+            }
+        };
+    </script> 
+  <style id="6259">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(22, 119, 255, 0.1);
+            color: #1677FF;
+            border-right: 3px solid #1677FF;
+        }
+        .modal-mask {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .modal-mask.hidden {
+            display: none;
+        }
+        .modal-content.hidden {
+            display: none;
+        }
+        .card-shadow {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+        .high-confidence-tag {
+            background-color: rgba(82, 196, 26, 0.1);
+            color: #52C41A;
+            border: 1px solid rgba(82, 196, 26, 0.2);
+        }
+        .low-confidence-tag {
+            background-color: rgba(250, 173, 20, 0.1);
+            color: #FAAD14;
+            border: 1px solid rgba(250, 173, 20, 0.2);
+        }
+        .text-highlight-green {
+            background-color: rgba(82, 196, 26, 0.2);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        .text-highlight-yellow {
+            background-color: rgba(250, 173, 20, 0.2);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+        .wave-bar {
+            width: 4px;
+            background: linear-gradient(to top, #1677FF, #69C0FF);
+            border-radius: 2px;
+        }
+    </style> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+</style> 
+ </head> 
+ <body class="min-h-screen" id="4608"> 
+  <!-- 顶部导航栏 --> 
+  <header class="fixed top-0 left-0 right-0 h-header bg-white border-b border-gray-200 flex items-center px-6 z-30" id="1493"> 
+   <div class="flex items-center gap-3" id="5124"> 
+    <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center" id="2185"> 
+     <i class="fas fa-brain text-white text-lg" id="6488"></i> 
+    </div> 
+    <span class="text-xl font-bold text-darkBg" id="8563">AI-CRM</span> 
+   </div> 
+   <div class="flex-1 flex items-center justify-center px-8" id="8830"> 
+    <div class="relative w-full max-w-xl" id="1069"> 
+     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" id="8421"></i> 
+     <input type="text" placeholder="全局搜索功能、模块、文档..." class="w-full h-10 pl-10 pr-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="5042"> 
+    </div> 
+   </div> 
+   <div class="flex items-center gap-5" id="8369"> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="5412"> <i class="fas fa-bell" id="7527"></i> </button> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="3651"> <i class="fas fa-cog" id="5879"></i> </button> 
+    <div class="flex items-center gap-3 pl-3 border-l border-gray-200" id="5941"> 
+     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-medium" id="4534">
+       管 
+     </div> 
+     <span class="text-sm font-medium text-darkBg" id="8730">系统管理员</span> 
+    </div> 
+   </div> 
+  </header> 
+  <!-- 侧边导航栏 --> 
+  <aside class="fixed top-header left-0 bottom-0 w-sidebar bg-darkBg z-20" id="5369"> 
+   <nav class="h-full py-4" id="8966"> 
+    <ul class="flex flex-col" id="7231"> 
+     <li id="3728"> <a id="smartFormPipelinePage" data-uuid="smartFormPipelinePage" href="javascript:void(0);" class="sidebar-item-active flex items-center gap-3 px-5 py-3.5 text-sm font-medium"> <i class="fas fa-file-import w-5 text-center" id="5156"></i> <span id="2328">智能填表引擎</span> </a> </li> 
+     <li id="4555"> <a id="aiSalesAssistantPage" data-uuid="aiSalesAssistantPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-user-tie w-5 text-center" id="9303"></i> <span id="5444">AI销售助手</span> </a> </li> 
+     <li id="9780"> <a id="smartContractReviewPage" data-uuid="smartContractReviewPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-file-contract w-5 text-center" id="6224"></i> <span id="4260">合同智能审查</span> </a> </li> 
+     <li id="8790"> <a id="systemArchitecturePage" data-uuid="systemArchitecturePage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-sitemap w-5 text-center" id="6788"></i> <span id="9977">系统整体架构图</span> </a> </li> 
+    </ul> 
+   </nav> 
+  </aside> 
+  <!-- 主内容区域 --> 
+  <main class="pt-header pl-sidebar min-h-screen" id="5128"> 
+   <div class="p-6" id="1018"> 
+    <!-- 页面标题与流程步骤 --> 
+    <div class="flex flex-col gap-6" id="2092"> 
+     <div class="flex items-center justify-between" id="4207"> 
+      <div class="flex flex-col gap-1" id="9517"> 
+       <h1 class="text-2xl font-bold text-darkBg" id="5878">智能填表引擎</h1> 
+       <p class="text-gray-500 text-sm" id="3818">多源异构数据抽取 → AI解析校验 → CRM结构化一键入库工作流</p> 
+      </div> 
+      <div class="flex items-center gap-3" id="9763"> 
+       <button type="button" class="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50" id="1278"> <i class="fas fa-history" id="4361"></i> <span id="1597">历史记录</span> </button> 
+       <button type="button" class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90" id="8201"> <i class="fas fa-plus" id="1100"></i> <span id="5120">新建抽取任务</span> </button> 
+      </div> 
+     </div> 
+     <!-- 底部分步流程 --> 
+     <div class="bg-white rounded-xl p-5 card-shadow" id="3919"> 
+      <div class="flex items-center justify-between" id="6601"> 
+       <div class="flex items-center gap-3" id="7432"> 
+        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-medium" id="9913">
+          1 
+        </div> 
+        <span class="text-sm font-medium text-primary" id="4920">多源数据输入</span> 
+       </div> 
+       <div class="flex-1 h-1 bg-gray-200 mx-4 relative" id="2341"> 
+        <div class="absolute left-0 top-0 h-full w-1/3 bg-primary rounded-full" id="5520"></div> 
+       </div> 
+       <div class="flex items-center gap-3" id="8292"> 
+        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-medium" id="2888">
+          2 
+        </div> 
+        <span class="text-sm font-medium text-primary" id="7910">AI OCR/NLP解析</span> 
+       </div> 
+       <div class="flex-1 h-1 bg-gray-200 mx-4 relative" id="9881"> 
+        <div class="absolute left-0 top-0 h-full w-2/3 bg-primary rounded-full" id="1051"></div> 
+       </div> 
+       <div class="flex items-center gap-3" id="8055"> 
+        <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-sm font-medium" id="9906">
+          3 
+        </div> 
+        <span class="text-sm font-medium text-primary" id="4799">置信度校验</span> 
+       </div> 
+       <div class="flex-1 h-1 bg-gray-200 mx-4 relative" id="4087"> 
+        <div class="absolute left-0 top-0 h-full w-full bg-gray-200 rounded-full" id="7633"></div> 
+       </div> 
+       <div class="flex items-center gap-3" id="9874"> 
+        <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-sm font-medium" id="9259">
+          4 
+        </div> 
+        <span class="text-sm font-medium text-gray-500" id="5415">CRM一键入库</span> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 三栏主内容区 --> 
+     <div class="grid grid-cols-12 gap-5" id="2674"> 
+      <!-- 左侧输入区 --> 
+      <div class="col-span-4 flex flex-col gap-5" id="2505"> 
+       <div class="bg-white rounded-xl p-5 card-shadow" id="3282"> 
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="1021"> 
+         <h3 class="text-base font-semibold text-darkBg flex items-center gap-2" id="8006"> <i class="fas fa-layer-group text-primary" id="5068"></i> <span id="1812">多源输入源</span> </h3> 
+         <button type="button" class="text-primary text-sm flex items-center gap-1" id="7155"> <i class="fas fa-plus" id="6440"></i> <span id="7589">添加源</span> </button> 
+        </div> 
+        <div class="flex flex-col gap-4 pt-4" id="8129"> 
+         <!-- 微信聊天截图卡片 --> 
+         <div class="border border-primary/20 rounded-lg p-3 bg-layerBg" id="3419"> 
+          <div class="flex items-center justify-between pb-2" id="1444"> 
+           <div class="flex items-center gap-2" id="1472"> 
+            <i class="fab fa-weixin text-green-500 text-lg" id="9286"></i> 
+            <span class="text-sm font-medium text-darkBg" id="3714">微信聊天截图</span> 
+           </div> 
+           <span class="text-xs text-success bg-success/10 px-2 py-0.5 rounded" id="5717">已解析</span> 
+          </div> 
+          <div class="w-full h-32 bg-gray-100 rounded-lg overflow-hidden" id="2727"> 
+           <img src="./smartFormPipelinePage/9cbf3cf84ffef4aad4bc1152ae41061b_9323f671.png" class="w-full h-full object-cover" alt="微信聊天截图" id="7190"> 
+          </div> 
+         </div> 
+         <!-- PDF标书文件卡片 --> 
+         <div class="border border-gray-200 rounded-lg p-3 hover:border-primary/20 hover:bg-layerBg transition-all" id="7712"> 
+          <div class="flex items-center justify-between pb-2" id="8417"> 
+           <div class="flex items-center gap-2" id="6925"> 
+            <i class="fas fa-file-pdf text-red-500 text-lg" id="3780"></i> 
+            <span class="text-sm font-medium text-darkBg" id="2005">项目标书文件.pdf</span> 
+           </div> 
+           <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded" id="6337">2.3MB</span> 
+          </div> 
+          <div class="text-xs text-gray-500" id="6319">
+            共12页，包含客户公司信息、项目预算、联系方式等关键信息 
+          </div> 
+         </div> 
+         <!-- 邮件正文文本卡片 --> 
+         <div class="border border-gray-200 rounded-lg p-3 hover:border-primary/20 hover:bg-layerBg transition-all" id="3220"> 
+          <div class="flex items-center justify-between pb-2" id="8524"> 
+           <div class="flex items-center gap-2" id="9979"> 
+            <i class="fas fa-envelope text-primary text-lg" id="7320"></i> 
+            <span class="text-sm font-medium text-darkBg" id="8126">客户商务邮件</span> 
+           </div> 
+           <span class="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded" id="3100">已导入</span> 
+          </div> 
+          <div class="text-xs text-gray-600 line-clamp-2" id="3301">
+            "您好，我们公司对您的AI-CRM系统非常感兴趣，希望能安排下周二进行产品演示，我们的预算大概在50万左右..." 
+          </div> 
+         </div> 
+         <!-- 语音转文字音频波形图卡片 --> 
+         <div class="border border-gray-200 rounded-lg p-3 hover:border-primary/20 hover:bg-layerBg transition-all" id="2656"> 
+          <div class="flex items-center justify-between pb-2" id="3647"> 
+           <div class="flex items-center gap-2" id="6306"> 
+            <i class="fas fa-microphone text-purple-500 text-lg" id="1909"></i> 
+            <span class="text-sm font-medium text-darkBg" id="5088">3分钟通话录音</span> 
+           </div> 
+           <span class="text-xs text-success bg-success/10 px-2 py-0.5 rounded" id="6648">转写完成</span> 
+          </div> 
+          <div class="flex items-center gap-1 h-10 overflow-hidden" id="8802"> 
+           <div class="wave-bar h-4" id="6567"></div> 
+           <div class="wave-bar h-6" id="7532"></div> 
+           <div class="wave-bar h-8" id="2331"></div> 
+           <div class="wave-bar h-5" id="1489"></div> 
+           <div class="wave-bar h-10" id="2244"></div> 
+           <div class="wave-bar h-7" id="6779"></div> 
+           <div class="wave-bar h-4" id="4686"></div> 
+           <div class="wave-bar h-9" id="1318"></div> 
+           <div class="wave-bar h-6" id="6802"></div> 
+           <div class="wave-bar h-3" id="1055"></div> 
+           <div class="wave-bar h-8" id="7398"></div> 
+           <div class="wave-bar h-5" id="4196"></div> 
+           <div class="wave-bar h-7" id="3781"></div> 
+           <div class="wave-bar h-4" id="7003"></div> 
+           <div class="wave-bar h-10" id="2514"></div> 
+           <div class="wave-bar h-6" id="2357"></div> 
+           <div class="wave-bar h-8" id="6591"></div> 
+           <div class="wave-bar h-5" id="3665"></div> 
+           <div class="wave-bar h-3" id="8422"></div> 
+           <div class="wave-bar h-7" id="3745"></div> 
+           <div class="wave-bar h-9" id="1483"></div> 
+           <div class="wave-bar h-4" id="1309"></div> 
+           <div class="wave-bar h-6" id="2093"></div> 
+           <div class="wave-bar h-8" id="4522"></div> 
+           <div class="wave-bar h-5" id="4052"></div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 中间 AI 抽取与置信度引擎区 --> 
+      <div class="col-span-4 flex flex-col gap-5" id="8099"> 
+       <div class="bg-white rounded-xl p-5 card-shadow h-full" id="8170"> 
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="8411"> 
+         <h3 class="text-base font-semibold text-darkBg flex items-center gap-2" id="1437"> <i class="fas fa-brain text-primary" id="1652"></i> <span id="4974">AI 智能抽取引擎</span> </h3> 
+         <div class="flex items-center gap-2" id="2260"> 
+          <span class="text-xs text-success bg-success/10 px-2 py-0.5 rounded-full flex items-center gap-1" id="4871"> <span class="w-1.5 h-1.5 rounded-full bg-success animate-pulse" id="5741"></span> 运行中 </span> 
+         </div> 
+        </div> 
+        <div class="pt-4 flex flex-col gap-4" id="8610"> 
+         <!-- 解析文本高亮区域 --> 
+         <div class="p-4 bg-gray-50 rounded-lg text-sm text-gray-700 leading-relaxed" id="7982"> 
+          <p id="5312"> 您好，我是 <span class="text-highlight-green" id="7836">张三</span>，来自 <span class="text-highlight-green" id="7588">北京科技有限公司</span>，我的联系电话是 <span class="text-highlight-green" id="1761">13800138000</span>。 我们这次项目的 <span class="text-highlight-green" id="8939">预计金额是50万元</span>，希望能在本月底前完成部署。 关于付款周期，我们这边内部要求是 <span class="text-highlight-yellow" id="8823">90天账期</span>， 我们的开户行信息是 <span class="text-highlight-yellow" id="6415">中国工商银行北京海淀支行 6222 xxxx xxxx 1234</span>。 </p> 
+         </div> 
+         <!-- 提取字段映射列表 --> 
+         <div class="flex flex-col gap-3" id="7218"> 
+          <h4 class="text-sm font-medium text-gray-700" id="3690">提取字段映射</h4> 
+          <!-- 高置信度字段 --> 
+          <div class="flex items-center justify-between p-3 rounded-lg border border-success/20 bg-success/5" id="2551"> 
+           <div class="flex items-center gap-3" id="2683"> 
+            <i class="fas fa-check-circle text-success" id="5302"></i> 
+            <div class="flex flex-col gap-0.5" id="4856"> 
+             <span class="text-sm font-medium text-darkBg" id="2814">客户姓名</span> 
+             <span class="text-xs text-gray-500" id="5024">提取自微信聊天记录</span> 
+            </div> 
+           </div> 
+           <div class="flex items-center gap-2" id="6796"> 
+            <span class="text-sm font-medium text-darkBg" id="5017">张三</span> 
+            <span class="high-confidence-tag text-xs px-2 py-0.5 rounded" id="1015">98%</span> 
+           </div> 
+          </div> 
+          <div class="flex items-center justify-between p-3 rounded-lg border border-success/20 bg-success/5" id="2184"> 
+           <div class="flex items-center gap-3" id="3676"> 
+            <i class="fas fa-check-circle text-success" id="7202"></i> 
+            <div class="flex flex-col gap-0.5" id="2019"> 
+             <span class="text-sm font-medium text-darkBg" id="7137">联系电话</span> 
+             <span class="text-xs text-gray-500" id="1026">提取自邮件正文</span> 
+            </div> 
+           </div> 
+           <div class="flex items-center gap-2" id="9247"> 
+            <span class="text-sm font-medium text-darkBg" id="4645">13800138000</span> 
+            <span class="high-confidence-tag text-xs px-2 py-0.5 rounded" id="6828">95%</span> 
+           </div> 
+          </div> 
+          <div class="flex items-center justify-between p-3 rounded-lg border border-success/20 bg-success/5" id="5876"> 
+           <div class="flex items-center gap-3" id="1842"> 
+            <i class="fas fa-check-circle text-success" id="8646"></i> 
+            <div class="flex flex-col gap-0.5" id="9089"> 
+             <span class="text-sm font-medium text-darkBg" id="3985">预计金额</span> 
+             <span class="text-xs text-gray-500" id="8831">提取自标书文件</span> 
+            </div> 
+           </div> 
+           <div class="flex items-center gap-2" id="3194"> 
+            <span class="text-sm font-medium text-darkBg" id="2404">50万元</span> 
+            <span class="high-confidence-tag text-xs px-2 py-0.5 rounded" id="8096">92%</span> 
+           </div> 
+          </div> 
+          <!-- 低置信度字段 --> 
+          <div class="flex items-center justify-between p-3 rounded-lg border border-warning/20 bg-warning/5" id="1407"> 
+           <div class="flex items-center gap-3" id="8235"> 
+            <i class="fas fa-exclamation-triangle text-warning" id="5833"></i> 
+            <div class="flex flex-col gap-0.5" id="9177"> 
+             <span class="text-sm font-medium text-darkBg" id="1151">开户行账号</span> 
+             <span class="text-xs text-gray-500" id="7996">部分字符识别模糊</span> 
+            </div> 
+           </div> 
+           <div class="flex items-center gap-2" id="3869"> 
+            <span class="text-sm font-medium text-darkBg" id="3177">6222 xxxx xxxx 1234</span> 
+            <span class="low-confidence-tag text-xs px-2 py-0.5 rounded" id="4132">62%</span> 
+           </div> 
+          </div> 
+          <div class="flex items-center justify-between p-3 rounded-lg border border-warning/20 bg-warning/5" id="9652"> 
+           <div class="flex items-center gap-3" id="5615"> 
+            <i class="fas fa-exclamation-triangle text-warning" id="1738"></i> 
+            <div class="flex flex-col gap-0.5" id="1760"> 
+             <span class="text-sm font-medium text-darkBg" id="9981">付款周期</span> 
+             <span class="text-xs text-gray-500" id="1121">非标账期，需人工确认</span> 
+            </div> 
+           </div> 
+           <div class="flex items-center gap-2" id="5768"> 
+            <span class="text-sm font-medium text-darkBg" id="2166">90天</span> 
+            <span class="low-confidence-tag text-xs px-2 py-0.5 rounded" id="4069">71%</span> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 右侧 CRM 表单高亮确认区 --> 
+      <div class="col-span-4 flex flex-col gap-5" id="5753"> 
+       <div class="bg-white rounded-xl p-5 card-shadow h-full flex flex-col" id="1107"> 
+        <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="6530"> 
+         <h3 class="text-base font-semibold text-darkBg flex items-center gap-2" id="9226"> <i class="fas fa-crm text-primary fa-building" id="7818"></i> <span id="9307">CRM 结构化表单确认</span> </h3> 
+         <div class="flex items-center gap-2" id="4842"> 
+          <span class="text-xs text-primary bg-primary/10 px-2 py-0.5 rounded-full" id="5056">自动填充完成</span> 
+         </div> 
+        </div> 
+        <div class="pt-4 flex-1 flex flex-col gap-4 overflow-auto" id="4648"> 
+         <div class="flex flex-col gap-2" id="8716"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="5411"> <span class="text-danger" id="9685">*</span> 客户姓名 </label> 
+          <input type="text" value="张三" class="w-full h-10 px-3 border border-success/30 bg-success/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="9995"> 
+         </div> 
+         <div class="flex flex-col gap-2" id="5308"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="9647"> <span class="text-danger" id="7608">*</span> 公司名称 </label> 
+          <input type="text" value="北京科技有限公司" class="w-full h-10 px-3 border border-success/30 bg-success/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="5230"> 
+         </div> 
+         <div class="flex flex-col gap-2" id="4046"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="8572"> <span class="text-danger" id="2742">*</span> 联系电话 </label> 
+          <input type="text" value="13800138000" class="w-full h-10 px-3 border border-success/30 bg-success/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="6664"> 
+         </div> 
+         <div class="flex flex-col gap-2" id="7992"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="7925"> 意向级别 </label> 
+          <select class="w-full h-10 px-3 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="8037"> <option id="2430">A级 - 高意向</option> <option id="6730">B级 - 中意向</option> <option id="3540">C级 - 低意向</option> </select> 
+         </div> 
+         <div class="flex flex-col gap-2" id="6123"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="6145"> <span class="text-danger" id="7863">*</span> 预算金额 </label> 
+          <div class="relative" id="3663"> 
+           <input type="text" value="500000" class="w-full h-10 px-3 pr-12 border border-success/30 bg-success/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="5027"> 
+           <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm" id="9007">元</span> 
+          </div> 
+         </div> 
+         <div class="flex flex-col gap-2" id="2502"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="9018"> 开户行账号 <span class="ml-1 text-warning text-xs flex items-center gap-0.5" id="7971"> <i class="fas fa-exclamation-circle" id="5061"></i> 需确认 </span> </label> 
+          <input type="text" value="6222 0812 3456 7891 234" class="w-full h-10 px-3 border border-warning/30 bg-warning/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="3662"> 
+         </div> 
+         <div class="flex flex-col gap-2" id="7704"> 
+          <label class="text-sm font-medium text-gray-700 flex items-center gap-1" id="6586"> 付款周期 <span class="ml-1 text-warning text-xs flex items-center gap-0.5" id="4142"> <i class="fas fa-exclamation-circle" id="1468"></i> 需确认 </span> </label> 
+          <select class="w-full h-10 px-3 border border-warning/30 bg-warning/5 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="7493"> <option id="2698">90天</option> <option id="5364">60天</option> <option id="1895">30天</option> <option id="2661">预付全款</option> </select> 
+         </div> 
+         <div class="flex flex-col gap-2" id="5967"> 
+          <label class="text-sm font-medium text-gray-700" id="2134">跟进节点</label> 
+          <textarea rows="3" class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" placeholder="记录当前跟进阶段..." id="6283">已完成产品初步沟通，客户对系统功能表示认可，预计下周安排产品演示。</textarea> 
+         </div> 
+        </div> 
+        <!-- 底部操作按钮 --> 
+        <div class="flex items-center gap-3 pt-4 border-t border-gray-100 mt-4" id="6288"> 
+         <button type="button" id="reExtractBtn" class="flex-1 h-10 flex items-center justify-center gap-2 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50"> <i class="fas fa-redo" id="2339"></i> <span id="9435">重新提取</span> </button> 
+         <button type="button" id="writeToCrmBtn" class="flex-1 h-10 flex items-center justify-center gap-2 bg-primary text-white rounded-lg text-sm hover:bg-primary/90"> <i class="fas fa-database" id="7822"></i> <span id="8829">一键确认并写入 CRM</span> </button> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <!-- 成功提示弹窗蒙版 --> 
+  <div id="successModalMask" class="modal-mask fixed inset-0 z-50 flex items-center justify-center hidden"> 
+   <div id="successModalContent" class="modal-content bg-white rounded-xl p-6 w-96 shadow-2xl hidden"> 
+    <div class="flex flex-col items-center gap-4" id="8766"> 
+     <div class="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center" id="6043"> 
+      <i class="fas fa-check text-success text-3xl" id="1919"></i> 
+     </div> 
+     <h3 class="text-lg font-semibold text-darkBg" id="3968">写入成功</h3> 
+     <p class="text-sm text-gray-500 text-center" id="4801">数据已成功同步至CRM系统，客户档案已自动创建。</p> 
+     <button type="button" id="closeSuccessModalBtn" class="w-full h-10 bg-primary text-white rounded-lg text-sm hover:bg-primary/90"> 确定 </button> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        },
+        //显示id为targetId的目标容器
+        show: function(targetId, callback) {
+            const modal = document.getElementById(targetId);//获取targetId的隐藏框元素
+            // 检查targetId的隐藏框元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            // 递归清理子元素的内联样式和hidden类
+            const clearChildrenStyles = function(element) {
+                if (!element) return;
+                const children = element.children;
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i];
+                    // 清理hidden类
+                    child.classList.remove("hidden");
+                    // 清理内联样式
+                    child.style.display = "";
+                    child.style.visibility = "";
+                    child.style.opacity = "";
+                    child.style.transform = "";
+                    child.style.animation = "";
+                    // 递归处理子元素的子元素
+                    clearChildrenStyles(child);
+                }
+            };
+            // 1. 清理该元素之前的状态和监听器
+            if (modal._hideAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._hideAnimationEndHandler);
+                delete modal._hideAnimationEndHandler;
+            }
+            if (modal._hideTimeout){
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+            }
+             // 2. 移除目标元素的隐藏类并重置内联样式
+            modal.classList.remove("hidden");
+            modal.style.display = ""; // 清空内联隐藏，让 CSS 的 flex 自动接管
+            modal.style.visibility = "";
+            modal.style.opacity = "";
+            modal.style.transform = "";
+            modal.style.animation = "";
+            // 3. 递归清理所有子元素的内联样式和hidden类
+            clearChildrenStyles(modal);
+            // 4. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 5. 执行显示动画
+            modal.style.animation = 'yt_modalFadeIn 0.3s ease-out';
+            // 6. 动画结束后清理动画样式
+            const onAnimationEnd = function() {
+                modal.style.animation = "";
+                delete modal._showAnimationEndHandler;
+            };
+            modal._showAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            if (callback) callback();
+        },
+        //移除类名
+        removeClassNames: function(targetId, classNames) {
+            const target = document.getElementById(targetId);
+            if (!target) { console.error('Modal element not found: ' + targetId); return; }
+            if (!classNames) { console.warn('No class names provided'); return; }
+            const classNamesArray = classNames.split(',') || [];
+            classNamesArray.forEach(className => {
+                className = className.trim();
+                if (className) { target.classList.remove(className); }
+            });
+        },
+        //添加类名
+        addClassNames: function(targetId, classNames) {
+            const target = document.getElementById(targetId);
+            if (!target) { console.error('Modal element not found: ' + targetId); return; }
+            if (!classNames) { console.warn('No class names provided'); return; }
+            const classNamesArray = classNames.split(',') || [];
+            classNamesArray.forEach(className => {
+                className = className.trim();
+                if (className) { target.classList.add(className); }
+            });
+        }
+        };
+window.onload = function(){
+        try {
+          //为#writeToCrmBtn元素添加点击事件监听器
+          document.getElementById('writeToCrmBtn').addEventListener('click',function(event){
+             ytHandles.show('successModalMask', null);
+          ytHandles.show('successModalContent', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#closeSuccessModalBtn元素添加点击事件监听器
+          document.getElementById('closeSuccessModalBtn').addEventListener('click',function(event){
+             ytHandles.hide('successModalMask');
+          ytHandles.hide('successModalContent');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#reExtractBtn元素添加点击事件监听器
+          document.getElementById('reExtractBtn').addEventListener('click',function(event){
+             ytHandles.addClassNames('reExtractBtn', 'animate-pulse');
+          })
+        } catch (e) {
+          console.error('addClass error:', e);
+        }
+        try {
+          //为#reExtractBtn元素添加点击事件监听器
+          document.getElementById('reExtractBtn').addEventListener('click',function(event){
+             ytHandles.removeClassNames('reExtractBtn', 'animate-pulse');
+          })
+        } catch (e) {
+          console.error('removeClass error:', e);
+        }
+        try {
+          //为#smartFormPipelinePage元素添加点击事件监听器
+          document.getElementById('smartFormPipelinePage').addEventListener('click',function(event){
+             ytHandles.openPage('smartFormPipelinePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#aiSalesAssistantPage元素添加点击事件监听器
+          document.getElementById('aiSalesAssistantPage').addEventListener('click',function(event){
+             ytHandles.openPage('aiSalesAssistantPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#smartContractReviewPage元素添加点击事件监听器
+          document.getElementById('smartContractReviewPage').addEventListener('click',function(event){
+             ytHandles.openPage('smartContractReviewPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#systemArchitecturePage元素添加点击事件监听器
+          document.getElementById('systemArchitecturePage').addEventListener('click',function(event){
+             ytHandles.openPage('systemArchitecturePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="zh-CN" id="6540">
+ <head id="7222"> 
+  <meta charset="UTF-8" id="4189"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="9252"> 
+  <title id="2994">AI销售助手工作台 - AI-CRM</title> 
+  <script src="./aiSalesAssistantPage/resource_3fa48481.js" id="1439"></script> 
+  <link href="./aiSalesAssistantPage/all.min_3d03d8cd.css" rel="stylesheet" id="6927"> 
+  <script src="./aiSalesAssistantPage/echarts.min_2475de5b.js" id="5898"></script> 
+  <style id="4902">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #F8FAFC;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(22, 119, 255, 0.1);
+            color: #1677FF;
+            border-right: 3px solid #1677FF;
+        }
+        .modal-mask.hidden {
+            display: none;
+        }
+        .modal-content.hidden {
+            display: none;
+        }
+        .card-shadow {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+        }
+        .timeline-line {
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #1677FF, rgba(22, 119, 255, 0.2));
+        }
+    </style> 
+  <script id="5163">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1677FF',
+                        darkBg: '#0F172A',
+                        layerBg: 'rgba(22, 119, 255, 0.05)',
+                        cardBorder: 'rgba(22, 119, 255, 0.2)',
+                        success: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        info: '#3B82F6',
+                    },
+                    spacing: {
+                        sidebar: '240px',
+                        header: '64px',
+                    }
+                }
+            }
+        };
+    </script> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+</style> 
+ </head> 
+ <body class="min-h-screen" id="3392"> 
+  <!-- 顶部导航栏 --> 
+  <header class="fixed top-0 left-0 right-0 h-header bg-white border-b border-gray-200 flex items-center px-6 z-30" id="7788"> 
+   <div class="flex items-center gap-3" id="7896"> 
+    <div class="w-9 h-9 bg-primary rounded-lg flex items-center justify-center" id="2078"> 
+     <i class="fas fa-brain text-white text-lg" id="4453"></i> 
+    </div> 
+    <span class="text-xl font-bold text-darkBg" id="3138">AI-CRM</span> 
+   </div> 
+   <div class="flex-1 flex items-center justify-center px-8" id="6673"> 
+    <div class="relative w-full max-w-xl" id="4885"> 
+     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" id="4606"></i> 
+     <input type="text" placeholder="全局搜索功能、模块、文档..." class="w-full h-10 pl-10 pr-4 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="8425"> 
+    </div> 
+   </div> 
+   <div class="flex items-center gap-5" id="7045"> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="4794"> <i class="fas fa-bell" id="6174"></i> </button> 
+    <button type="button" class="w-9 h-9 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-100" id="6261"> <i class="fas fa-cog" id="6807"></i> </button> 
+    <div class="flex items-center gap-3 pl-3 border-l border-gray-200" id="9035"> 
+     <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-purple-500 flex items-center justify-center text-white font-medium" id="7200">
+       管 
+     </div> 
+     <span class="text-sm font-medium text-darkBg" id="3012">系统管理员</span> 
+    </div> 
+   </div> 
+  </header> 
+  <!-- 侧边导航栏 --> 
+  <aside class="fixed top-header left-0 bottom-0 w-sidebar bg-darkBg z-20" id="9547"> 
+   <nav class="h-full py-4" id="2466"> 
+    <ul class="flex flex-col" id="2957"> 
+     <li id="9786"> <a id="smartFormPipelinePage" data-uuid="smartFormPipelinePage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-file-import w-5 text-center" id="9030"></i> <span id="6386">智能填表引擎</span> </a> </li> 
+     <li id="3933"> <a id="aiSalesAssistantPage" data-uuid="aiSalesAssistantPage" href="javascript:void(0);" class="sidebar-item-active flex items-center gap-3 px-5 py-3.5 text-sm font-medium"> <i class="fas fa-user-tie w-5 text-center" id="6005"></i> <span id="6399">AI销售助手</span> </a> </li> 
+     <li id="8127"> <a id="smartContractReviewPage" data-uuid="smartContractReviewPage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-file-contract w-5 text-center" id="2735"></i> <span id="8341">合同智能审查</span> </a> </li> 
+     <li id="3262"> <a id="systemArchitecturePage" data-uuid="systemArchitecturePage" href="javascript:void(0);" class="flex items-center gap-3 px-5 py-3.5 text-sm font-medium text-gray-300 hover:bg-white/5"> <i class="fas fa-sitemap w-5 text-center" id="9862"></i> <span id="7611">系统整体架构图</span> </a> </li> 
+    </ul> 
+   </nav> 
+  </aside> 
+  <!-- 主内容区域 --> 
+  <main class="pt-header pl-sidebar min-h-screen" id="5207"> 
+   <div class="p-6 h-full" id="9643"> 
+    <div class="flex items-center gap-2 pb-5" id="3338"> 
+     <h1 class="text-2xl font-bold text-darkBg" id="8175">AI销售助手工作台</h1> 
+     <span class="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-full" id="6384">智能分析中</span> 
+    </div> 
+    <!-- 三栏布局容器 --> 
+    <div class="flex gap-5 h-full" id="2920"> 
+     <!-- 左侧：客户基本信息栏 --> 
+     <div class="w-1/4 flex flex-col gap-5" id="1920"> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="3509"> 
+       <div class="flex items-center gap-3 pb-4 border-b border-gray-100" id="7576"> 
+        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-blue-400 flex items-center justify-center text-white text-xl font-bold" id="3117">
+          华 
+        </div> 
+        <div class="flex flex-col gap-1" id="2410"> 
+         <h2 class="text-lg font-semibold text-darkBg" id="4990">华为技术有限公司</h2> 
+         <span class="text-sm text-gray-500" id="8882">客户编号: CUS-2024-0892</span> 
+        </div> 
+       </div> 
+       <div class="flex flex-col gap-4 pt-4" id="1336"> 
+        <div class="flex items-center gap-3" id="4601"> 
+         <i class="fas fa-user text-gray-400 w-5" id="9119"></i> 
+         <div class="flex flex-col gap-0.5" id="4218"> 
+          <span class="text-xs text-gray-500" id="2691">对接人</span> 
+          <span class="text-sm font-medium text-darkBg" id="5413">张明远</span> 
+         </div> 
+        </div> 
+        <div class="flex items-center gap-3" id="4089"> 
+         <i class="fas fa-phone text-gray-400 w-5" id="2704"></i> 
+         <div class="flex flex-col gap-0.5" id="5846"> 
+          <span class="text-xs text-gray-500" id="7782">联系电话</span> 
+          <span class="text-sm font-medium text-darkBg" id="2073">138****5678</span> 
+         </div> 
+        </div> 
+        <div class="flex items-center gap-3" id="4923"> 
+         <i class="fas fa-envelope text-gray-400 w-5" id="3135"></i> 
+         <div class="flex flex-col gap-0.5" id="2136"> 
+          <span class="text-xs text-gray-500" id="3030">邮箱</span> 
+          <span class="text-sm font-medium text-darkBg" id="3708">zhangmy@huawei.com</span> 
+         </div> 
+        </div> 
+        <div class="flex items-center gap-3" id="4293"> 
+         <i class="fas fa-building text-gray-400 w-5" id="4460"></i> 
+         <div class="flex flex-col gap-0.5" id="1303"> 
+          <span class="text-xs text-gray-500" id="6865">所属行业</span> 
+          <span class="text-sm font-medium text-darkBg" id="5019">通信设备制造</span> 
+         </div> 
+        </div> 
+        <div class="flex items-center gap-3" id="2436"> 
+         <i class="fas fa-flag text-gray-400 w-5" id="4487"></i> 
+         <div class="flex flex-col gap-0.5" id="3765"> 
+          <span class="text-xs text-gray-500" id="8973">意向级别</span> 
+          <span class="inline-flex items-center px-2 py-0.5 bg-success/10 text-success text-xs font-medium rounded-full" id="6082">A类 高意向</span> 
+         </div> 
+        </div> 
+        <div class="flex items-center gap-3" id="3797"> 
+         <i class="fas fa-coins text-gray-400 w-5" id="7321"></i> 
+         <div class="flex flex-col gap-0.5" id="2276"> 
+          <span class="text-xs text-gray-500" id="7645">预计预算</span> 
+          <span class="text-sm font-medium text-darkBg" id="6679">¥ 1,200,000</span> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="5204"> 
+       <h3 class="text-base font-semibold text-darkBg pb-3 border-b border-gray-100" id="1302">客户标签</h3> 
+       <div class="flex flex-wrap gap-2 pt-3" id="3254"> 
+        <span class="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full" id="3503">重点客户</span> 
+        <span class="px-3 py-1 bg-success/10 text-success text-xs rounded-full" id="1528">复购意向</span> 
+        <span class="px-3 py-1 bg-warning/10 text-warning text-xs rounded-full" id="2341">高预算</span> 
+        <span class="px-3 py-1 bg-purple-100 text-purple-600 text-xs rounded-full" id="1959">AI需求</span> 
+        <span class="px-3 py-1 bg-pink-100 text-pink-600 text-xs rounded-full" id="8964">长期合作</span> 
+       </div> 
+      </div> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="8420"> 
+       <h3 class="text-base font-semibold text-darkBg pb-3 border-b border-gray-100" id="7706">历史跟进记录</h3> 
+       <div class="flex flex-col gap-3 pt-3" id="1363"> 
+        <div class="flex items-center gap-2" id="6242"> 
+         <i class="fas fa-check-circle text-success" id="8037"></i> 
+         <span class="text-sm text-gray-600" id="8995">2024-05-20 初次拜访完成</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="8989"> 
+         <i class="fas fa-check-circle text-success" id="6081"></i> 
+         <span class="text-sm text-gray-600" id="9630">2024-05-25 方案演示完成</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="8516"> 
+         <i class="fas fa-check-circle text-success" id="1908"></i> 
+         <span class="text-sm text-gray-600" id="1683">2024-06-01 技术对接完成</span> 
+        </div> 
+        <div class="flex items-center gap-2" id="4183"> 
+         <i class="fas fa-spinner text-primary" id="8314"></i> 
+         <span class="text-sm text-gray-600" id="8897">2024-06-08 商务谈判中</span> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 中间：跟进时间线区域 --> 
+     <div class="w-2/4 flex flex-col gap-5" id="9707"> 
+      <div class="bg-white rounded-xl p-5 card-shadow flex-1 overflow-auto" id="5021"> 
+       <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="4886"> 
+        <h2 class="text-lg font-semibold text-darkBg" id="9612">跟进时间线</h2> 
+        <button type="button" id="addFollowBtn" class="flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-sm rounded-lg hover:bg-primary/90"> <i class="fas fa-plus" id="8742"></i> <span id="7528">新增跟进</span> </button> 
+       </div> 
+       <div class="relative pt-6" id="9372"> 
+        <div class="timeline-line" id="8799"></div> 
+        <div class="flex flex-col gap-6 pl-8 relative" id="3327"> 
+         <!-- AI生成的跟进摘要卡片 --> 
+         <div class="relative" id="8769"> 
+          <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center text-white text-xs" id="4002"> 
+           <i class="fas fa-robot" id="3596"></i> 
+          </div> 
+          <div class="bg-primary/5 rounded-xl p-4 border border-primary/20" id="6962"> 
+           <div class="flex items-center gap-2 pb-3" id="1396"> 
+            <span class="px-2 py-0.5 bg-primary text-white text-xs rounded" id="4583">AI 智能生成</span> 
+            <span class="text-xs text-gray-500" id="3348">根据 3 分钟前通话录音生成</span> 
+           </div> 
+           <div class="flex flex-col gap-3" id="8592"> 
+            <div class="flex flex-col gap-1" id="4675"> 
+             <h4 class="text-sm font-semibold text-darkBg flex items-center gap-1" id="9097"> <i class="fas fa-exclamation-circle text-warning" id="2168"></i> 客户痛点 </h4> 
+             <p class="text-sm text-gray-600 pl-6" id="9718">当前旧系统响应速度慢，高峰期经常卡顿，无法满足大并发数据处理需求，急需升级高性能AI处理模块。</p> 
+            </div> 
+            <div class="flex flex-col gap-1" id="7858"> 
+             <h4 class="text-sm font-semibold text-darkBg flex items-center gap-1" id="4836"> <i class="fas fa-tag text-info" id="5686"></i> 关注价格点 </h4> 
+             <p class="text-sm text-gray-600 pl-6" id="2640">客户对整体报价比较满意，但希望能够提供3个月的免费试用期，同时要求包含1年的免费运维服务。</p> 
+            </div> 
+            <div class="flex flex-col gap-1" id="5406"> 
+             <h4 class="text-sm font-semibold text-darkBg flex items-center gap-1" id="4051"> <i class="fas fa-tasks text-success" id="2040"></i> 下一步行动项 </h4> 
+             <p class="text-sm text-gray-600 pl-6" id="6329">1. 明日10:30发送调整后的报价方案<br id="1781">2. 协调技术部出具定制化部署方案<br id="9811">3. 预约下周三进行最终合同细节沟通</p> 
+            </div> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 普通跟进记录 --> 
+         <div class="relative" id="7184"> 
+          <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-success flex items-center justify-center text-white text-xs" id="4080"> 
+           <i class="fas fa-phone" id="8573"></i> 
+          </div> 
+          <div class="bg-white rounded-xl p-4 border border-gray-100" id="5587"> 
+           <div class="flex items-center justify-between pb-2" id="7015"> 
+            <span class="text-sm font-medium text-darkBg" id="6407">通话沟通</span> 
+            <span class="text-xs text-gray-500" id="9812">2024-06-10 15:30</span> 
+           </div> 
+           <p class="text-sm text-gray-600" id="1128">与客户技术负责人李工沟通系统部署架构细节，确认了服务器配置要求和数据迁移方案，客户对我们的技术方案表示认可。</p> 
+          </div> 
+         </div> 
+         <div class="relative" id="5649"> 
+          <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-warning flex items-center justify-center text-white text-xs" id="8603"> 
+           <i class="fas fa-video" id="1140"></i> 
+          </div> 
+          <div class="bg-white rounded-xl p-4 border border-gray-100" id="6338"> 
+           <div class="flex items-center justify-between pb-2" id="3438"> 
+            <span class="text-sm font-medium text-darkBg" id="8023">视频会议</span> 
+            <span class="text-xs text-gray-500" id="2401">2024-06-08 10:00</span> 
+           </div> 
+           <p class="text-sm text-gray-600" id="3206">进行线上产品演示，展示AI智能分析模块的实际运行效果，客户方12人参与会议，会后收集到5条优化建议。</p> 
+          </div> 
+         </div> 
+         <div class="relative" id="9917"> 
+          <div class="absolute -left-10 top-0 w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center text-white text-xs" id="6411"> 
+           <i class="fas fa-building" id="3903"></i> 
+          </div> 
+          <div class="bg-white rounded-xl p-4 border border-gray-100" id="3301"> 
+           <div class="flex items-center justify-between pb-2" id="2982"> 
+            <span class="text-sm font-medium text-darkBg" id="8227">上门拜访</span> 
+            <span class="text-xs text-gray-500" id="7007">2024-06-05 14:00</span> 
+           </div> 
+           <p class="text-sm text-gray-600" id="3015">前往客户公司进行实地调研，了解现有系统运行情况和团队人员配置，收集详细需求文档，初步确定项目实施周期为2个月。</p> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+     <!-- 右侧：AI预测与推荐面板 --> 
+     <div class="w-1/4 flex flex-col gap-5" id="9946"> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="6023"> 
+       <h3 class="text-base font-semibold text-darkBg pb-4 border-b border-gray-100" id="2451">赢单概率预测</h3> 
+       <div class="flex items-center justify-center py-5" id="5545"> 
+        <div id="winRateChart" class="w-40 h-40"></div> 
+       </div> 
+       <div class="flex flex-col gap-3 pt-2" id="6100"> 
+        <div class="flex items-center gap-2 p-2 bg-success/5 rounded-lg" id="9645"> 
+         <i class="fas fa-arrow-up text-success" id="4025"></i> 
+         <span class="text-sm text-gray-700" id="1321">+15% 决策人已深度参与</span> 
+        </div> 
+        <div class="flex items-center gap-2 p-2 bg-success/5 rounded-lg" id="4599"> 
+         <i class="fas fa-arrow-up text-success" id="1851"></i> 
+         <span class="text-sm text-gray-700" id="9528">+10% 技术方案已通过评审</span> 
+        </div> 
+        <div class="flex items-center gap-2 p-2 bg-warning/5 rounded-lg" id="7330"> 
+         <i class="fas fa-arrow-down text-warning" id="3366"></i> 
+         <span class="text-sm text-gray-700" id="8019">-5% 账期要求较长</span> 
+        </div> 
+        <div class="flex items-center gap-2 p-2 bg-warning/5 rounded-lg" id="2190"> 
+         <i class="fas fa-arrow-down text-warning" id="7385"></i> 
+         <span class="text-sm text-gray-700" id="7379">-2% 竞品正在跟进</span> 
+        </div> 
+       </div> 
+      </div> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="2540"> 
+       <h3 class="text-base font-semibold text-darkBg pb-4 border-b border-gray-100" id="1280">最佳联系时机推荐</h3> 
+       <div class="flex items-center gap-3 p-4 bg-primary/5 rounded-xl border border-primary/20 mt-3" id="3665"> 
+        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary text-xl" id="2044"> 
+         <i class="fas fa-clock" id="5573"></i> 
+        </div> 
+        <div class="flex flex-col gap-1" id="7343"> 
+         <span class="text-sm font-medium text-darkBg" id="6732">建议明日 10:30 AM 联系</span> 
+         <span class="text-xs text-gray-500" id="5174">客户习惯在此时间段处理采购审批，历史沟通回复率达92%</span> 
+        </div> 
+       </div> 
+       <button type="button" class="w-full mt-4 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 flex items-center justify-center gap-2" id="8662"> <i class="fas fa-calendar-plus" id="1236"></i> <span id="5789">添加日程提醒</span> </button> 
+      </div> 
+      <div class="bg-white rounded-xl p-5 card-shadow" id="2428"> 
+       <h3 class="text-base font-semibold text-darkBg pb-4 border-b border-gray-100" id="5029">AI智能建议</h3> 
+       <div class="flex flex-col gap-3 pt-3" id="4111"> 
+        <div class="p-3 bg-blue-50 rounded-lg border border-blue-100" id="8978"> 
+         <div class="flex items-start gap-2" id="3412"> 
+          <i class="fas fa-lightbulb text-blue-500 mt-0.5" id="4778"></i> 
+          <p class="text-sm text-gray-700" id="3177">建议在下次沟通中重点强调我们的7*24小时技术支持服务，这是竞品不具备的核心优势。</p> 
+         </div> 
+        </div> 
+        <div class="p-3 bg-green-50 rounded-lg border border-green-100" id="9292"> 
+         <div class="flex items-start gap-2" id="1552"> 
+          <i class="fas fa-chart-line text-green-500 mt-0.5" id="2191"></i> 
+          <p class="text-sm text-gray-700" id="7764">根据历史数据，当前阶段提供5%的价格优惠可以将成交概率提升至90%以上。</p> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <!-- 新增跟进弹窗蒙版 --> 
+  <div id="addFollowMask" class="modal-mask hidden fixed inset-0 bg-black/50 z-40 flex items-center justify-center"> 
+   <!-- 新增跟进弹窗内容 --> 
+   <div id="addFollowModal" class="modal-content hidden bg-white rounded-xl w-full max-w-lg p-6 z-50"> 
+    <div class="flex items-center justify-between pb-4 border-b border-gray-100" id="5067"> 
+     <h3 class="text-lg font-semibold text-darkBg" id="8868">新增跟进记录</h3> 
+     <button type="button" id="closeAddFollowBtn" class="w-8 h-8 rounded-lg flex items-center justify-center text-gray-400 hover:bg-gray-100"> <i class="fas fa-times" id="3577"></i> </button> 
+    </div> 
+    <div class="flex flex-col gap-4 pt-4" id="3667"> 
+     <div class="flex flex-col gap-2" id="6683"> 
+      <label class="text-sm font-medium text-gray-700" id="7958">跟进类型</label> 
+      <select class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="1433"> <option id="6617">电话沟通</option> <option id="9739">视频会议</option> <option id="3572">上门拜访</option> <option id="9732">微信沟通</option> <option id="2106">邮件沟通</option> </select> 
+     </div> 
+     <div class="flex flex-col gap-2" id="5728"> 
+      <label class="text-sm font-medium text-gray-700" id="1142">跟进内容</label> 
+      <textarea rows="4" class="w-full px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" placeholder="请输入本次跟进的详细内容..." id="5432"></textarea> 
+     </div> 
+     <div class="flex flex-col gap-2" id="2400"> 
+      <label class="text-sm font-medium text-gray-700" id="7109">下次跟进时间</label> 
+      <input type="datetime-local" class="w-full h-10 px-3 border border-gray-200 rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20" id="1160"> 
+     </div> 
+     <div class="flex items-center gap-3 pt-3" id="6316"> 
+      <button type="button" id="cancelAddFollowBtn" class="flex-1 h-10 border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50">取消</button> 
+      <button type="button" class="flex-1 h-10 bg-primary text-white rounded-lg hover:bg-primary/90" id="7538">保存记录</button> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+            //图表初始化
+            {
+                const chart_winRateChart = echarts.init(document.getElementById('winRateChart'));
+                chart_winRateChart.setOption({"series":[{"pointer":{"offsetCenter":[0,"-10%"],"length":"60%","width":4},"startAngle":180,"data":[{"name":"赢单概率","value":78}],"max":100,"endAngle":0,"splitNumber":10,"type":"gauge","title":{"show":false},"axisLabel":{"formatter":"{value}%","distance":-15,"color":"#6B7280","fontSize":10},"min":0,"axisLine":{"lineStyle":{"color":[[0.3,"#EF4444"],[0.7,"#F59E0B"],[1,"#10B981"]],"width":12,"opacity":0.3}},"anchor":{"size":8,"show":true,"itemStyle":{"borderColor":"#1677FF","borderWidth":2}},"axisTick":{"distance":-20,"lineStyle":{"color":"#9CA3AF","width":1},"splitNumber":5},"splitLine":{"distance":-25,"lineStyle":{"color":"#9CA3AF","width":2},"length":12},"detail":{"offsetCenter":[0,"30%"],"formatter":"{value}%","color":"#1677FF","fontSize":28,"valueAnimation":true,"fontWeight":"bold"},"radius":"100%"}]});
+            }</script> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        },
+        //显示id为targetId的目标容器
+        show: function(targetId, callback) {
+            const modal = document.getElementById(targetId);//获取targetId的隐藏框元素
+            // 检查targetId的隐藏框元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            // 递归清理子元素的内联样式和hidden类
+            const clearChildrenStyles = function(element) {
+                if (!element) return;
+                const children = element.children;
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i];
+                    // 清理hidden类
+                    child.classList.remove("hidden");
+                    // 清理内联样式
+                    child.style.display = "";
+                    child.style.visibility = "";
+                    child.style.opacity = "";
+                    child.style.transform = "";
+                    child.style.animation = "";
+                    // 递归处理子元素的子元素
+                    clearChildrenStyles(child);
+                }
+            };
+            // 1. 清理该元素之前的状态和监听器
+            if (modal._hideAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._hideAnimationEndHandler);
+                delete modal._hideAnimationEndHandler;
+            }
+            if (modal._hideTimeout){
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+            }
+             // 2. 移除目标元素的隐藏类并重置内联样式
+            modal.classList.remove("hidden");
+            modal.style.display = ""; // 清空内联隐藏，让 CSS 的 flex 自动接管
+            modal.style.visibility = "";
+            modal.style.opacity = "";
+            modal.style.transform = "";
+            modal.style.animation = "";
+            // 3. 递归清理所有子元素的内联样式和hidden类
+            clearChildrenStyles(modal);
+            // 4. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 5. 执行显示动画
+            modal.style.animation = 'yt_modalFadeIn 0.3s ease-out';
+            // 6. 动画结束后清理动画样式
+            const onAnimationEnd = function() {
+                modal.style.animation = "";
+                delete modal._showAnimationEndHandler;
+            };
+            modal._showAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            if (callback) callback();
+        }
+        };
+window.onload = function(){
+        try {
+          //为#addFollowBtn元素添加点击事件监听器
+          document.getElementById('addFollowBtn').addEventListener('click',function(event){
+             ytHandles.show('addFollowMask', null);
+          ytHandles.show('addFollowModal', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#closeAddFollowBtn元素添加点击事件监听器
+          document.getElementById('closeAddFollowBtn').addEventListener('click',function(event){
+             ytHandles.hide('addFollowMask');
+          ytHandles.hide('addFollowModal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#cancelAddFollowBtn元素添加点击事件监听器
+          document.getElementById('cancelAddFollowBtn').addEventListener('click',function(event){
+             ytHandles.hide('addFollowMask');
+          ytHandles.hide('addFollowModal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#smartFormPipelinePage元素添加点击事件监听器
+          document.getElementById('smartFormPipelinePage').addEventListener('click',function(event){
+             ytHandles.openPage('smartFormPipelinePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#aiSalesAssistantPage元素添加点击事件监听器
+          document.getElementById('aiSalesAssistantPage').addEventListener('click',function(event){
+             ytHandles.openPage('aiSalesAssistantPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#smartContractReviewPage元素添加点击事件监听器
+          document.getElementById('smartContractReviewPage').addEventListener('click',function(event){
+             ytHandles.openPage('smartContractReviewPage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#systemArchitecturePage元素添加点击事件监听器
+          document.getElementById('systemArchitecturePage').addEventListener('click',function(event){
+             ytHandles.openPage('systemArchitecturePage');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

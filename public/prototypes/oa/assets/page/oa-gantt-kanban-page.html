@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="zh-CN" id="8181">
+ <head id="2886"> 
+  <meta charset="UTF-8" id="5114"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="8026"> 
+  <title id="5861">项目与研发协同页 - 企业OA系统</title> 
+  <script src="./oa-gantt-kanban-page/resource_3fa48481.js" id="6368"></script> 
+  <script src="./oa-gantt-kanban-page/all.min_3d03d8cd.css" id="1522"></script> 
+  <script src="./oa-gantt-kanban-page/echarts.min_2475de5b.js" id="3267"></script> 
+  <script id="6903">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#2563EB',
+                        accent: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#0F172A',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        };
+    </script> 
+  <style type="text/tailwindcss" id="2039">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-glass {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            .card-glass-dark {
+                background: rgba(30, 58, 138, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(30, 58, 138, 0.15);
+            }
+            .flow-line {
+                background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0.2));
+                height: 2px;
+                position: relative;
+                overflow: hidden;
+            }
+            .flow-line::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, #10B981, transparent);
+                animation: flow 3s linear infinite;
+            }
+            @keyframes flow {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(200%); }
+            }
+            .modal-mask {
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(4px);
+            }
+            .modal-mask.hidden {
+                display: none;
+            }
+            .kanban-column {
+                min-height: 400px;
+            }
+            .gantt-bar {
+                height: 24px;
+                border-radius: 4px;
+                position: relative;
+            }
+            .gantt-progress {
+                height: 100%;
+                border-radius: 4px;
+            }
+        }
+    </style> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+
+
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+</style> 
+ </head> 
+ <body class="bg-slate-50 font-sans" id="4026"> 
+  <!-- 左侧侧边栏 --> 
+  <aside class="w-64 bg-dark text-white fixed left-0 top-0 h-full z-20 overflow-y-auto" id="5883"> 
+   <div class="p-6 flex flex-col gap-8" id="9262"> 
+    <div class="flex items-center gap-3" id="5310"> 
+     <i class="fas fa-building text-2xl text-secondary" id="5387"></i> 
+     <h1 class="text-xl font-bold" id="7956">企业OA系统</h1> 
+    </div> 
+    <nav class="flex flex-col gap-1" id="9837"> 
+     <a id="nav-architecture" data-uuid="oa-architecture-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-sitemap w-5 text-center" id="6905"></i> <span id="6627">系统架构总览</span> </a> 
+     <a id="nav-workflow" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-cogs w-5 text-center" id="6432"></i> <span id="3049">流程引擎配置</span> </a> 
+     <a id="nav-attendance" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-user-clock w-5 text-center" id="8288"></i> <span id="5190">人事考勤管理</span> </a> 
+     <a id="nav-finance" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-bookkeeping w-5 text-center" id="6979"></i> <span id="6424">财务台账管理</span> </a> 
+     <a id="nav-security" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-shield-alt w-5 text-center" id="2775"></i> <span id="7333">保密权限配置</span> </a> 
+     <a id="nav-progress" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg bg-primary/30 text-white font-medium"> <i class="fas fa-tasks w-5 text-center" id="5453"></i> <span id="1515">项目进度管控</span> </a> 
+     <a id="nav-kanban" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-columns w-5 text-center" id="5802"></i> <span id="2617">研发协同看板</span> </a> 
+    </nav> 
+   </div> 
+  </aside> 
+  <!-- 主内容区域 --> 
+  <main class="pl-64" id="9203"> 
+   <!-- 顶部导航栏 --> 
+   <header class="h-16 bg-white shadow-sm sticky top-0 z-10 flex items-center px-8" id="6907"> 
+    <div class="flex items-center justify-between w-full" id="2666"> 
+     <div class="flex items-center gap-2 text-slate-500" id="1015"> 
+      <i class="fas fa-home" id="3612"></i> 
+      <span id="4092">/</span> 
+      <span class="text-primary font-medium" id="1836">项目与研发协同</span> 
+     </div> 
+     <div class="flex items-center gap-6" id="7882"> 
+      <button type="button" class="relative p-2 rounded-full hover:bg-slate-100" id="9848"> <i class="fas fa-bell text-slate-600" id="6739"></i> <span class="absolute top-0 right-0 w-2 h-2 bg-danger rounded-full" id="5554"></span> </button> 
+      <div class="flex items-center gap-3" id="8973"> 
+       <img src="./oa-gantt-kanban-page/40_206da978.jpg" alt="用户头像" class="w-9 h-9 rounded-full object-cover" id="9822"> 
+       <span class="font-medium" id="3225">系统管理员</span> 
+      </div> 
+     </div> 
+    </div> 
+   </header> 
+   <!-- 页面内容 --> 
+   <div class="p-6 flex flex-col gap-6" id="5044"> 
+    <!-- 顶部统计卡片区域 --> 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="8770"> 
+     <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-3" id="9691"> 
+      <div class="flex items-center justify-between" id="7367"> 
+       <span class="text-slate-500 text-sm" id="4108">进行中项目</span> 
+       <div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center" id="9589"> 
+        <i class="fas fa-project-diagram text-secondary" id="2099"></i> 
+       </div> 
+      </div> 
+      <div class="flex items-end gap-2" id="6926"> 
+       <span class="text-3xl font-bold text-dark" id="4264">12</span> 
+       <span class="text-accent text-sm pb-1" id="4353">+2 本周新增</span> 
+      </div> 
+     </div> 
+     <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-3" id="4521"> 
+      <div class="flex items-center justify-between" id="3842"> 
+       <span class="text-slate-500 text-sm" id="8889">待处理任务</span> 
+       <div class="w-10 h-10 rounded-lg bg-warning/10 flex items-center justify-center" id="6443"> 
+        <i class="fas fa-tasks text-warning" id="4708"></i> 
+       </div> 
+      </div> 
+      <div class="flex items-end gap-2" id="1123"> 
+       <span class="text-3xl font-bold text-dark" id="8976">47</span> 
+       <span class="text-warning text-sm pb-1" id="8750">8 项即将延期</span> 
+      </div> 
+     </div> 
+     <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-3" id="1245"> 
+      <div class="flex items-center justify-between" id="4980"> 
+       <span class="text-slate-500 text-sm" id="4278">项目整体进度</span> 
+       <div class="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center" id="9893"> 
+        <i class="fas fa-chart-line text-accent" id="1659"></i> 
+       </div> 
+      </div> 
+      <div class="flex items-end gap-2" id="4115"> 
+       <span class="text-3xl font-bold text-dark" id="3557">68%</span> 
+       <span class="text-slate-500 text-sm pb-1" id="4603">平均完成率</span> 
+      </div> 
+     </div> 
+     <div class="bg-white rounded-xl p-5 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-3" id="2349"> 
+      <div class="flex items-center justify-between" id="1010"> 
+       <span class="text-slate-500 text-sm" id="5599">延期风险项目</span> 
+       <div class="w-10 h-10 rounded-lg bg-danger/10 flex items-center justify-center" id="7412"> 
+        <i class="fas fa-exclamation-triangle text-danger" id="2854"></i> 
+       </div> 
+      </div> 
+      <div class="flex items-end gap-2" id="7721"> 
+       <span class="text-3xl font-bold text-dark" id="8468">3</span> 
+       <span class="text-danger text-sm pb-1" id="8147">需重点关注</span> 
+      </div> 
+     </div> 
+    </div> 
+    <!-- 项目进度甘特图区域 --> 
+    <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-5" id="1611"> 
+     <div class="flex items-center justify-between" id="2930"> 
+      <h2 class="text-xl font-bold text-dark" id="2189">项目进度甘特图</h2> 
+      <div class="flex items-center gap-3" id="9176"> 
+       <div class="flex bg-slate-100 rounded-lg p-1" id="5420"> 
+        <button type="button" class="px-3 py-1 rounded-md bg-white text-primary text-sm font-medium shadow-sm" id="6956">月视图</button> 
+        <button type="button" class="px-3 py-1 rounded-md text-slate-500 text-sm" id="2699">周视图</button> 
+        <button type="button" class="px-3 py-1 rounded-md text-slate-500 text-sm" id="5016">日视图</button> 
+       </div> 
+       <button id="add-gantt-task" type="button" class="flex items-center gap-1 px-4 py-2 bg-secondary text-white rounded-lg text-sm"> <i class="fas fa-plus" id="9265"></i> <span id="1025">新增任务</span> </button> 
+      </div> 
+     </div> 
+     <div class="flow-line" id="5396"></div> 
+     <div class="w-full overflow-x-auto" id="5691"> 
+      <div class="min-w-[1000px]" id="9050"> 
+       <!-- 甘特图头部时间轴 --> 
+       <div class="flex border-b border-slate-200" id="7316"> 
+        <div class="w-64 p-3 bg-slate-50 font-medium text-slate-600" id="4131">
+          任务名称 
+        </div> 
+        <div class="flex-1 flex" id="4191"> 
+         <div class="flex-1 p-3 bg-slate-50 text-center text-sm text-slate-500" id="1026">
+           第1周 
+         </div> 
+         <div class="flex-1 p-3 bg-slate-50 text-center text-sm text-slate-500" id="7251">
+           第2周 
+         </div> 
+         <div class="flex-1 p-3 bg-slate-50 text-center text-sm text-slate-500" id="8751">
+           第3周 
+         </div> 
+         <div class="flex-1 p-3 bg-slate-50 text-center text-sm text-slate-500" id="9475">
+           第4周 
+         </div> 
+        </div> 
+       </div> 
+       <!-- 甘特图任务列表 --> 
+       <div class="flex items-center border-b border-slate-100" id="3395"> 
+        <div class="w-64 p-3 flex items-center gap-2 text-sm" id="9001"> 
+         <i class="fas fa-folder text-secondary" id="3639"></i> 
+         <span class="font-medium" id="9734">企业OA系统升级项目</span> 
+        </div> 
+        <div class="flex-1 p-3" id="6445"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="2791"> 
+          <div class="h-full bg-secondary w-3/4 rounded-full" id="4055"></div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="flex items-center border-b border-slate-100" id="9792"> 
+        <div class="w-64 p-3 pl-8 flex items-center gap-2 text-sm" id="5662"> 
+         <i class="fas fa-tasks text-slate-400" id="9074"></i> 
+         <span id="9182">需求调研与分析</span> 
+        </div> 
+        <div class="flex-1 p-3" id="2052"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="3567"> 
+          <div class="h-full bg-accent w-full rounded-full" id="9285"></div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="flex items-center border-b border-slate-100" id="3815"> 
+        <div class="w-64 p-3 pl-8 flex items-center gap-2 text-sm" id="9910"> 
+         <i class="fas fa-tasks text-slate-400" id="1504"></i> 
+         <span id="7475">系统架构设计</span> 
+        </div> 
+        <div class="flex-1 p-3" id="7781"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="3830"> 
+          <div class="h-full bg-accent w-full rounded-full" id="5428"></div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="flex items-center border-b border-slate-100" id="2839"> 
+        <div class="w-64 p-3 pl-8 flex items-center gap-2 text-sm" id="7443"> 
+         <i class="fas fa-tasks text-slate-400" id="1086"></i> 
+         <span id="7821">核心功能开发</span> 
+        </div> 
+        <div class="flex-1 p-3" id="7126"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="4915"> 
+          <div class="h-full bg-secondary w-2/3 rounded-full" id="4186"></div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="flex items-center border-b border-slate-100" id="2623"> 
+        <div class="w-64 p-3 pl-8 flex items-center gap-2 text-sm" id="4126"> 
+         <i class="fas fa-exclamation-circle text-warning" id="8020"></i> 
+         <span id="6415">测试与bug修复</span> 
+         <span class="px-2 py-0.5 bg-warning/10 text-warning text-xs rounded-full" id="9303">延期2天</span> 
+        </div> 
+        <div class="flex-1 p-3" id="8330"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="9413"> 
+          <div class="h-full bg-warning w-1/2 rounded-full" id="7344"></div> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="flex items-center" id="1604"> 
+        <div class="w-64 p-3 pl-8 flex items-center gap-2 text-sm" id="1222"> 
+         <i class="fas fa-gem text-accent" id="9004"></i> 
+         <span class="font-medium" id="4900">系统上线</span> 
+        </div> 
+        <div class="flex-1 p-3" id="9690"> 
+         <div class="w-full h-6 bg-slate-100 rounded-full overflow-hidden" id="6004"> 
+          <div class="h-full bg-slate-200 w-0 rounded-full" id="3592"></div> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <!-- 研发敏捷任务看板区域 --> 
+    <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)] flex flex-col gap-5" id="9739"> 
+     <div class="flex items-center justify-between" id="6125"> 
+      <h2 class="text-xl font-bold text-dark" id="5799">研发协同看板</h2> 
+      <button id="add-kanban-task" type="button" class="flex items-center gap-1 px-4 py-2 bg-secondary text-white rounded-lg text-sm"> <i class="fas fa-plus" id="6635"></i> <span id="1194">新建任务</span> </button> 
+     </div> 
+     <div class="flow-line" id="7616"></div> 
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="3452"> 
+      <!-- 待处理列 --> 
+      <div class="bg-slate-50 rounded-xl p-4 flex flex-col gap-4 kanban-column" id="2214"> 
+       <div class="flex items-center justify-between" id="6048"> 
+        <h3 class="font-semibold text-slate-700 flex items-center gap-2" id="2498"> <span class="w-3 h-3 rounded-full bg-slate-400" id="4148"></span> 待处理 <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full" id="9526">12</span> </h3> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3" id="6758"> 
+        <div class="flex items-center justify-between" id="7706"> 
+         <span class="px-2 py-0.5 bg-danger/10 text-danger text-xs rounded" id="9954">P0</span> 
+         <span class="text-xs text-slate-500" id="3722">关联单据: OA-2024-001</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="1478">权限管理模块功能开发</p> 
+        <div class="flex items-center justify-between" id="5374"> 
+         <div class="flex items-center gap-2" id="6282"> 
+          <img src="./oa-gantt-kanban-page/24_8b912f37.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="6469"> 
+          <span class="text-xs text-slate-500" id="3468">张开发</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="3276">研发部</span> 
+        </div> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3" id="2426"> 
+        <div class="flex items-center justify-between" id="8013"> 
+         <span class="px-2 py-0.5 bg-warning/10 text-warning text-xs rounded" id="7007">P1</span> 
+         <span class="text-xs text-slate-500" id="2601">关联单据: OA-2024-003</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="2710">移动端适配优化</p> 
+        <div class="flex items-center justify-between" id="7979"> 
+         <div class="flex items-center gap-2" id="4217"> 
+          <img src="./oa-gantt-kanban-page/24_2b6bbd0f.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="6334"> 
+          <span class="text-xs text-slate-500" id="7509">李前端</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="4541">研发部</span> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 进行中列 --> 
+      <div class="bg-slate-50 rounded-xl p-4 flex flex-col gap-4 kanban-column" id="8204"> 
+       <div class="flex items-center justify-between" id="8854"> 
+        <h3 class="font-semibold text-slate-700 flex items-center gap-2" id="4238"> <span class="w-3 h-3 rounded-full bg-secondary" id="6399"></span> 进行中 <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full" id="5876">18</span> </h3> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3" id="2074"> 
+        <div class="flex items-center justify-between" id="5021"> 
+         <span class="px-2 py-0.5 bg-danger/10 text-danger text-xs rounded" id="5423">P0</span> 
+         <span class="text-xs text-slate-500" id="4406">关联单据: OA-2024-002</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="2819">工作流引擎重构</p> 
+        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden" id="8063"> 
+         <div class="h-full bg-secondary w-3/4 rounded-full" id="4043"></div> 
+        </div> 
+        <div class="flex items-center justify-between" id="6663"> 
+         <div class="flex items-center gap-2" id="5230"> 
+          <img src="./oa-gantt-kanban-page/24_77d26ba0.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="3131"> 
+          <span class="text-xs text-slate-500" id="8720">王后端</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="3014">研发部</span> 
+        </div> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3" id="7837"> 
+        <div class="flex items-center justify-between" id="1354"> 
+         <span class="px-2 py-0.5 bg-warning/10 text-warning text-xs rounded" id="9386">P1</span> 
+         <span class="text-xs text-slate-500" id="2006">关联采购单: 服务器设备已到货</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="5075">服务器环境部署</p> 
+        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden" id="5511"> 
+         <div class="h-full bg-secondary w-1/2 rounded-full" id="2638"></div> 
+        </div> 
+        <div class="flex items-center justify-between" id="2183"> 
+         <div class="flex items-center gap-2" id="2714"> 
+          <img src="./oa-gantt-kanban-page/24_ab88dd87.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="6703"> 
+          <span class="text-xs text-slate-500" id="2625">赵运维</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="3097">行政采购部</span> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 测试/评审中列 --> 
+      <div class="bg-slate-50 rounded-xl p-4 flex flex-col gap-4 kanban-column" id="4460"> 
+       <div class="flex items-center justify-between" id="3342"> 
+        <h3 class="font-semibold text-slate-700 flex items-center gap-2" id="3995"> <span class="w-3 h-3 rounded-full bg-warning" id="7715"></span> 测试/评审中 <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full" id="1817">10</span> </h3> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3" id="4496"> 
+        <div class="flex items-center justify-between" id="8220"> 
+         <span class="px-2 py-0.5 bg-warning/10 text-warning text-xs rounded" id="1473">P1</span> 
+         <span class="text-xs text-slate-500" id="7430">关联单据: OA-2024-004</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="8138">考勤模块功能测试</p> 
+        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden" id="1860"> 
+         <div class="h-full bg-warning w-2/3 rounded-full" id="7075"></div> 
+        </div> 
+        <div class="flex items-center justify-between" id="2019"> 
+         <div class="flex items-center gap-2" id="7820"> 
+          <img src="./oa-gantt-kanban-page/24_9608bb22.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="3526"> 
+          <span class="text-xs text-slate-500" id="9113">刘测试</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="2482">质量部</span> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 已完成列 --> 
+      <div class="bg-slate-50 rounded-xl p-4 flex flex-col gap-4 kanban-column" id="3636"> 
+       <div class="flex items-center justify-between" id="8352"> 
+        <h3 class="font-semibold text-slate-700 flex items-center gap-2" id="1863"> <span class="w-3 h-3 rounded-full bg-accent" id="6827"></span> 已完成 <span class="text-xs bg-slate-200 px-2 py-0.5 rounded-full" id="5869">25</span> </h3> 
+       </div> 
+       <div class="bg-white rounded-lg p-4 shadow-sm flex flex-col gap-3 opacity-80" id="1039"> 
+        <div class="flex items-center justify-between" id="3884"> 
+         <span class="px-2 py-0.5 bg-accent/10 text-accent text-xs rounded" id="5635">已完成</span> 
+         <span class="text-xs text-slate-500" id="8946">关联单据: OA-2024-000</span> 
+        </div> 
+        <p class="text-sm font-medium text-dark" id="7686">数据库架构设计</p> 
+        <div class="flex items-center justify-between" id="3445"> 
+         <div class="flex items-center gap-2" id="1260"> 
+          <img src="./oa-gantt-kanban-page/24_582974cc.jpg" alt="用户头像" class="w-6 h-6 rounded-full object-cover" id="5202"> 
+          <span class="text-xs text-slate-500" id="6714">陈架构</span> 
+         </div> 
+         <span class="text-xs text-slate-500" id="8412">研发部</span> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </main> 
+  <!-- 新增任务弹窗蒙版 --> 
+  <div id="task-modal-mask" class="modal-mask fixed inset-0 z-50 hidden flex items-center justify-center"> 
+   <!-- 新增任务弹窗 --> 
+   <div id="task-modal" class="bg-white rounded-xl w-full max-w-lg p-6 flex flex-col gap-5"> 
+    <div class="flex items-center justify-between" id="5464"> 
+     <h3 class="text-xl font-bold text-dark" id="5135">新建任务</h3> 
+     <button id="close-task-modal" type="button" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center"> <i class="fas fa-times text-slate-500" id="6922"></i> </button> 
+    </div> 
+    <div class="flow-line" id="2802"></div> 
+    <div class="flex flex-col gap-4" id="6673"> 
+     <div class="flex flex-col gap-2" id="7319"> 
+      <label class="text-sm font-medium text-slate-700" id="6088">任务名称</label> 
+      <input type="text" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" placeholder="请输入任务名称" id="5100"> 
+     </div> 
+     <div class="grid grid-cols-2 gap-4" id="3585"> 
+      <div class="flex flex-col gap-2" id="2187"> 
+       <label class="text-sm font-medium text-slate-700" id="7879">优先级</label> 
+       <select class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" id="5101"> <option id="4454">P0 - 紧急</option> <option id="4591">P1 - 高</option> <option id="4842">P2 - 中</option> <option id="8920">P3 - 低</option> </select> 
+      </div> 
+      <div class="flex flex-col gap-2" id="2142"> 
+       <label class="text-sm font-medium text-slate-700" id="5899">负责部门</label> 
+       <select class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" id="3883"> <option id="2028">研发部</option> <option id="7093">行政部</option> <option id="1592">人事部</option> <option id="5686">财务部</option> <option id="9989">采购部</option> </select> 
+      </div> 
+     </div> 
+     <div class="grid grid-cols-2 gap-4" id="8622"> 
+      <div class="flex flex-col gap-2" id="7244"> 
+       <label class="text-sm font-medium text-slate-700" id="3083">开始日期</label> 
+       <input type="date" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" id="6141"> 
+      </div> 
+      <div class="flex flex-col gap-2" id="4758"> 
+       <label class="text-sm font-medium text-slate-700" id="5523">截止日期</label> 
+       <input type="date" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" id="1073"> 
+      </div> 
+     </div> 
+     <div class="flex flex-col gap-2" id="3574"> 
+      <label class="text-sm font-medium text-slate-700" id="8757">任务描述</label> 
+      <textarea rows="3" class="w-full px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary/30" placeholder="请输入任务详细描述" id="7997"></textarea> 
+     </div> 
+    </div> 
+    <div class="flex items-center justify-end gap-3 pt-4" id="2929"> 
+     <button id="cancel-task-btn" type="button" class="px-5 py-2 border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50">取消</button> 
+     <button type="button" class="px-5 py-2 bg-secondary text-white rounded-lg hover:bg-secondary/90" id="7181">确认创建</button> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        },
+        //显示id为targetId的目标容器
+        show: function(targetId, callback) {
+            const modal = document.getElementById(targetId);//获取targetId的隐藏框元素
+            // 检查targetId的隐藏框元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            // 递归清理子元素的内联样式和hidden类
+            const clearChildrenStyles = function(element) {
+                if (!element) return;
+                const children = element.children;
+                for (let i = 0; i < children.length; i++) {
+                    const child = children[i];
+                    // 清理hidden类
+                    child.classList.remove("hidden");
+                    // 清理内联样式
+                    child.style.display = "";
+                    child.style.visibility = "";
+                    child.style.opacity = "";
+                    child.style.transform = "";
+                    child.style.animation = "";
+                    // 递归处理子元素的子元素
+                    clearChildrenStyles(child);
+                }
+            };
+            // 1. 清理该元素之前的状态和监听器
+            if (modal._hideAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._hideAnimationEndHandler);
+                delete modal._hideAnimationEndHandler;
+            }
+            if (modal._hideTimeout){
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+            }
+             // 2. 移除目标元素的隐藏类并重置内联样式
+            modal.classList.remove("hidden");
+            modal.style.display = ""; // 清空内联隐藏，让 CSS 的 flex 自动接管
+            modal.style.visibility = "";
+            modal.style.opacity = "";
+            modal.style.transform = "";
+            modal.style.animation = "";
+            // 3. 递归清理所有子元素的内联样式和hidden类
+            clearChildrenStyles(modal);
+            // 4. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 5. 执行显示动画
+            modal.style.animation = 'yt_modalFadeIn 0.3s ease-out';
+            // 6. 动画结束后清理动画样式
+            const onAnimationEnd = function() {
+                modal.style.animation = "";
+                delete modal._showAnimationEndHandler;
+            };
+            modal._showAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            if (callback) callback();
+        }
+        };
+window.onload = function(){
+        try {
+          //为#add-gantt-task元素添加点击事件监听器
+          document.getElementById('add-gantt-task').addEventListener('click',function(event){
+             ytHandles.show('task-modal-mask', null);
+          ytHandles.show('task-modal', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#add-kanban-task元素添加点击事件监听器
+          document.getElementById('add-kanban-task').addEventListener('click',function(event){
+             ytHandles.show('task-modal-mask', null);
+          ytHandles.show('task-modal', null);
+          })
+        } catch (e) {
+          console.error('OpenModal error:', e);
+        }
+        try {
+          //为#close-task-modal元素添加点击事件监听器
+          document.getElementById('close-task-modal').addEventListener('click',function(event){
+             ytHandles.hide('task-modal-mask');
+          ytHandles.hide('task-modal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#cancel-task-btn元素添加点击事件监听器
+          document.getElementById('cancel-task-btn').addEventListener('click',function(event){
+             ytHandles.hide('task-modal-mask');
+          ytHandles.hide('task-modal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#nav-architecture元素添加点击事件监听器
+          document.getElementById('nav-architecture').addEventListener('click',function(event){
+             ytHandles.openPage('oa-architecture-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-workflow元素添加点击事件监听器
+          document.getElementById('nav-workflow').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-attendance元素添加点击事件监听器
+          document.getElementById('nav-attendance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-finance元素添加点击事件监听器
+          document.getElementById('nav-finance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-security元素添加点击事件监听器
+          document.getElementById('nav-security').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-progress元素添加点击事件监听器
+          document.getElementById('nav-progress').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-kanban元素添加点击事件监听器
+          document.getElementById('nav-kanban').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>

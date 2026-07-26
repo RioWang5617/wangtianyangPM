@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="zh-CN" id="7039">
+ <head id="8757"> 
+  <meta charset="UTF-8" id="6182"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" id="8294"> 
+  <title id="1306">OA系统架构总览页</title> 
+  <script src="./oa-architecture-page/resource_3fa48481.js" id="5574"></script> 
+  <link rel="stylesheet" href="./oa-architecture-page/all.min_3d03d8cd.css" id="2033"> 
+  <script src="./oa-architecture-page/echarts.min_2475de5b.js" id="1024"></script> 
+  <script id="6225">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#2563EB',
+                        accent: '#10B981',
+                        warning: '#F59E0B',
+                        danger: '#EF4444',
+                        dark: '#0F172A',
+                        light: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        };
+    </script> 
+  <style type="text/tailwindcss" id="8570">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .card-glass {
+                background: rgba(255, 255, 255, 0.7);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+            .card-glass-dark {
+                background: rgba(30, 58, 138, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(30, 58, 138, 0.15);
+            }
+            .flow-line {
+                background: linear-gradient(90deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0.2));
+                height: 2px;
+                position: relative;
+                overflow: hidden;
+            }
+            .flow-line::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, #10B981, transparent);
+                animation: flow 3s linear infinite;
+            }
+            @keyframes flow {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(200%); }
+            }
+            .modal-mask {
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(4px);
+            }
+            .modal-mask.hidden {
+                display: none;
+            }
+        }
+    </style> 
+  <style>
+            /* 新增动画定义 */
+            @keyframes yt_modalFadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+</style> 
+ </head> 
+ <body class="bg-slate-50 text-slate-800 font-sans" id="5230"> 
+  <div class="flex h-full min-h-screen" id="7373"> 
+   <!-- 左侧主导航栏 --> 
+   <aside class="w-64 bg-dark text-white fixed left-0 top-0 h-full z-20 overflow-y-auto" id="9137"> 
+    <div class="p-6 flex flex-col gap-8" id="2667"> 
+     <div class="flex items-center gap-3" id="1045"> 
+      <i class="fas fa-building text-2xl text-secondary" id="5845"></i> 
+      <h1 class="text-xl font-bold" id="9115">企业OA系统</h1> 
+     </div> 
+     <nav class="flex flex-col gap-1" id="6757"> 
+      <a id="nav-architecture" data-uuid="oa-architecture-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg bg-primary/30 text-white font-medium"> <i class="fas fa-sitemap w-5 text-center" id="3570"></i> <span id="1041">系统架构总览</span> </a> 
+      <a id="nav-workflow" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-cogs w-5 text-center" id="4028"></i> <span id="1591">流程引擎配置</span> </a> 
+      <a id="nav-attendance" data-uuid="oa-workflow-attendance-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-user-clock w-5 text-center" id="6364"></i> <span id="1027">人事考勤管理</span> </a> 
+      <a id="nav-finance" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-bookkeeping w-5 text-center" id="4561"></i> <span id="9639">财务台账管理</span> </a> 
+      <a id="nav-security" data-uuid="oa-finance-rbac-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-shield-alt w-5 text-center" id="2607"></i> <span id="3088">保密权限配置</span> </a> 
+      <a id="nav-progress" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-tasks w-5 text-center" id="7932"></i> <span id="9487">项目进度管控</span> </a> 
+      <a id="nav-kanban" data-uuid="oa-gantt-kanban-page" href="javascript:void(0);" class="flex items-center gap-3 p-3 rounded-lg hover:bg-primary/20 transition-all text-slate-300"> <i class="fas fa-columns w-5 text-center" id="7291"></i> <span id="9171">研发协同看板</span> </a> 
+     </nav> 
+    </div> 
+   </aside> 
+   <!-- 主内容区域 --> 
+   <main class="flex-1 ml-64" id="7410"> 
+    <!-- 顶部二级导航栏 --> 
+    <header class="h-16 bg-white shadow-sm sticky top-0 z-10 flex items-center px-8" id="4616"> 
+     <div class="flex items-center justify-between w-full" id="9515"> 
+      <div class="flex items-center gap-2 text-slate-500" id="6881"> 
+       <i class="fas fa-home" id="8722"></i> 
+       <span id="3629">/</span> 
+       <span class="text-primary font-medium" id="2664">系统架构总览</span> 
+      </div> 
+      <div class="flex items-center gap-6" id="1989"> 
+       <button type="button" class="relative p-2 rounded-full hover:bg-slate-100" id="4097"> <i class="fas fa-bell text-slate-600" id="3037"></i> <span class="absolute top-0 right-0 w-2 h-2 bg-danger rounded-full" id="9099"></span> </button> 
+       <div class="flex items-center gap-3" id="6764"> 
+        <img src="./oa-architecture-page/40_206da978.jpg" alt="用户头像" class="w-9 h-9 rounded-full object-cover" id="8995"> 
+        <span class="font-medium" id="7792">系统管理员</span> 
+       </div> 
+      </div> 
+     </div> 
+    </header> 
+    <!-- 页面内容 --> 
+    <div class="p-8" id="9004"> 
+     <div class="flex flex-col gap-8" id="5321"> 
+      <!-- 页面标题 --> 
+      <div class="flex flex-col gap-2" id="1556"> 
+       <h2 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark" id="2589">企业级OA协同办公系统全功能架构</h2> 
+       <p class="text-slate-500" id="8204">多部门业务流转拓扑图，清晰展示系统各模块之间的关联与数据流向</p> 
+      </div> 
+      <!-- 架构图主容器 --> 
+      <div class="w-full bg-white rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="8416"> 
+       <!-- 顶部：多部门业务协同矩阵 --> 
+       <div class="flex flex-col gap-6" id="9387"> 
+        <div class="flex items-center gap-2" id="3846"> 
+         <div class="w-1 h-6 bg-primary rounded-full" id="3077"></div> 
+         <h3 class="text-lg font-semibold text-dark" id="6721">多部门业务协同矩阵</h3> 
+        </div> 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="6642"> 
+         <!-- 行政部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="4941"> 
+          <div class="flex items-center gap-3" id="5207"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="4723"> 
+            <i class="fas fa-building" id="2216"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="8948">行政部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="8001"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7804"> 
+            <i class="fas fa-file-alt text-xs text-accent" id="8526"></i> 
+            <span id="1635">公文发文</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="9350"> 
+            <i class="fas fa-stamp text-xs text-accent" id="3949"></i> 
+            <span id="8556">印章管理</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="2936"> 
+            <i class="fas fa-calendar-alt text-xs text-accent" id="3311"></i> 
+            <span id="7775">会议室与车辆调度</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 人事部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="2774"> 
+          <div class="flex items-center gap-3" id="5451"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="2938"> 
+            <i class="fas fa-users" id="1285"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="5063">人事部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="4793"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7613"> 
+            <i class="fas fa-sitemap text-xs text-accent" id="3804"></i> 
+            <span id="8061">组织架构</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="8748"> 
+            <i class="fas fa-user-clock text-xs text-accent" id="2676"></i> 
+            <span id="3047">考勤排班</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="3126"> 
+            <i class="fas fa-chart-line text-xs text-accent" id="5297"></i> 
+            <span id="9725">绩效考核</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="6193"> 
+            <i class="fas fa-user-plus text-xs text-accent" id="1728"></i> 
+            <span id="4512">入离职管理</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 保密部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="9655"> 
+          <div class="flex items-center gap-3" id="8094"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="5197"> 
+            <i class="fas fa-shield-alt" id="5215"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="2456">保密部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="5497"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="8647"> 
+            <i class="fas fa-lock text-xs text-accent" id="1098"></i> 
+            <span id="8764">密级审批</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="6256"> 
+            <i class="fas fa-user-secret text-xs text-accent" id="6362"></i> 
+            <span id="5655">文档权限隔离</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="6409"> 
+            <i class="fas fa-tint text-xs text-accent" id="2021"></i> 
+            <span id="4087">水签名单</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 财务部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="8915"> 
+          <div class="flex items-center gap-3" id="9546"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="1833"> 
+            <i class="fas fa-money-bill-wave" id="4497"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="6446">财务部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="9451"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="3389"> 
+            <i class="fas fa-receipt text-xs text-accent" id="4550"></i> 
+            <span id="6520">费用报销</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="5764"> 
+            <i class="fas fa-chart-pie text-xs text-accent" id="9454"></i> 
+            <span id="2584">预算管控</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7645"> 
+            <i class="fas fa-file-invoice text-xs text-accent" id="1758"></i> 
+            <span id="6087">发票验真</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="2776"> 
+            <i class="fas fa-book text-xs text-accent" id="3888"></i> 
+            <span id="3204">资金台账</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 销售部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="7850"> 
+          <div class="flex items-center gap-3" id="7022"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="2557"> 
+            <i class="fas fa-briefcase" id="9563"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="6170">销售部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="8387"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7824"> 
+            <i class="fas fa-plane text-xs text-accent" id="6473"></i> 
+            <span id="1355">出差申请</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="1021"> 
+            <i class="fas fa-file-contract text-xs text-accent" id="6850"></i> 
+            <span id="6019">合同协同</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="5559"> 
+            <i class="fas fa-utensils text-xs text-accent" id="7853"></i> 
+            <span id="2763">招待报销联动</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 采购部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="1824"> 
+          <div class="flex items-center gap-3" id="8161"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="9395"> 
+            <i class="fas fa-boxes" id="8665"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="2798">采购部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="9590"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="1766"> 
+            <i class="fas fa-pencil-alt text-xs text-accent" id="8448"></i> 
+            <span id="2270">办公用品领用</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="3652"> 
+            <i class="fas fa-shopping-cart text-xs text-accent" id="4353"></i> 
+            <span id="5797">物资采购审批</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7345"> 
+            <i class="fas fa-handshake text-xs text-accent" id="4765"></i> 
+            <span id="9605">供应商协同</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 项目部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="8223"> 
+          <div class="flex items-center gap-3" id="7506"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="2356"> 
+            <i class="fas fa-folder-open" id="7110"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="1343">项目部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="9921"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="6852"> 
+            <i class="fas fa-plus-circle text-xs text-accent" id="6463"></i> 
+            <span id="2929">项目立项</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="3417"> 
+            <i class="fas fa-flag-checkered text-xs text-accent" id="5310"></i> 
+            <span id="4410">里程碑跟踪</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="2408"> 
+            <i class="fas fa-user-plus text-xs text-accent" id="4820"></i> 
+            <span id="1785">跨部门派工</span> 
+           </div> 
+          </div> 
+         </div> 
+         <!-- 研发部 --> 
+         <div class="card-glass-dark rounded-xl p-5 shadow-[0_8px_30px_rgba(30,58,138,0.06)] hover:shadow-[0_8px_30px_rgba(30,58,138,0.12)] transition-all" id="1440"> 
+          <div class="flex items-center gap-3" id="6638"> 
+           <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary text-xl" id="2178"> 
+            <i class="fas fa-code" id="9905"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="3271">研发部</h4> 
+          </div> 
+          <div class="mt-4 flex flex-col gap-2" id="5741"> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="7428"> 
+            <i class="fas fa-exchange-alt text-xs text-accent" id="9024"></i> 
+            <span id="1656">需求变更工单</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="9722"> 
+            <i class="fas fa-clock text-xs text-accent" id="9227"></i> 
+            <span id="2497">工时统计</span> 
+           </div> 
+           <div class="flex items-center gap-2 text-sm text-slate-600" id="9568"> 
+            <i class="fas fa-users-cog text-xs text-accent" id="1413"></i> 
+            <span id="3987">研发资源调配</span> 
+           </div> 
+          </div> 
+         </div> 
+        </div> 
+       </div> 
+       <!-- 数据流转线 --> 
+       <div class="py-6 flex justify-center" id="4310"> 
+        <div class="w-3/4 flow-line rounded-full" id="4088"></div> 
+       </div> 
+       <!-- 中间：核心业务流转与引擎层 --> 
+       <div class="flex flex-col gap-6" id="8981"> 
+        <div class="flex items-center gap-2" id="9344"> 
+         <div class="w-1 h-6 bg-secondary rounded-full" id="6250"></div> 
+         <h3 class="text-lg font-semibold text-dark" id="7244">核心业务流转与引擎层</h3> 
+        </div> 
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="7979"> 
+         <!-- BPMN工作流引擎 --> 
+         <div class="bg-gradient-to-br from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20 shadow-[0_8px_30px_rgba(37,99,235,0.08)] hover:shadow-[0_8px_30px_rgba(37,99,235,0.15)] transition-all" id="6707"> 
+          <div class="flex items-center gap-3" id="8837"> 
+           <div class="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center text-primary text-2xl" id="2590"> 
+            <i class="fas fa-sync-alt" id="4664"></i> 
+           </div> 
+           <h4 class="font-semibold text-xl" id="9305">BPMN 2.0 工作流引擎</h4> 
+          </div> 
+          <p class="mt-4 text-slate-600 text-sm" id="8210">可视化流程编排，支持条件分支、自动审批、超时催办等复杂业务规则</p> 
+         </div> 
+         <!-- 保密与RBAC动态权限控制中心 --> 
+         <div class="bg-gradient-to-br from-danger/5 to-danger/10 rounded-xl p-6 border border-danger/20 shadow-[0_8px_30px_rgba(239,68,68,0.08)] hover:shadow-[0_8px_30px_rgba(239,68,68,0.15)] transition-all" id="6350"> 
+          <div class="flex items-center gap-3" id="8278"> 
+           <div class="w-14 h-14 rounded-xl bg-danger/20 flex items-center justify-center text-danger text-2xl" id="5590"> 
+            <i class="fas fa-lock" id="7817"></i> 
+           </div> 
+           <h4 class="font-semibold text-xl" id="4158">保密与RBAC动态权限控制中心</h4> 
+          </div> 
+          <p class="mt-4 text-slate-600 text-sm" id="7868">三级密级权限隔离，字段级数据脱敏，动态水印与操作审计</p> 
+         </div> 
+         <!-- 跨部门数据汇总与数据看板引擎 --> 
+         <div class="bg-gradient-to-br from-accent/5 to-accent/10 rounded-xl p-6 border border-accent/20 shadow-[0_8px_30px_rgba(16,185,129,0.08)] hover:shadow-[0_8px_30px_rgba(16,185,129,0.15)] transition-all" id="2777"> 
+          <div class="flex items-center gap-3" id="7819"> 
+           <div class="w-14 h-14 rounded-xl bg-accent/20 flex items-center justify-center text-accent text-2xl" id="6667"> 
+            <i class="fas fa-chart-bar" id="3342"></i> 
+           </div> 
+           <h4 class="font-semibold text-xl" id="9998">跨部门数据汇总与数据看板引擎</h4> 
+          </div> 
+          <p class="mt-4 text-slate-600 text-sm" id="4818">多维度数据聚合，实时业务指标监控，自定义报表生成与导出</p> 
+         </div> 
+         <!-- 移动协同与消息通知网关 --> 
+         <div class="bg-gradient-to-br from-warning/5 to-warning/10 rounded-xl p-6 border border-warning/20 shadow-[0_8px_30px_rgba(245,158,11,0.08)] hover:shadow-[0_8px_30px_rgba(245,158,11,0.15)] transition-all" id="9363"> 
+          <div class="flex items-center gap-3" id="6442"> 
+           <div class="w-14 h-14 rounded-xl bg-warning/20 flex items-center justify-center text-warning text-2xl" id="9698"> 
+            <i class="fas fa-mobile-alt" id="6379"></i> 
+           </div> 
+           <h4 class="font-semibold text-xl" id="6770">移动协同与消息通知网关</h4> 
+          </div> 
+          <p class="mt-4 text-slate-600 text-sm" id="1599">多端消息同步推送，待办事项实时提醒，移动端审批与操作</p> 
+         </div> 
+        </div> 
+       </div> 
+       <!-- 数据流转线 --> 
+       <div class="py-6 flex justify-center" id="7892"> 
+        <div class="w-3/4 flow-line rounded-full" id="3330"></div> 
+       </div> 
+       <!-- 底部：基础数据与集成层 --> 
+       <div class="flex flex-col gap-6" id="2816"> 
+        <div class="flex items-center gap-2" id="9951"> 
+         <div class="w-1 h-6 bg-dark rounded-full" id="4636"></div> 
+         <h3 class="text-lg font-semibold text-dark" id="2044">基础数据与集成层</h3> 
+        </div> 
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="7965"> 
+         <!-- 组织架构数据库 --> 
+         <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.1)] transition-all" id="9315"> 
+          <div class="flex items-center gap-3" id="3547"> 
+           <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center text-dark text-xl" id="2126"> 
+            <i class="fas fa-database" id="8649"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="9549">组织架构数据库</h4> 
+          </div> 
+          <p class="mt-3 text-slate-600 text-sm" id="9491">存储全公司组织架构、人员信息、岗位职级、部门关联关系等核心基础数据</p> 
+         </div> 
+         <!-- 电子签章/CA认证接口 --> 
+         <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.1)] transition-all" id="6679"> 
+          <div class="flex items-center gap-3" id="5479"> 
+           <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center text-dark text-xl" id="8784"> 
+            <i class="fas fa-certificate" id="4357"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="1544">电子签章/CA认证接口</h4> 
+          </div> 
+          <p class="mt-3 text-slate-600 text-sm" id="3678">提供合法有效的电子签名与印章服务，确保审批流程的法律效力与不可篡改性</p> 
+         </div> 
+         <!-- ERP/财务系统API --> 
+         <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.1)] transition-all" id="6631"> 
+          <div class="flex items-center gap-3" id="7692"> 
+           <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center text-dark text-xl" id="9418"> 
+            <i class="fas fa-plug" id="6283"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="6384">ERP/财务系统API</h4> 
+          </div> 
+          <p class="mt-3 text-slate-600 text-sm" id="3800">与企业现有ERP、财务系统无缝对接，实现数据双向同步，避免信息孤岛</p> 
+         </div> 
+         <!-- 审计日志库 --> 
+         <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_8px_30px_rgba(15,23,42,0.1)] transition-all md:col-span-3" id="9523"> 
+          <div class="flex items-center gap-3" id="9049"> 
+           <div class="w-12 h-12 rounded-lg bg-slate-200 flex items-center justify-center text-dark text-xl" id="5450"> 
+            <i class="fas fa-history" id="3526"></i> 
+           </div> 
+           <h4 class="font-semibold text-lg" id="3653">审计日志库</h4> 
+          </div> 
+          <p class="mt-3 text-slate-600 text-sm" id="5701">全量记录系统所有操作行为，包含操作人、操作时间、操作内容、IP地址等信息，满足等保合规要求</p> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+      <!-- 系统概览统计卡片 --> 
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5" id="7152"> 
+       <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="5576"> 
+        <div class="flex items-center justify-between" id="5201"> 
+         <div id="9352"> 
+          <p class="text-slate-500 text-sm" id="3552">接入部门数</p> 
+          <h3 class="text-3xl font-bold mt-2 text-dark" id="9001">8</h3> 
+         </div> 
+         <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary" id="4356"> 
+          <i class="fas fa-building text-xl" id="8140"></i> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="8629"> 
+        <div class="flex items-center justify-between" id="4658"> 
+         <div id="1463"> 
+          <p class="text-slate-500 text-sm" id="2797">业务流程数</p> 
+          <h3 class="text-3xl font-bold mt-2 text-dark" id="5211">32</h3> 
+         </div> 
+         <div class="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary" id="9803"> 
+          <i class="fas fa-cogs text-xl" id="1042"></i> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="5057"> 
+        <div class="flex items-center justify-between" id="9556"> 
+         <div id="5896"> 
+          <p class="text-slate-500 text-sm" id="1075">系统用户数</p> 
+          <h3 class="text-3xl font-bold mt-2 text-dark" id="6479">1286</h3> 
+         </div> 
+         <div class="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center text-accent" id="5084"> 
+          <i class="fas fa-users text-xl" id="7778"></i> 
+         </div> 
+        </div> 
+       </div> 
+       <div class="bg-white rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.04)]" id="5847"> 
+        <div class="flex items-center justify-between" id="3378"> 
+         <div id="4022"> 
+          <p class="text-slate-500 text-sm" id="2168">日均处理单据</p> 
+          <h3 class="text-3xl font-bold mt-2 text-dark" id="8366">452</h3> 
+         </div> 
+         <div class="w-12 h-12 rounded-lg bg-warning/10 flex items-center justify-center text-warning" id="6347"> 
+          <i class="fas fa-file-alt text-xl" id="6108"></i> 
+         </div> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </main> 
+  </div> 
+  <!-- 系统说明弹窗蒙版 --> 
+  <div id="system-info-mask" class="modal-mask fixed inset-0 z-50 flex items-center justify-center hidden"> 
+   <div id="system-info-modal" class="bg-white rounded-2xl w-full max-w-lg p-6 shadow-2xl"> 
+    <div class="flex items-center justify-between" id="3679"> 
+     <h3 class="text-xl font-bold text-dark" id="1088">系统架构说明</h3> 
+     <button id="close-info-modal" type="button" class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100"> <i class="fas fa-times text-slate-500" id="1871"></i> </button> 
+    </div> 
+    <div class="mt-4 flex flex-col gap-4" id="9310"> 
+     <p class="text-slate-600" id="1756">本OA系统采用分层架构设计，实现了多部门业务的高效协同与数据流转：</p> 
+     <ul class="list-disc pl-5 text-slate-600 flex flex-col gap-2" id="4507"> 
+      <li id="7898">上层业务层面向各部门提供专属业务功能模块</li> 
+      <li id="7123">核心引擎层提供统一的工作流、权限控制、数据看板和消息通知能力</li> 
+      <li id="3524">底层基础层提供数据存储、第三方系统集成和安全审计能力</li> 
+      <li id="5548">全链路数据加密，满足企业级安全合规要求</li> 
+     </ul> 
+     <div class="flex justify-end pt-4" id="7761"> 
+      <button id="confirm-info-btn" type="button" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-all">我已了解</button> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <script>
+var pageUuid = "";
+        window.ytHandles = {
+        openPage: function(url) {
+            // 当前窗口打开url页面
+            window.open(url + '.html', '_self');
+        },
+        //关闭id为targetId的目标容器
+        hide: function(targetId) {
+            const modal = document.getElementById(targetId);//获取targetId的元素
+            // 检查targetId元素是否存在
+            if (!modal) {console.error('Modal element not found: targetId');return;}
+            //1. 准备隐藏前先清理旧动画和监听器
+            if (modal._hideTimeout) clearTimeout(modal._hideTimeout);
+            if (modal._showAnimationEndHandler) {
+                modal.removeEventListener("animationend", modal._showAnimationEndHandler);
+                delete modal._showAnimationEndHandler;
+            }
+            modal.style.animation = "";
+            // 2. 强制重绘以确保样式应用
+            void modal.offsetHeight;
+            // 3. 启动淡出动画
+            modal.style.animation = 'yt_modalFadeOut 0.3s ease-out';
+            let animationCompleted = false;
+            const onAnimationEnd = function () {
+              if (animationCompleted) return;
+              animationCompleted = true;
+              // 4. 动画结束后，添加隐藏类并清空所有内联干扰样式
+              modal.classList.add("hidden");
+              modal.style.display = "";
+              modal.style.visibility = "";
+              modal.style.opacity = "";
+              modal.style.animation = "";
+              modal.style.transform = "";
+              // 清理引用
+              delete modal._hideAnimationEndHandler;
+              if (modal._hideTimeout) {
+                clearTimeout(modal._hideTimeout);
+                delete modal._hideTimeout;
+              }
+            };
+            // 5. 使用事件监听 + 定时器双重保险，确保清理逻辑一定会执行
+            modal._hideAnimationEndHandler = onAnimationEnd;
+            modal.addEventListener("animationend", onAnimationEnd, { once: true });
+            modal._hideTimeout = setTimeout(onAnimationEnd, 400); // 略长于动画时间
+        }
+        };
+window.onload = function(){
+        try {
+          //为#close-info-modal元素添加点击事件监听器
+          document.getElementById('close-info-modal').addEventListener('click',function(event){
+             ytHandles.hide('system-info-mask');
+          ytHandles.hide('system-info-modal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#confirm-info-btn元素添加点击事件监听器
+          document.getElementById('confirm-info-btn').addEventListener('click',function(event){
+             ytHandles.hide('system-info-mask');
+          ytHandles.hide('system-info-modal');
+          })
+        } catch (e) {
+          console.error('CloseModal error:', e);
+        }
+        try {
+          //为#nav-architecture元素添加点击事件监听器
+          document.getElementById('nav-architecture').addEventListener('click',function(event){
+             ytHandles.openPage('oa-architecture-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-workflow元素添加点击事件监听器
+          document.getElementById('nav-workflow').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-attendance元素添加点击事件监听器
+          document.getElementById('nav-attendance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-workflow-attendance-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-finance元素添加点击事件监听器
+          document.getElementById('nav-finance').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-security元素添加点击事件监听器
+          document.getElementById('nav-security').addEventListener('click',function(event){
+             ytHandles.openPage('oa-finance-rbac-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-progress元素添加点击事件监听器
+          document.getElementById('nav-progress').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+        try {
+          //为#nav-kanban元素添加点击事件监听器
+          document.getElementById('nav-kanban').addEventListener('click',function(event){
+             ytHandles.openPage('oa-gantt-kanban-page');
+          })
+        } catch (e) {
+          console.error('OpenPage error:', e);
+        }
+};
+</script>  
+ </body>
+</html>
