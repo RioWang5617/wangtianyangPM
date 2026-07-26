@@ -41,6 +41,36 @@ const projects: Project[] = [
       'https://stunt-route-84150395.figma.site/_assets/v11/51416c967bb02b3bb4d41790ae4327edebe21618.png',
     tags: ['课程数据可视化', 'SaaS 多机构管理', '智能排课系统', '运营数据分析'],
   },
+  {
+    id: 4,
+    category: 'E-Commerce / Mini Program',
+    title: 'GIGI HOUSE 潮玩商城',
+    description:
+      '专为年轻圈层打造的潮玩购物小程序。重构了从选品到支付的核心链路，引入了盲盒抽赏与社区分享机制，大幅提升了用户留存与复购率。',
+    image:
+      'https://images.unsplash.com/photo-1612015900986-4c4d017d1648?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw0fHxtaW5pbWFsaXN0JTIwYXBwfGVufDB8fHx8MTc4NTA3ODkyM3ww&ixlib=rb-4.1.0&q=80&w=1080',
+    tags: ['E-Commerce', 'Mini Program', 'Visual Design'],
+  },
+  {
+    id: 5,
+    category: 'IoT / Hardware',
+    title: '香港房屋署 T5 智能机器人',
+    description:
+      '面向香港公共房屋管理的智能接待机器人终端。设计了适老化且直观的语音/触控双模态交互界面，提升了公共服务的数字化体验。',
+    image:
+      'https://images.unsplash.com/photo-1518770660439-4636190af475?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwzfHxpb3R8ZW58MHx8fHwxNzg1MDc4OTUzfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    tags: ['Hardware UI', 'Accessibility', 'IoT Terminal'],
+  },
+  {
+    id: 6,
+    category: 'Fintech / Web3',
+    title: 'Kredit 跨境金融平台',
+    description:
+      '针对东南亚市场的数字资产借贷平台。建立了严谨的表单交互与资产可视化面板，在保证合规性的同时提供了流畅的用户开户与交易体验。',
+    image:
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHw2fHxkYXNoYm9hcmR8ZW58MHx8fHwxNzg1MDc4OTcyfDA&ixlib=rb-4.1.0&q=80&w=1080',
+    tags: ['Fintech', 'Data Dashboard', 'Form Design'],
+  },
 ];
 
 const skills = [

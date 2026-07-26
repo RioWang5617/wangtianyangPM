@@ -327,6 +327,87 @@ export default function About() {
                 </div>
               </div>
             </div>
+
+            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(500)}>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-2">GIGI HOUSE 潮玩商城</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">E-Commerce</span>
+              </div>
+              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
+                专为年轻圈层打造的潮玩购物小程序。重构了从选品到支付的核心链路，引入了盲盒抽赏与社区分享机制，大幅提升了用户留存与复购率。
+              </p>
+              <div className="space-y-4 pt-8 border-t border-white/5">
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">电商链路</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">年轻化视觉</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">社区互动</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>复购率提升 30%</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>转化率提升 12%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(600)}>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-2">DUODUOLAND 社交招聘</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Social App</span>
+              </div>
+              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
+                探索多模态对话场景下的求职交互。分析并优化 AI 匹配逻辑，为 Z 世代提供沉浸式的职场社交体验。
+              </p>
+              <div className="space-y-4 pt-8 border-t border-white/5">
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">社交互动</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">AI 匹配</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">多模态对话</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>日活时长增加 25%</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>简历投递率提升 40%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col p-10 rounded-[48px] bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 hover:from-white/[0.06] transition-all" {...scaleUp(700)}>
+              <div className="mb-8">
+                <h3 className="text-2xl font-bold mb-2">Kredit 跨境金融</h3>
+                <span className="text-sm uppercase tracking-widest text-purple-400 font-bold">Fintech</span>
+              </div>
+              <p className="text-lg text-[#86868b] leading-relaxed mb-8 flex-1">
+                针对东南亚市场的数字资产借贷平台。建立了严谨的表单交互与资产可视化面板，在保证合规性的同时提供了流畅的用户开户与交易体验。
+              </p>
+              <div className="space-y-4 pt-8 border-t border-white/5">
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">资产可视化</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">表单体验</span>
+                  <span className="px-3 py-1 bg-white/5 rounded-md text-white/40 uppercase tracking-tighter text-[12px]">安全合规</span>
+                </div>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>开户流失率降低 18%</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-400 font-medium text-sm">
+                    <Zap className="w-3.5 h-3.5" />
+                    <span>交易效率提升 2x</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
