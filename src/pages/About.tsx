@@ -38,7 +38,7 @@ export default function About() {
   return (
     <div className="min-h-screen bg-[#070612] text-white selection:bg-purple-500/30 overflow-x-hidden">
       {/* Background */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
           <div className="absolute top-[10%] left-[15%] w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[160px]" />
           <div className="absolute top-[40%] right-[10%] w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[140px]" />
@@ -72,19 +72,19 @@ export default function About() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pt-12 border-t border-white/5">
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">学历</span>
-                <span className="text-lg font-medium whitespace-nowrap">本科</span>
+                <span className="text-lg font-medium md:whitespace-nowrap">本科</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">专业</span>
-                <span className="text-lg font-medium whitespace-nowrap">计算机科班</span>
+                <span className="text-lg font-medium md:whitespace-nowrap">计算机科班</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">经验</span>
-                <span className="text-lg font-medium whitespace-nowrap">四年</span>
+                <span className="text-lg font-medium md:whitespace-nowrap">四年</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-[10px] uppercase tracking-widest text-white/30 mb-2">坐标</span>
-                <span className="text-lg font-medium whitespace-nowrap">成都/北京</span>
+                <span className="text-lg font-medium md:whitespace-nowrap">成都/北京</span>
               </div>
             </div>
           </div>

@@ -12,7 +12,7 @@ export default function Nav() {
   ];
 
   return (
-    <nav className="fixed top-4 sm:top-6 md:top-8 left-1/2 -translate-x-1/2 z-50 h-[60px] sm:h-[72px] w-[calc(100vw-1.5rem)] sm:w-auto sm:min-w-[600px] lg:min-w-[900px] bg-white/[0.03] backdrop-blur-[40px] flex items-center justify-between px-4 sm:px-8 md:px-10 rounded-full border border-white/10 shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/[0.04] before:to-transparent before:pointer-events-none before:rounded-full after:absolute after:inset-0 after:bg-[url('https://grainy-gradients.vercel.app/noise.svg')] after:opacity-[0.03] after:pointer-events-none after:rounded-full">
+    <nav className="fixed top-4 sm:top-6 md:top-8 left-1/2 -translate-x-1/2 z-50 h-[60px] sm:h-[72px] w-[calc(100%-1.5rem)] max-w-[calc(100vw-1.5rem)] sm:w-auto sm:min-w-[600px] lg:min-w-[900px] bg-white/[0.03] backdrop-blur-[40px] flex items-center justify-between px-4 sm:px-8 md:px-10 rounded-full border border-white/10 shadow-2xl before:absolute before:inset-0 before:bg-gradient-to-b before:from-white/[0.04] before:to-transparent before:pointer-events-none before:rounded-full after:absolute after:inset-0 after:bg-[url('https://grainy-gradients.vercel.app/noise.svg')] after:opacity-[0.03] after:pointer-events-none after:rounded-full">
       <Link
         to="/"
         className="relative z-10 flex items-center gap-2 sm:gap-3 cursor-pointer group shrink-0"

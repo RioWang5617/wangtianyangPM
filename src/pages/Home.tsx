@@ -30,10 +30,10 @@ function PillButton() {
   return (
     <Link
       to="/portfolio"
-      className="transition-all group relative grid h-20 w-80 cursor-pointer grid-cols-3 rounded-full p-1 z-50 overflow-hidden border-none bg-transparent no-underline"
+      className="transition-all group relative grid h-20 w-full max-w-80 sm:w-80 cursor-pointer grid-cols-3 rounded-full p-1 z-50 overflow-hidden border-none bg-transparent no-underline"
     >
       <div className="absolute inset-0 rounded-full overflow-hidden flex items-center justify-between pointer-events-none">
-        <div className="bg-gradient-to-b w-0 h-72 from-neutral-700 to-neutral-200 transition-all duration-500 group-hover:w-80 rounded-full" />
+        <div className="bg-gradient-to-b w-0 h-72 from-neutral-700 to-neutral-200 transition-all duration-500 group-hover:w-full sm:group-hover:w-80 rounded-full" />
       </div>
 
       {/* Left knob (dark) */}
@@ -46,7 +46,7 @@ function PillButton() {
 
       {/* Right panel with text */}
       <div className="relative col-span-2 flex h-full justify-end overflow-hidden rounded-r-full border-[2px] border-neutral-600 bg-neutral-800 shadow-[inset_0px_-5px_5px_rgba(0,0,0,0.5)] no-underline">
-        <div className="h-16 w-64 rounded-r-full bg-neutral-800 shadow-[inset_-4px_-4px_0px_rgba(255,255,255,0.2)] blur-sm" />
+        <div className="h-16 w-full max-w-64 rounded-r-full bg-neutral-800 shadow-[inset_-4px_-4px_0px_rgba(255,255,255,0.2)] blur-sm" />
         <div className="absolute top-2 bottom-6 left-0 my-auto w-10/12 rounded-r-full bg-gradient-to-b from-white opacity-20" />
         <div className="absolute top-0 bottom-0 left-0 my-auto w-8 h-4 bg-neutral-700 rounded-r-full" />
         <div className="absolute top-0 bottom-0 left-0 my-auto w-6 h-2 bg-neutral-700 rounded-r-full" />

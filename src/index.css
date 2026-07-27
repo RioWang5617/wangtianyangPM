@@ -28,6 +28,10 @@
   font-synthesis: none;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }

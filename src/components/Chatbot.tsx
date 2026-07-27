@@ -224,7 +224,7 @@ export default function Chatbot() {
     <div className="fixed bottom-6 right-6 z-[9999]">
       {/* Chat Window */}
       {isOpen && (
-        <div className="absolute bottom-20 right-0 w-[360px] h-[500px] bg-[#12121e] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
+        <div className="absolute bottom-20 right-0 w-[calc(100vw-3rem)] sm:w-[360px] h-[500px] bg-[#12121e] border border-white/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden animate-fade-in-up">
           {/* Header */}
           <div className="h-16 border-b border-white/10 flex items-center justify-between px-4 bg-white/[0.02]">
             <div className="flex items-center gap-3 min-w-0">
