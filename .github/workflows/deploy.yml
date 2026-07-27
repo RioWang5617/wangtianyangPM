@@ -33,12 +33,10 @@ jobs:
           VITE_VOLC2_KEY: ${{ secrets.VITE_VOLC2_KEY }}
 
       - name: Deploy to Cloudflare Pages
-        id: deploy
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: e9330bce223e000fb2335def862aa63d
-          command: pages deploy dist --project-name=wangtianyang-pm --branch=main
+        run: npx wrangler@3 pages deploy dist --project-name=wangtianyang-pm --branch=main
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: e9330bce223e000fb2335def862aa63d
 
       - name: Deployment URL
-        run: echo "Deployed to ${{ steps.deploy.outputs.deployment-url }}"
+        run: echo "Deployed successfully"
